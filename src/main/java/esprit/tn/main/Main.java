@@ -25,8 +25,8 @@ public class Main {
         List<Reclamation> allReclamations = reclamationService.getall(); // Récupérer toutes les réclamations
 
         //--------------------- Ajout Réclamation ---------------------------------------------
-        //Reclamation recla = saisirReclamationAjout();
-        //reclamationService.ajouter(recla);
+        Reclamation recla = saisirReclamationAjout();
+        reclamationService.ajouter(recla);
 
         //--------------------- Modification Réclamation --------------------------------------
         Reclamation ReclamationChoisi = choisirReclamation(allReclamations);
