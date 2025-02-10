@@ -21,7 +21,7 @@ public class ReclamationService implements IserviceR<Reclamation> {
 
     @Override
     public void ajouter(Reclamation reclamation) {
-        String req="INSERT INTO Reclamation (Titre, Description, Status, DateCreation) VALUES (?, ?, ?, ?)";
+        String req = "INSERT INTO Reclamation (Titre, Description, Status, DateCreation) VALUES (?, ?, ?, ?)";
 
         try {
             PreparedStatement stm = cnx.prepareStatement(req);
@@ -54,6 +54,10 @@ public class ReclamationService implements IserviceR<Reclamation> {
             stm.setString(1, reclamation.getTitre());
             stm.setString(2, reclamation.getDescription());
             stm.setString(3, reclamation.getStatus());
+
+            if (!reclamation.getStatus().equalsIgnoreCase("Soumise") & !reclamation.getStatus().equalsIgnoreCase("En cours de traitement") && !reclamation.getStatus().equalsIgnoreCase("Résolue") && !reclamation.getStatus().equalsIgnoreCase("Fermée")) {
+                throw new IllegalArgumentException("Le status doit être 'Soumise' ou 'En cours de traitement' ou 'Résolue' ou 'Fermée'.");
+            }
 
             // Convertir LocalDateTime en Timestamp
             LocalDateTime dateCreation = reclamation.getDateCreation();
@@ -172,7 +176,7 @@ public class ReclamationService implements IserviceR<Reclamation> {
         return reclamations;
     }
 
-    public static Reclamation saisirReclamation() {
+    public static Reclamation saisirReclamationAjout() {
         Scanner scanner = new Scanner(System.in);
 
         // Demander à l'utilisateur de saisir le message du feedback
@@ -182,11 +186,25 @@ public class ReclamationService implements IserviceR<Reclamation> {
         // Demander à l'utilisateur de saisir la note du feedback
         System.out.print("Entrez la description de la réclamation : ");
         String description = scanner.nextLine();
-        scanner.nextLine();
+
+        // Créer et retourner un nouveau feedback
+        LocalDateTime dateCreation = LocalDateTime.now(); // Date actuelle
+        return new Reclamation(titre, description, "Soumise", dateCreation);
+    }
+
+    public static Reclamation saisirReclamationModification() {
+        Scanner scanner = new Scanner(System.in);
+
+        // Demander à l'utilisateur de saisir le message du feedback
+        System.out.print("Entrez le titre de la réclamation : ");
+        String titre = scanner.nextLine();
+
+        // Demander à l'utilisateur de saisir la note du feedback
+        System.out.print("Entrez la description de la réclamation : ");
+        String description = scanner.nextLine();
 
         System.out.print("Entrez le status de la réclamation : ");
         String status = scanner.nextLine();
-        scanner.nextLine();
 
         // Créer et retourner un nouveau feedback
         LocalDateTime dateCreation = LocalDateTime.now(); // Date actuelle
@@ -196,7 +214,7 @@ public class ReclamationService implements IserviceR<Reclamation> {
     public static void afficherReclamations(List<Reclamation> reclamations) {
         System.out.println("Liste des réclamations disponibles :");
         for (Reclamation reclamation : reclamations) {
-            System.out.println("ID: " + reclamation.getId() + " | Message: " + reclamation.getTitre() + " | Note: " + reclamation.getDescription());
+            System.out.println("ID: " + reclamation.getId() + " | Titre: " + reclamation.getTitre() + " | Description: " + reclamation.getDescription());
         }
     }
 

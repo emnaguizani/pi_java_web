@@ -49,7 +49,7 @@ public class Reclamation {
     }
 
     public void setStatus(String status) {
-        Status = status;
+        Status = "Soumise";
     }
 
     public String getDescription() {
