@@ -110,38 +110,11 @@ public class ReclamationService implements IserviceR<Reclamation> {
                 }
                 ps.add(p);
             }
-
             System.out.println(ps);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return ps;
-    }
-
-    public static Reclamation choisirReclamation(List<Reclamation> reclamations) {
-        Scanner scanner = new Scanner(System.in);
-
-        // Afficher la liste des réclamations
-        System.out.println("Liste des réclamations disponibles :");
-        for (Reclamation reclamation : reclamations) {
-            System.out.println("ID: " + reclamation.getId() + " | Titre: " + reclamation.getTitre());
-        }
-
-        // Demander à l'utilisateur de choisir une réclamation par son ID
-        System.out.print("Entrez l'ID de la réclamation à laquelle ajouter un feedback : ");
-        int idReclamation = scanner.nextInt();
-        scanner.nextLine(); // Pour consommer la nouvelle ligne après nextInt()
-
-        // Trouver la réclamation correspondante
-        for (Reclamation reclamation : reclamations) {
-            if (reclamation.getId() == idReclamation) {
-                return reclamation;
-            }
-        }
-
-        // Si aucune réclamation n'est trouvée
-        System.out.println("Aucune réclamation trouvée avec l'ID " + idReclamation);
-        return null;
     }
 
     @Override
@@ -174,6 +147,32 @@ public class ReclamationService implements IserviceR<Reclamation> {
         }
 
         return reclamations;
+    }
+
+    public static Reclamation choisirReclamation(List<Reclamation> reclamations) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Afficher la liste des réclamations
+        System.out.println("Liste des réclamations disponibles :");
+        for (Reclamation reclamation : reclamations) {
+            System.out.println("ID: " + reclamation.getId() + " | Titre: " + reclamation.getTitre() + " | Description: " + reclamation.getDescription());
+        }
+
+        // Demander à l'utilisateur de choisir une réclamation par son ID
+        System.out.print("Entrez l'ID de la réclamation à laquelle ajouter un feedback : ");
+        int idReclamation = scanner.nextInt();
+        scanner.nextLine(); // Pour consommer la nouvelle ligne après nextInt()
+
+        // Trouver la réclamation correspondante
+        for (Reclamation reclamation : reclamations) {
+            if (reclamation.getId() == idReclamation) {
+                return reclamation;
+            }
+        }
+
+        // Si aucune réclamation n'est trouvée
+        System.out.println("Aucune réclamation trouvée avec l'ID " + idReclamation);
+        return null;
     }
 
     public static Reclamation saisirReclamationAjout() {
@@ -209,35 +208,5 @@ public class ReclamationService implements IserviceR<Reclamation> {
         // Créer et retourner un nouveau feedback
         LocalDateTime dateCreation = LocalDateTime.now(); // Date actuelle
         return new Reclamation(titre, description, status, dateCreation);
-    }
-
-    public static void afficherReclamations(List<Reclamation> reclamations) {
-        System.out.println("Liste des réclamations disponibles :");
-        for (Reclamation reclamation : reclamations) {
-            System.out.println("ID: " + reclamation.getId() + " | Titre: " + reclamation.getTitre() + " | Description: " + reclamation.getDescription());
-        }
-    }
-
-    public static Reclamation choixReclamation(List<Reclamation> reclamations) {
-        Scanner scanner = new Scanner(System.in);
-
-        // Afficher la liste des feedbacks
-        afficherReclamations(reclamations);
-
-        // Demander à l'utilisateur de choisir un feedback par son ID
-        System.out.print("Entrez l'ID de la réclamation : ");
-        int idReclamation = scanner.nextInt();
-        scanner.nextLine(); // Pour consommer la nouvelle ligne après nextInt()
-
-        // Trouver le feedback correspondant
-        for (Reclamation reclamation : reclamations) {
-            if (reclamation.getId() == idReclamation) {
-                return reclamation;
-            }
-        }
-
-        // Si aucun feedback n'est trouvé
-        System.out.println("Aucun feedback trouvé avec l'ID " + idReclamation);
-        return null;
     }
 }

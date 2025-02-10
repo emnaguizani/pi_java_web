@@ -30,6 +30,11 @@ public class FeedbackService implements IserviceF<Feedback> {
             stm.setInt(2, feedback.getNote());
             stm.setTimestamp(3, java.sql.Timestamp.valueOf(feedback.getDateFeedback()));
             stm.setInt(4, feedback.getReclamation().getId());
+
+            if (feedback.getNote() < 1 || feedback.getNote() > 5) {
+                throw new IllegalArgumentException("La note doit être comprise entre 1 et 5.");
+            }
+
             stm.executeUpdate();
             System.out.println("Feedback ajouté avec succès !");
         } catch (SQLException e) {
@@ -50,6 +55,10 @@ public class FeedbackService implements IserviceF<Feedback> {
             stm.setTimestamp(3, java.sql.Timestamp.valueOf(feedback.getDateFeedback()));
             stm.setInt(4, feedback.getReclamation().getId()); // Clé étrangère vers Reclamation
             stm.setInt(5, feedback.getIdFeedback()); // ID du feedback à modifier
+
+            if (feedback.getNote() < 1 || feedback.getNote() > 5) {
+                throw new IllegalArgumentException("La note doit être comprise entre 1 et 5.");
+            }
 
             stm.executeUpdate();
             System.out.println("Feedback modifié avec succès !");
@@ -104,23 +113,6 @@ public class FeedbackService implements IserviceF<Feedback> {
         return feedbacks;
     }
 
-    public static Feedback saisirFeedback(Reclamation reclamation) {
-        Scanner scanner = new Scanner(System.in);
-
-        // Demander à l'utilisateur de saisir le message du feedback
-        System.out.print("Entrez le message du feedback : ");
-        String message = scanner.nextLine();
-
-        // Demander à l'utilisateur de saisir la note du feedback
-        System.out.print("Entrez la note du feedback (entre 1 et 5) : ");
-        int note = scanner.nextInt();
-        scanner.nextLine(); // Pour consommer la nouvelle ligne après nextInt()
-
-        // Créer et retourner un nouveau feedback
-        LocalDateTime dateFeedback = LocalDateTime.now(); // Date actuelle
-        return new Feedback(message, note, dateFeedback, reclamation);
-    }
-
     public static void afficherFeedbacks(List<Feedback> feedbacks) {
         System.out.println("Liste des feedbacks disponibles :");
         for (Feedback feedback : feedbacks) {
@@ -149,6 +141,23 @@ public class FeedbackService implements IserviceF<Feedback> {
         // Si aucun feedback n'est trouvé
         System.out.println("Aucun feedback trouvé avec l'ID " + idFeedback);
         return null;
+    }
+
+    public static Feedback saisirFeedback(Reclamation reclamation) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Demander à l'utilisateur de saisir le message du feedback
+        System.out.print("Entrez le message du feedback : ");
+        String message = scanner.nextLine();
+
+        // Demander à l'utilisateur de saisir la note du feedback
+        System.out.print("Entrez la note du feedback (entre 1 et 5) : ");
+        int note = scanner.nextInt();
+        scanner.nextLine(); // Pour consommer la nouvelle ligne après nextInt()
+
+        // Créer et retourner un nouveau feedback
+        LocalDateTime dateFeedback = LocalDateTime.now(); // Date actuelle
+        return new Feedback(message, note, dateFeedback, reclamation);
     }
 
     public static Feedback saisirNouveauxDetailsFeedback() {
