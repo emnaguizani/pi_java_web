@@ -16,7 +16,7 @@ public class ReclamationService implements IserviceR<Reclamation> {
 
     public ReclamationService(){
 
-        cnx = DatabaseConnection.instance.getCnx();
+        cnx = DatabaseConnection.getInstance().getCnx();
     }
 
     @Override
@@ -42,6 +42,11 @@ public class ReclamationService implements IserviceR<Reclamation> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static Reclamation saisirReclamationAjout(String titre, String description) {
+        LocalDateTime dateCreation = LocalDateTime.now(); // Date actuelle
+        return new Reclamation(titre, description, "Soumise", dateCreation);
     }
 
     @Override
@@ -173,22 +178,6 @@ public class ReclamationService implements IserviceR<Reclamation> {
         // Si aucune réclamation n'est trouvée
         System.out.println("Aucune réclamation trouvée avec l'ID " + idReclamation);
         return null;
-    }
-
-    public static Reclamation saisirReclamationAjout() {
-        Scanner scanner = new Scanner(System.in);
-
-        // Demander à l'utilisateur de saisir le message du feedback
-        System.out.print("Entrez le titre de la réclamation : ");
-        String titre = scanner.nextLine();
-
-        // Demander à l'utilisateur de saisir la note du feedback
-        System.out.print("Entrez la description de la réclamation : ");
-        String description = scanner.nextLine();
-
-        // Créer et retourner un nouveau feedback
-        LocalDateTime dateCreation = LocalDateTime.now(); // Date actuelle
-        return new Reclamation(titre, description, "Soumise", dateCreation);
     }
 
     public static Reclamation saisirReclamationModification() {
