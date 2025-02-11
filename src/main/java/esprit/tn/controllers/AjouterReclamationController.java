@@ -42,7 +42,7 @@ public class AjouterReclamationController{
         } catch (IllegalArgumentException e) {
             // Affichage d'une alerte en cas de champ vide
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur de saisie");
+            alert.setTitle("Erreur de saisie !");
             alert.setContentText(e.getMessage());
             alert.showAndWait();
         } catch (Exception e) {
