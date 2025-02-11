@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AjouterReclamationController">
    <children>
       <Button layoutX="272.0" layoutY="312.0" mnemonicParsing="false" onAction="#AjouterRec" text="Ajouter" />
@@ -16,5 +15,6 @@
             <Font size="14.0" />
          </font>
       </TextArea>
+      <Button fx:id="nextAjout" layoutX="534.0" layoutY="338.0" mnemonicParsing="false" onAction="#nextRecAjout" text="Next" />
    </children>
 </AnchorPane>
