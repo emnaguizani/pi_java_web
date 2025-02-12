@@ -9,13 +9,13 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AfficherReclamationController">
    <children>
-      <TableView fx:id="TableViewR" layoutX="31.0" layoutY="69.0" prefHeight="200.0" prefWidth="538.0">
+      <TableView fx:id="TableViewR" layoutX="25.0" layoutY="69.0" prefHeight="200.0" prefWidth="548.0">
         <columns>
-          <TableColumn id="idR" fx:id="idR" prefWidth="89.60000228881836" text="ID" />
-          <TableColumn id="titreR" fx:id="titreR" prefWidth="95.20001220703125" text="Titre" />
-            <TableColumn id="descriptionR" fx:id="descriptionR" prefWidth="111.19998168945312" text="Description" />
-            <TableColumn id="statusR" fx:id="statusR" prefWidth="109.60003662109375" text="Status" />
-            <TableColumn id="dateCreationR" fx:id="dateCreationR" prefWidth="131.20001220703125" text="Date de création" />
+          <TableColumn id="idR" fx:id="idR" prefWidth="49.60000228881836" text="ID" />
+          <TableColumn id="titreR" fx:id="titreR" prefWidth="100.0" text="Titre" />
+            <TableColumn id="descriptionR" fx:id="descriptionR" prefWidth="153.59999084472656" text="Description" />
+            <TableColumn id="statusR" fx:id="statusR" prefWidth="105.60003662109375" text="Status" />
+            <TableColumn id="dateCreationR" fx:id="dateCreationR" prefWidth="145.60001220703123" text="Date de création" />
         </columns>
       </TableView>
       <Button layoutX="38.0" layoutY="305.0" mnemonicParsing="false" onAction="#AjouterRecAff" text="Ajouter Reclamation" />

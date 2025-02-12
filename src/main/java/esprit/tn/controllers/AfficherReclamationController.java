@@ -77,16 +77,16 @@ public class AfficherReclamationController {
     @FXML
     void ModifierRecAff() {
         // Récupérer la réclamation sélectionnée
-        Reclamation selectedReclamation = TableViewR.getSelectionModel().getSelectedItem();
+        Reclamation reclamationChoisi = TableViewR.getSelectionModel().getSelectedItem();
 
-        if (selectedReclamation != null) {
+        if (reclamationChoisi != null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierReclamation.fxml"));
                 Parent root = loader.load();
 
                 // Passer la réclamation sélectionnée au contrôleur de la deuxième interface
                 ModifierReclamationController controller = loader.getController();
-                controller.setReclamation(selectedReclamation);
+                controller.setReclamation(reclamationChoisi);
 
                 // Afficher la deuxième interface
                 Stage stage = new Stage();
@@ -106,6 +106,24 @@ public class AfficherReclamationController {
     }
 
     @FXML
-    void SupprimerRecAff(ActionEvent event) {
+    void SupprimerRecAff() {
+        Reclamation reclamationChoisi = TableViewR.getSelectionModel().getSelectedItem();
+
+        ReclamationService rs = new ReclamationService();
+
+        if (reclamationChoisi != null) {
+            rs.supprimer(reclamationChoisi);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Succès");
+            alert.setContentText("Réclamation supprimée avec succès !");
+            alert.showAndWait();
+        }
+        else {
+            System.out.println("Aucune réclamation sélectionnée.");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Vous devez sélectionner une réclamation!");
+            alert.setContentText("Veuillez sélectionner une réclamation afin de la supprimer");
+            alert.showAndWait();
+        }
     }
 }
