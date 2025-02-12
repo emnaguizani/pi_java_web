@@ -67,4 +67,10 @@ public class AjouterFeedbackController {
         // Fermer la fenêtre
         AjouterFeed.getScene().getWindow().hide();
     }
+
+    @FXML
+    void annulerAjoutFeedback() {
+        // Fermer la fenêtre
+        AjouterFeed.getScene().getWindow().hide();
+    }
 }

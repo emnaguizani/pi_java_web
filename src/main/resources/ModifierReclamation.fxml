@@ -30,8 +30,8 @@
             </FXCollections>
          </items>
       </ComboBox>
-      <Button layoutX="265.0" layoutY="336.0" mnemonicParsing="false" onAction="#enregistrerModifications" text="Enregistrer" />
-      <Label layoutX="194.0" layoutY="19.0" text="Modifier une réclamation" textAlignment="CENTER" textFill="RED">
+      <Button layoutX="263.0" layoutY="336.0" mnemonicParsing="false" onAction="#enregistrerModifications" text="Enregistrer" />
+      <Label layoutX="187.0" layoutY="19.0" text="Modifier une réclamation" textAlignment="CENTER" textFill="RED">
          <font>
             <Font size="20.0" />
          </font>
