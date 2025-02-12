@@ -8,10 +8,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 import static esprit.tn.services.ReclamationService.saisirReclamationAjout;
 
@@ -63,7 +65,7 @@ public class AjouterReclamationController{
     @FXML
     void nextRecAjout(ActionEvent event) {
         try {
-            Parent root= FXMLLoader.load(getClass().getResource("/AfficherReclamation.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/AfficherReclamation.fxml"));
 
             titreid.getScene().setRoot(root);
             descriptionid.getScene().setRoot(root);
@@ -72,6 +74,4 @@ public class AjouterReclamationController{
             throw new RuntimeException(e);
         }
     }
-
-
 }

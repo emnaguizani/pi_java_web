@@ -2,13 +2,18 @@
 
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<TableView fx:id="TableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1">
-  <columns>
-    <TableColumn fx:id="id" prefWidth="124.00006103515625" text="ID" />
-    <TableColumn fx:id="titre" prefWidth="116.7999267578125" text="Titre" />
-      <TableColumn fx:id="description" prefWidth="123.199951171875" text="Description" />
-      <TableColumn fx:id="status" minWidth="0.0" prefWidth="115.20001220703125" text="Status" />
-      <TableColumn fx:id="dateCreation" prefWidth="124.0" text="Date de création" />
-  </columns>
-</TableView>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AfficherReclamationController">
+   <children>
+      <TableView fx:id="TableViewR" layoutX="30.0" layoutY="55.0" prefHeight="200.0" prefWidth="538.0">
+        <columns>
+          <TableColumn id="idR" fx:id="idR" prefWidth="89.60000228881836" text="ID" />
+          <TableColumn id="titreR" fx:id="titreR" prefWidth="95.20001220703125" text="Titre" />
+            <TableColumn id="descriptionR" fx:id="descriptionR" prefWidth="111.19998168945312" text="Description" />
+            <TableColumn id="statusR" fx:id="statusR" prefWidth="109.60003662109375" text="Status" />
+            <TableColumn id="dateCreationR" fx:id="dateCreationR" prefWidth="131.20001220703125" text="Date de création" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

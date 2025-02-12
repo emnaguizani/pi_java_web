@@ -8,33 +8,41 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.time.LocalDateTime;
 
 public class AfficherReclamationController {
 
     @FXML
-    private TableView<Reclamation> TableView;
+    private TableView<Reclamation> TableViewR;
 
     @FXML
-    private TableColumn<Reclamation, LocalDateTime> dateCreation;
+    private TableColumn<Reclamation, LocalDateTime> dateCreationR;
 
     @FXML
-    private TableColumn<Reclamation, String> description;
+    private TableColumn<Reclamation, String> descriptionR;
 
     @FXML
-    private TableColumn<Reclamation, Integer> id;
+    private TableColumn<Reclamation, Integer> idR;
 
     @FXML
-    private TableColumn<Reclamation, String> status;
+    private TableColumn<Reclamation, String> statusR;
 
     @FXML
-    private TableColumn<Reclamation, String> titre;
+    private TableColumn<Reclamation, String> titreR;
 
     @FXML
-    public void initialize() {
+    void initialize() {
         ReclamationService rs = new ReclamationService();
+
         ObservableList<Reclamation> observableList = FXCollections.observableList(rs.getall());
-        TableView.setItems(observableList);
+
+        TableViewR.setItems(observableList);
+        idR.setCellValueFactory(new PropertyValueFactory<>("id"));
+        titreR.setCellValueFactory(new PropertyValueFactory<>("titre"));
+        descriptionR.setCellValueFactory(new PropertyValueFactory<>("description"));
+        statusR.setCellValueFactory(new PropertyValueFactory<>("status"));
+        dateCreationR.setCellValueFactory(new PropertyValueFactory<>("dateCreation"));
     }
 }
