@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -74,7 +75,35 @@ public class AfficherReclamationController {
     }
 
     @FXML
-    void ModifierRecAff(ActionEvent event) {
+    void ModifierRecAff() {
+        // Récupérer la réclamation sélectionnée
+        Reclamation selectedReclamation = TableViewR.getSelectionModel().getSelectedItem();
+
+        if (selectedReclamation != null) {
+            try {
+                // Charger la deuxième interface
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierReclamation.fxml"));
+                Parent root = loader.load();
+
+                // Passer la réclamation sélectionnée au contrôleur de la deuxième interface
+                ModifierReclamationController controller = loader.getController();
+                controller.setReclamation(selectedReclamation);
+
+                // Afficher la deuxième interface
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Aucune réclamation sélectionnée.");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Vous devez sélectionner une réclamation !");
+            alert.setContentText("Veuillez sélectionner une réclamation afin de modifier");
+            alert.showAndWait();
+        }
     }
 
     @FXML

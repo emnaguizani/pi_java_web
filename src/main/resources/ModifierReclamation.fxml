@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.ModifierReclamationController">
    <children>
-      <TextField layoutX="225.0" layoutY="36.0" promptText="Titre" />
-      <TextArea layoutX="200.0" layoutY="84.0" prefHeight="138.0" prefWidth="200.0" promptText="Description" />
-      <TextField layoutX="225.0" layoutY="251.0" promptText="Status" />
-      <ComboBox layoutX="225.0" layoutY="304.0" prefWidth="150.0" promptText="Status" visibleRowCount="4" />
-      <ChoiceBox layoutX="225.0" layoutY="348.0" prefWidth="150.0" />
+      <TextField fx:id="titreIdM" layoutX="225.0" layoutY="67.0" promptText="Titre de la réclamation" />
+      <TextArea fx:id="descriptionIdM" layoutX="200.0" layoutY="131.0" prefHeight="138.0" prefWidth="200.0" promptText="Description de la réclamation" />
+      <ComboBox fx:id="statusIdM" accessibleText="Status" layoutX="233.0" layoutY="294.0" prefWidth="150.0" promptText="Status" visibleRowCount="4" />
+      <Button layoutX="274.0" layoutY="344.0" mnemonicParsing="false" onAction="#enregistrerModifications" text="Enregistrer" />
    </children>
 </AnchorPane>
