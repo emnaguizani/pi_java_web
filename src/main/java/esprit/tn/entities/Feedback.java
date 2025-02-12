@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 public class Feedback {
 
     private int IdFeedback;
+    private String TypeFeedback;
     private  String Message;
     private int Note;
     private LocalDateTime DateFeedback;
@@ -13,15 +14,17 @@ public class Feedback {
 
     public Feedback(){}
 
-    public Feedback(int idFeedback, String message, int note, LocalDateTime dateFeedback, Reclamation reclamationId) {
+    public Feedback(int idFeedback, String typeFeedback, String message, int note, LocalDateTime dateFeedback, Reclamation reclamationId) {
         IdFeedback = idFeedback;
+        this.TypeFeedback = typeFeedback;
         this.Message = message;
         this.Note = note;
         DateFeedback = dateFeedback;
         ReclamationId = reclamationId;
     }
 
-    public Feedback(String message, int note, LocalDateTime dateFeedback, Reclamation reclamationId) {
+    public Feedback(String typeFeedback, String message, int note, LocalDateTime dateFeedback, Reclamation reclamationId) {
+        this.TypeFeedback = typeFeedback;
         this.Message = message;
         this.Note = note;
         DateFeedback = dateFeedback;
@@ -34,6 +37,14 @@ public class Feedback {
 
     public void setIdFeedback(int idFeedback) {
         IdFeedback = idFeedback;
+    }
+
+    public String getTypeFeedback() {
+        return TypeFeedback;
+    }
+
+    public void setTypeFeedback(String typeFeedback) {
+        TypeFeedback = typeFeedback;
     }
 
     public String getMessage() {

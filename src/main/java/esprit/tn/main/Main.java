@@ -29,21 +29,21 @@ public class Main {
         //reclamationService.ajouter(recla);
 
         //--------------------- Modification Réclamation --------------------------------------
-        Reclamation ReclamationChoisi = choisirReclamation(allReclamations);
+        //Reclamation ReclamationChoisi = choisirReclamation(allReclamations);
 
-        Reclamation ReclaModif = saisirReclamationModification();
+        //Reclamation ReclaModif = saisirReclamationModification();
 
-        ReclamationChoisi.setTitre(ReclaModif.getTitre());
-        ReclamationChoisi.setDescription(ReclaModif.getDescription());
-        ReclamationChoisi.setStatus(ReclaModif.getStatus());
-        ReclamationChoisi.setDateCreation(ReclaModif.getDateCreation());
+        //ReclamationChoisi.setTitre(ReclaModif.getTitre());
+        //ReclamationChoisi.setDescription(ReclaModif.getDescription());
+        //ReclamationChoisi.setStatus(ReclaModif.getStatus());
+        //ReclamationChoisi.setDateCreation(ReclaModif.getDateCreation());
 
         // Modifier la réclamation dans la base de données
-        reclamationService.modifier(ReclamationChoisi);
+        //reclamationService.modifier(ReclamationChoisi);
 
         //--------------------- Suppression Réclamation ----------------------------------------
-        Reclamation reclamationChoisi = choisirReclamation(allReclamations);
-        reclamationService.supprimer(reclamationChoisi);
+        //Reclamation reclamationChoisi = choisirReclamation(allReclamations);
+        //reclamationService.supprimer(reclamationChoisi);
 
         //--------------------- Afficher Réclamation -------------------------------------------
 
@@ -101,6 +101,7 @@ public class Main {
             Feedback nouveauxDetailsFeedback = saisirNouveauxDetailsFeedback();
 
             // Mettre à jour le feedback choisi avec les nouveaux détails
+            feedbackChoisi.setTypeFeedback(nouveauxDetailsFeedback.getTypeFeedback());
             feedbackChoisi.setMessage(nouveauxDetailsFeedback.getMessage());
             feedbackChoisi.setNote(nouveauxDetailsFeedback.getNote());
             feedbackChoisi.setDateFeedback(nouveauxDetailsFeedback.getDateFeedback());
@@ -119,6 +120,7 @@ public class Main {
 
         for (Feedback FeedbackAff : allFeedbacks) {
             System.out.println("ID Feedback: " + FeedbackAff.getIdFeedback());
+            System.out.println("Type Feedback: " + FeedbackAff.getTypeFeedback());
             System.out.println("Message: " + FeedbackAff.getMessage());
             System.out.println("Note: " + FeedbackAff.getNote());
             System.out.println("Date Feedback: " + FeedbackAff.getDateFeedback());

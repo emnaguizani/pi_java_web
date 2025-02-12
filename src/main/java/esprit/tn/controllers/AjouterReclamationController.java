@@ -26,7 +26,7 @@ public class AjouterReclamationController{
     private TextField titreid;
 
     @FXML
-    void AjouterRec(ActionEvent event) {
+    void AjouterRec() {
         try {
             String titre = titreid.getText().trim();
             String description = descriptionid.getText().trim();
@@ -63,7 +63,7 @@ public class AjouterReclamationController{
     }
 
     @FXML
-    void nextRecAjout(ActionEvent event) {
+    void nextRecAjout() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/AfficherReclamation.fxml"));
 

@@ -21,15 +21,20 @@ public class FeedbackService implements IserviceF<Feedback> {
     public void ajouterF(Feedback feedback) {
 
         // Si la réclamation existe, insérer le feedback
-        String req = "INSERT INTO Feedback (Message, Note, DateFeedback, ReclamationId) VALUES (?, ?, ?, ?)";
+        String req = "INSERT INTO Feedback (TypeFeedback, Message, Note, DateFeedback, ReclamationId) VALUES (?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement stm = cnx.prepareStatement(req);
 
-            stm.setString(1, feedback.getMessage());
-            stm.setInt(2, feedback.getNote());
-            stm.setTimestamp(3, java.sql.Timestamp.valueOf(feedback.getDateFeedback()));
-            stm.setInt(4, feedback.getReclamation().getId());
+            stm.setString(1, feedback.getTypeFeedback());
+            stm.setString(2, feedback.getMessage());
+            stm.setInt(3, feedback.getNote());
+            stm.setTimestamp(4, java.sql.Timestamp.valueOf(feedback.getDateFeedback()));
+            stm.setInt(5, feedback.getReclamation().getId());
+
+            if (!feedback.getTypeFeedback().equalsIgnoreCase("Positif") & !feedback.getTypeFeedback().equalsIgnoreCase("Correctif") && !feedback.getTypeFeedback().equalsIgnoreCase("Négatif")) {
+                throw new IllegalArgumentException("Le Type du feedback doit être 'Positif' ou 'Correctif' ou 'Négatif'.");
+            }
 
             if (feedback.getNote() < 1 || feedback.getNote() > 5) {
                 throw new IllegalArgumentException("La note doit être comprise entre 1 et 5.");
@@ -44,17 +49,22 @@ public class FeedbackService implements IserviceF<Feedback> {
 
     @Override
     public void modifierF(Feedback feedback) {
-        String req = "UPDATE Feedback SET Message = ?, Note = ?, DateFeedback = ?, ReclamationId = ? WHERE IdFeedback = ?";
+        String req = "UPDATE Feedback SET TypeFeedback = ?, Message = ?, Note = ?, DateFeedback = ?, ReclamationId = ? WHERE IdFeedback = ?";
 
         try {
             PreparedStatement stm = cnx.prepareStatement(req);
 
             // Définir les paramètres de la requête
-            stm.setString(1, feedback.getMessage());
-            stm.setInt(2, feedback.getNote());
-            stm.setTimestamp(3, java.sql.Timestamp.valueOf(feedback.getDateFeedback()));
-            stm.setInt(4, feedback.getReclamation().getId()); // Clé étrangère vers Reclamation
-            stm.setInt(5, feedback.getIdFeedback()); // ID du feedback à modifier
+            stm.setString(1, feedback.getTypeFeedback());
+            stm.setString(2, feedback.getMessage());
+            stm.setInt(3, feedback.getNote());
+            stm.setTimestamp(4, java.sql.Timestamp.valueOf(feedback.getDateFeedback()));
+            stm.setInt(5, feedback.getReclamation().getId()); // Clé étrangère vers Reclamation
+            stm.setInt(6, feedback.getIdFeedback()); // ID du feedback à modifier
+
+            if (!feedback.getTypeFeedback().equalsIgnoreCase("Positif") & !feedback.getTypeFeedback().equalsIgnoreCase("Correctif") && !feedback.getTypeFeedback().equalsIgnoreCase("Négatif")) {
+                throw new IllegalArgumentException("Le Type du feedback doit être 'Positif' ou 'Correctif' ou 'Négatif'.");
+            }
 
             if (feedback.getNote() < 1 || feedback.getNote() > 5) {
                 throw new IllegalArgumentException("La note doit être comprise entre 1 et 5.");
@@ -96,6 +106,7 @@ public class FeedbackService implements IserviceF<Feedback> {
             while (rs.next()) {
                 Feedback feedback = new Feedback();
                 feedback.setIdFeedback(rs.getInt("IdFeedback"));
+                feedback.setTypeFeedback(rs.getString("TypeFeedback"));
                 feedback.setMessage(rs.getString("Message"));
                 feedback.setNote(rs.getInt("Note"));
                 feedback.setDateFeedback(rs.getTimestamp("DateFeedback").toLocalDateTime());
@@ -116,7 +127,7 @@ public class FeedbackService implements IserviceF<Feedback> {
     public static void afficherFeedbacks(List<Feedback> feedbacks) {
         System.out.println("Liste des feedbacks disponibles :");
         for (Feedback feedback : feedbacks) {
-            System.out.println("ID: " + feedback.getIdFeedback() + " | Message: " + feedback.getMessage() + " | Note: " + feedback.getNote());
+            System.out.println("ID: " + feedback.getIdFeedback() + " | Type de feedback: " + feedback.getTypeFeedback() + " | Message: " + feedback.getMessage() + " | Note: " + feedback.getNote());
         }
     }
 
@@ -146,6 +157,9 @@ public class FeedbackService implements IserviceF<Feedback> {
     public static Feedback saisirFeedback(Reclamation reclamation) {
         Scanner scanner = new Scanner(System.in);
 
+        System.out.print("Entrez le type du feedback : ");
+        String typeFeedback = scanner.nextLine();
+
         // Demander à l'utilisateur de saisir le message du feedback
         System.out.print("Entrez le message du feedback : ");
         String message = scanner.nextLine();
@@ -157,11 +171,15 @@ public class FeedbackService implements IserviceF<Feedback> {
 
         // Créer et retourner un nouveau feedback
         LocalDateTime dateFeedback = LocalDateTime.now(); // Date actuelle
-        return new Feedback(message, note, dateFeedback, reclamation);
+        return new Feedback(typeFeedback, message, note, dateFeedback, reclamation);
     }
 
     public static Feedback saisirNouveauxDetailsFeedback() {
         Scanner scanner = new Scanner(System.in);
+
+        // Demander à l'utilisateur de saisir le nouveau message du feedback
+        System.out.print("Entrez le nouveau type du feedback : ");
+        String typeFeedback = scanner.nextLine();
 
         // Demander à l'utilisateur de saisir le nouveau message du feedback
         System.out.print("Entrez le nouveau message du feedback : ");
@@ -175,6 +193,7 @@ public class FeedbackService implements IserviceF<Feedback> {
         // Créer et retourner un nouveau feedback avec les nouveaux détails
         LocalDateTime dateFeedback = LocalDateTime.now(); // Date actuelle
         Feedback feedback = new Feedback();
+        feedback.setTypeFeedback(typeFeedback);
         feedback.setMessage(message);
         feedback.setNote(note);
         feedback.setDateFeedback(dateFeedback);

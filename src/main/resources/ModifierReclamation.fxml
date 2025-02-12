@@ -20,7 +20,6 @@
          <font>
             <Font size="14.0" />
          </font></TextArea>
-      <!--<ComboBox fx:id="statusIdM" accessibleText="Status" layoutX="233.0" layoutY="294.0" prefWidth="150.0" promptText="Status" visibleRowCount="4" />-->
       <ComboBox fx:id="statusIdM" layoutX="201.0" layoutY="291.0" prefWidth="200.0" promptText="Status" visibleRowCount="4">
          <items>
             <FXCollections fx:factory="observableArrayList">

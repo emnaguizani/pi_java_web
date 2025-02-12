@@ -132,20 +132,21 @@ public class AfficherReclamationController {
     }
 
     @FXML
-    void AjouterFeed(ActionEvent event) {
+    void SoumettreFeed() {
         // Récupérer la réclamation sélectionnée
-        Reclamation reclamationChoisi = TableViewR.getSelectionModel().getSelectedItem();
+        Reclamation selectedReclamation = TableViewR.getSelectionModel().getSelectedItem();
 
-        if (reclamationChoisi != null) {
+        if (selectedReclamation != null) {
             try {
+                // Charger la nouvelle interface pour soumettre un feedback
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterFeedback.fxml"));
                 Parent root = loader.load();
 
-                // Passer la réclamation sélectionnée au contrôleur de la deuxième interface
-                ModifierReclamationController controller = loader.getController();
-                controller.setReclamation(reclamationChoisi);
+                // Passer l'ID de la réclamation au contrôleur de la nouvelle interface
+                AjouterFeedbackController controller = loader.getController();
+                controller.setReclamationId(selectedReclamation.getId());
 
-                // Afficher la deuxième interface
+                // Afficher la nouvelle interface
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
                 stage.show();
@@ -156,8 +157,8 @@ public class AfficherReclamationController {
         } else {
             System.out.println("Aucune réclamation sélectionnée.");
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Vous devez sélectionner une réclamation !");
-            alert.setContentText("Veuillez sélectionner une réclamation afin d'y attribuer un feedback.");
+            alert.setTitle("Aucune réclamation sélectionnée");
+            alert.setContentText("Veuillez sélectionner une réclamation pour soumettre un feedback.");
             alert.showAndWait();
         }
     }

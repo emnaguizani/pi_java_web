@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AjouterFeedbackController">
+   <children>
+      <TextArea fx:id="MessageF" layoutX="200.0" layoutY="128.0" prefHeight="95.0" prefWidth="200.0" promptText="Message du feedback">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextArea>
+       <ComboBox fx:id="TypeFeedbackF" layoutX="200.0" layoutY="84.0" prefWidth="200.0" promptText="Type du feedback" visibleRowCount="4">
+           <items>
+               <FXCollections fx:factory="observableArrayList">
+                   <String fx:value="Positif" />
+                   <String fx:value="Correctif" />
+                   <String fx:value="Négatif" />
+               </FXCollections>
+           </items>
+       </ComboBox>
+       <TextField fx:id="NoteF" layoutX="213.0" layoutY="248.0" promptText="Note du feedback">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <Button fx:id="AjouterFeed" layoutX="284.0" layoutY="329.0" mnemonicParsing="false" onAction="#AjouterFeedback" text="Ajouter" />
+   </children>
+</AnchorPane>

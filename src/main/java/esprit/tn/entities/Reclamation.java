@@ -13,6 +13,10 @@ public class Reclamation {
 
     public Reclamation(){}
 
+    public Reclamation(int id) {
+        this.Id = id;
+    }
+
     public Reclamation(int id, String titre, String description, String status, LocalDateTime dateCreation) {
         id = Id;
         titre = Titre;

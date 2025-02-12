@@ -26,6 +26,6 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="soumettreFeedback" layoutX="171.0" layoutY="348.0" mnemonicParsing="false" onAction="#AjouterFeed" prefHeight="26.0" prefWidth="253.0" text="Soumettre un feedback" />
+      <Button fx:id="soumettreFeedback" layoutX="171.0" layoutY="348.0" mnemonicParsing="false" onAction="#SoumettreFeed" prefHeight="26.0" prefWidth="253.0" text="Soumettre un feedback" />
    </children>
 </AnchorPane>
