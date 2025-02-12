@@ -18,13 +18,14 @@
             <TableColumn id="dateCreationR" fx:id="dateCreationR" prefWidth="145.60001220703123" text="Date de création" />
         </columns>
       </TableView>
-      <Button layoutX="38.0" layoutY="305.0" mnemonicParsing="false" onAction="#AjouterRecAff" text="Ajouter Reclamation" />
-      <Button layoutX="227.0" layoutY="305.0" mnemonicParsing="false" onAction="#ModifierRecAff" text="Modifier Reclamation" />
-      <Button layoutX="429.0" layoutY="305.0" mnemonicParsing="false" onAction="#SupprimerRecAff" text="Supprimer Reclamation" />
-      <Label layoutX="194.0" layoutY="23.0" text="Gérer les réclamations" textAlignment="CENTER" textFill="RED">
+      <Button layoutX="25.0" layoutY="290.0" mnemonicParsing="false" onAction="#AjouterRecAff" prefHeight="26.0" prefWidth="140.0" text="Ajouter Reclamation" />
+      <Button layoutX="222.0" layoutY="290.0" mnemonicParsing="false" onAction="#ModifierRecAff" prefHeight="26.0" prefWidth="140.0" text="Modifier Reclamation" />
+      <Button layoutX="433.0" layoutY="290.0" mnemonicParsing="false" onAction="#SupprimerRecAff" text="Supprimer Reclamation" />
+      <Label layoutX="194.0" layoutY="19.0" text="Gérer les réclamations" textAlignment="CENTER" textFill="RED">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
+      <Button fx:id="soumettreFeedback" layoutX="171.0" layoutY="348.0" mnemonicParsing="false" onAction="#AjouterFeed" prefHeight="26.0" prefWidth="253.0" text="Soumettre un feedback" />
    </children>
 </AnchorPane>

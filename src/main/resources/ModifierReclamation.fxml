@@ -12,7 +12,10 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.ModifierReclamationController">
    <children>
-      <TextField fx:id="titreIdM" layoutX="200.0" layoutY="73.0" prefHeight="26.0" prefWidth="200.0" promptText="Titre de la réclamation" />
+      <TextField fx:id="titreIdM" layoutX="200.0" layoutY="73.0" prefHeight="26.0" prefWidth="200.0" promptText="Titre de la réclamation">
+         <font>
+            <Font size="14.0" />
+         </font></TextField>
       <TextArea fx:id="descriptionIdM" layoutX="200.0" layoutY="120.0" prefHeight="149.0" prefWidth="200.0" promptText="Description de la réclamation">
          <font>
             <Font size="14.0" />
@@ -29,7 +32,7 @@
          </items>
       </ComboBox>
       <Button layoutX="265.0" layoutY="336.0" mnemonicParsing="false" onAction="#enregistrerModifications" text="Enregistrer" />
-      <Label layoutX="189.0" layoutY="19.0" text="Modifier une réclamation" textAlignment="CENTER" textFill="RED">
+      <Label layoutX="194.0" layoutY="19.0" text="Modifier une réclamation" textAlignment="CENTER" textFill="RED">
          <font>
             <Font size="20.0" />
          </font>

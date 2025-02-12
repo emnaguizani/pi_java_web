@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -38,6 +39,9 @@ public class AfficherReclamationController {
 
     @FXML
     private TableColumn<Reclamation, String> titreR;
+
+    @FXML
+    private Button soumettreFeedback;
 
     @FXML
     void initialize() {
@@ -98,7 +102,7 @@ public class AfficherReclamationController {
             }
         } else {
             System.out.println("Aucune réclamation sélectionnée.");
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Vous devez sélectionner une réclamation !");
             alert.setContentText("Veuillez sélectionner une réclamation afin de modifier");
             alert.showAndWait();
@@ -120,9 +124,40 @@ public class AfficherReclamationController {
         }
         else {
             System.out.println("Aucune réclamation sélectionnée.");
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Vous devez sélectionner une réclamation!");
             alert.setContentText("Veuillez sélectionner une réclamation afin de la supprimer");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    void AjouterFeed(ActionEvent event) {
+        // Récupérer la réclamation sélectionnée
+        Reclamation reclamationChoisi = TableViewR.getSelectionModel().getSelectedItem();
+
+        if (reclamationChoisi != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterFeedback.fxml"));
+                Parent root = loader.load();
+
+                // Passer la réclamation sélectionnée au contrôleur de la deuxième interface
+                ModifierReclamationController controller = loader.getController();
+                controller.setReclamation(reclamationChoisi);
+
+                // Afficher la deuxième interface
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Aucune réclamation sélectionnée.");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Vous devez sélectionner une réclamation !");
+            alert.setContentText("Veuillez sélectionner une réclamation afin d'y attribuer un feedback.");
             alert.showAndWait();
         }
     }
