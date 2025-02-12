@@ -1,9 +1,9 @@
 package esprit.tn.services;
 import java.util.List;
 import java.util.ArrayList;
+import esprit.tn.main.DatabaseConnection;
 
 import esprit.tn.entities.Seance;
-import esprit.tn.main.DatabaseConnection;
 
 import java.sql.*;
 

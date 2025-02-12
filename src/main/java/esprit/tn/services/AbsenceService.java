@@ -1,11 +1,11 @@
 package esprit.tn.services;
 
 import esprit.tn.entities.Absence;
-import esprit.tn.main.DatabaseConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import esprit.tn.main.DatabaseConnection;
 
 public class AbsenceService implements Iservice<Absence> {
     private Connection cnx;
