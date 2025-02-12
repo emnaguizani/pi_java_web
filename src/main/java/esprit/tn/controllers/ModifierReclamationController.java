@@ -3,14 +3,15 @@ package esprit.tn.controllers;
 import esprit.tn.entities.Reclamation;
 import esprit.tn.services.ReclamationService;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.*;
 
 import javafx.fxml.Initializable;
+
+import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class ModifierReclamationController {
@@ -25,6 +26,12 @@ public class ModifierReclamationController {
     private ComboBox<String> statusIdM;
 
     private Reclamation reclamation;
+
+    @FXML
+    private Button nextM;
+
+    @FXML
+    private Button annulerModifR;
 
 
     public class AjouterReclamationController implements Initializable {
@@ -81,6 +88,12 @@ public class ModifierReclamationController {
         alert.showAndWait();
 
         // Fermer la fenêtre de modification
+        titreIdM.getScene().getWindow().hide();
+    }
+
+    @FXML
+    void annulerModifReclamation() {
+        // Fermer la fenêtre de modification sans enregistrer les modifications
         titreIdM.getScene().getWindow().hide();
     }
 }

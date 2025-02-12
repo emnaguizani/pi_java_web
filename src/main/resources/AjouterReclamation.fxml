@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -8,13 +9,18 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AjouterReclamationController">
    <children>
-      <Button layoutX="272.0" layoutY="312.0" mnemonicParsing="false" onAction="#AjouterRec" text="Ajouter" />
-      <TextField id="titreid" fx:id="titreid" layoutX="198.0" layoutY="44.0" prefHeight="26.0" prefWidth="200.0" promptText="Titre de la réclamation" />
-      <TextArea id="descriptionid" fx:id="descriptionid" layoutX="200.0" layoutY="91.0" prefHeight="200.0" prefWidth="200.0" promptText="Description de la réclamation">
+      <Button layoutX="273.0" layoutY="336.0" mnemonicParsing="false" onAction="#AjouterRec" text="Ajouter" />
+      <TextField id="titreid" fx:id="titreid" layoutX="200.0" layoutY="73.0" prefHeight="26.0" prefWidth="200.0" promptText="Titre de la réclamation" />
+      <TextArea id="descriptionid" fx:id="descriptionid" layoutX="200.0" layoutY="120.0" prefHeight="149.0" prefWidth="200.0" promptText="Description de la réclamation">
          <font>
             <Font size="14.0" />
          </font>
       </TextArea>
-      <Button fx:id="nextAjout" layoutX="534.0" layoutY="338.0" mnemonicParsing="false" onAction="#nextRecAjout" text="Next" />
+      <Button fx:id="nextAjout" layoutX="525.0" layoutY="336.0" mnemonicParsing="false" onAction="#nextRecAjout" text="Next" />
+      <Label layoutX="189.0" layoutY="19.0" text="Ajouter une réclamation" textAlignment="CENTER" textFill="RED">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
