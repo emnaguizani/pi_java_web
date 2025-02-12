@@ -17,6 +17,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import javax.swing.text.html.ImageView;
+import java.awt.*;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
@@ -39,9 +41,6 @@ public class AfficherReclamationController {
 
     @FXML
     private TableColumn<Reclamation, String> titreR;
-
-    @FXML
-    private Button soumettreFeedback;
 
     @FXML
     void initialize() {
@@ -160,6 +159,24 @@ public class AfficherReclamationController {
             alert.setTitle("Aucune réclamation sélectionnée");
             alert.setContentText("Veuillez sélectionner une réclamation pour soumettre un feedback.");
             alert.showAndWait();
+        }
+    }
+
+    @FXML
+    void GestionFeedback(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/AfficherFeedback.fxml"));
+            Scene scene = new Scene(root);
+
+            // Obtenir la fenêtre actuelle (stage) à partir de l'événement
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+
+            // Définir la nouvelle scène sur le stage
+            stage.setScene(scene);
+            stage.show(); // Afficher la nouvelle scène
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

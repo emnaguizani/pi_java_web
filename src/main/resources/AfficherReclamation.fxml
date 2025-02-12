@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -26,6 +28,11 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="soumettreFeedback" layoutX="171.0" layoutY="348.0" mnemonicParsing="false" onAction="#SoumettreFeed" prefHeight="26.0" prefWidth="253.0" text="Soumettre un feedback" />
+      <Button fx:id="soumettreFeedback" layoutX="154.0" layoutY="346.0" mnemonicParsing="false" onAction="#SoumettreFeed" prefHeight="30.0" prefWidth="254.0" text="Soumettre un feedback" />
+      <ImageView fx:id="gestionFeedback" accessibleRole="BUTTON" fitHeight="30.0" fitWidth="34.0" layoutX="413.0" layoutY="346.0" onMouseClicked="#GestionFeedback" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/iconeGestionFeedback.jpg" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
