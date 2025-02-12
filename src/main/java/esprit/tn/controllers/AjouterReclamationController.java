@@ -68,7 +68,7 @@ public class AjouterReclamationController{
             Parent root = FXMLLoader.load(getClass().getResource("/AfficherReclamation.fxml"));
 
             titreid.getScene().setRoot(root);
-            descriptionid.getScene().setRoot(root);
+            //descriptionid.getScene().setRoot(root);
 
         } catch (IOException e) {
             throw new RuntimeException(e);

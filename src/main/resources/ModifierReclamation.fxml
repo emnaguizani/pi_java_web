@@ -6,11 +6,23 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.ModifierReclamationController">
    <children>
       <TextField fx:id="titreIdM" layoutX="225.0" layoutY="67.0" promptText="Titre de la réclamation" />
       <TextArea fx:id="descriptionIdM" layoutX="200.0" layoutY="131.0" prefHeight="138.0" prefWidth="200.0" promptText="Description de la réclamation" />
-      <ComboBox fx:id="statusIdM" accessibleText="Status" layoutX="233.0" layoutY="294.0" prefWidth="150.0" promptText="Status" visibleRowCount="4" />
+      <!--<ComboBox fx:id="statusIdM" accessibleText="Status" layoutX="233.0" layoutY="294.0" prefWidth="150.0" promptText="Status" visibleRowCount="4" />-->
+      <ComboBox fx:id="statusIdM" layoutX="233.0" layoutY="294.0" prefWidth="150.0" promptText="Status" visibleRowCount="4">
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <String fx:value="Traitée"/>
+               <String fx:value="En cours de traitement"/>
+               <String fx:value="Résolue"/>
+               <String fx:value="Fermée"/>
+            </FXCollections>
+         </items>
+      </ComboBox>
       <Button layoutX="274.0" layoutY="344.0" mnemonicParsing="false" onAction="#enregistrerModifications" text="Enregistrer" />
    </children>
 </AnchorPane>

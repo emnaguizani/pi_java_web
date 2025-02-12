@@ -81,7 +81,6 @@ public class AfficherReclamationController {
 
         if (selectedReclamation != null) {
             try {
-                // Charger la deuxième interface
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierReclamation.fxml"));
                 Parent root = loader.load();
 
