@@ -1,4 +1,5 @@
 package esprit.tn.controllers;
+import javafx.stage.Stage;
 
 import esprit.tn.entities.Seance;
 import esprit.tn.services.SeanceService;
@@ -6,20 +7,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.util.StringConverter;
 
-import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
 
-public class AjouterSeanceController {
+public class ModifierSeanceController {
 
     @FXML
     private TextField titreId;
@@ -36,6 +32,7 @@ public class AjouterSeanceController {
     @FXML
     private TextField idFormateurId;
 
+    private Seance selectedSeance;
     private final SeanceService seanceService = new SeanceService();
 
     @FXML
@@ -43,36 +40,30 @@ public class AjouterSeanceController {
         // Initialisation du ComboBox avec des heures de 00:00 à 23:59
         ObservableList<String> hours = FXCollections.observableArrayList();
         for (int h = 0; h < 24; h++) {
-            for (int m = 0; m < 60; m += 15) { // Ajout d'intervalles de 15 minutes
+            for (int m = 0; m < 60; m += 15) {
                 hours.add(String.format("%02d:%02d:00", h, m));
             }
         }
         hourComboBox.setItems(hours);
-        hourComboBox.setValue("12:00:00"); // Heure par défaut
+    }
 
-        // Personnalisation du format du DatePicker
-        datePicker.setConverter(new StringConverter<>() {
-            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-            @Override
-            public String toString(LocalDate date) {
-                return (date != null) ? dateFormatter.format(date) : "";
-            }
-
-            @Override
-            public LocalDate fromString(String text) {
-                return (text != null && !text.isEmpty()) ? LocalDate.parse(text, dateFormatter) : null;
-            }
-        });
-
-        // Sélection de la date actuelle par défaut
-        datePicker.setValue(LocalDate.now());
+    public void setSeance(Seance seance) {
+        this.selectedSeance = seance;
+        titreId.setText(seance.getTitre());
+        contenuId.setText(seance.getContenu());
+        datePicker.setValue(seance.getDatetime().toLocalDateTime().toLocalDate());
+        hourComboBox.setValue(seance.getDatetime().toLocalDateTime().toLocalTime().toString());
+        idFormateurId.setText(String.valueOf(seance.getIdFormateur()));
     }
 
     @FXML
-    void ajouterSeance(ActionEvent event) {
+    void modifierSeance(ActionEvent event) {
         try {
-            // Validation des champs
+            if (selectedSeance == null) {
+                showError("Erreur", "Aucune séance sélectionnée.");
+                return;
+            }
+
             String titre = titreId.getText().trim();
             String contenu = contenuId.getText().trim();
             LocalDate selectedDate = datePicker.getValue();
@@ -111,32 +102,29 @@ public class AjouterSeanceController {
                 return;
             }
 
-            // Création de l'objet Timestamp
+            // Mise à jour de l'objet
             LocalDateTime localDateTime = LocalDateTime.of(selectedDate, LocalTime.parse(selectedTime));
             Timestamp datetime = Timestamp.valueOf(localDateTime);
 
-            // Création de l'objet Séance et insertion
-            Seance seance = new Seance(0, titre, contenu, datetime, idFormateur);
-            seanceService.ajouter(seance);
+            selectedSeance.setTitre(titre);
+            selectedSeance.setContenu(contenu);
+            selectedSeance.setDatetime(datetime);
+            selectedSeance.setIdFormateur(idFormateur);
+
+            seanceService.modifier(selectedSeance);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Ajout réussi");
-            alert.setContentText("Séance ajoutée avec succès !");
+            alert.setTitle("Modification réussie");
+            alert.setContentText("Séance modifiée avec succès !");
             alert.showAndWait();
-
         } catch (Exception e) {
             showError("Erreur", "Une erreur est survenue : " + e.getMessage());
         }
     }
 
     @FXML
-    void afficherSeances(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/AfficherSeance.fxml"));
-            titreId.getScene().setRoot(root);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    void annuler(ActionEvent event) {
+        ((Stage) titreId.getScene().getWindow()).close();
     }
 
     private void showError(String title, String message) {
