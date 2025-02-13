@@ -93,7 +93,6 @@ public class AjouterCoursController implements Initializable {
         String title = titleField.getText();
         String description = descriptionField.getText();
 
-        // Validate fields
         boolean isValid = true;
 
         if (title.isEmpty()) {
@@ -106,27 +105,21 @@ public class AjouterCoursController implements Initializable {
             return;
         }
 
-        // If validation fails, do not proceed with course creation
         if (!isValid) {
             titleErrorLabel.setVisible(false);
             descriptionErrorLabel.setVisible(false);
             return;
         }
 
-        // Set the current date as the creation date
         String creationDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
-        // Set the formateurId to 1 (as specified)
         int formateurId = 1;
 
-        // Get the selected status and level
         String status = StatusBox.getValue();
         String niveau = LevelBox.getValue();
 
-        // Get the video paths
         String videoPaths = videoPathField.getText();
 
-        // Create a new Cours object
         Cours newCourse = new Cours();
         newCourse.setTitle(title);
         newCourse.setDescription(description);
@@ -136,7 +129,6 @@ public class AjouterCoursController implements Initializable {
         newCourse.setNiveau(Niveau.valueOf(niveau));
         newCourse.setVideoPaths(List.of(videoPaths.split(","))); // Assuming video paths are separated by commas
 
-        // Add the course using the service
         service.add(newCourse);
 
     }
