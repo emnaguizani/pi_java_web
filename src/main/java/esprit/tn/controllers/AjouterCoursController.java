@@ -99,17 +99,15 @@ public class AjouterCoursController implements Initializable {
             titleErrorLabel.setVisible(true);
             return;
         }
+        titleErrorLabel.setVisible(false);
+
 
         if (description.isEmpty()) {
             descriptionErrorLabel.setVisible(true);
             return;
         }
+        descriptionErrorLabel.setVisible(false);
 
-        if (!isValid) {
-            titleErrorLabel.setVisible(false);
-            descriptionErrorLabel.setVisible(false);
-            return;
-        }
 
         String creationDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
@@ -130,8 +128,13 @@ public class AjouterCoursController implements Initializable {
         newCourse.setVideoPaths(List.of(videoPaths.split(",")));
 
         service.add(newCourse);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Course Added");
+        alert.setContentText("The course has been successfully added.");
+        alert.showAndWait();
 
     }
+
 
 
 }
