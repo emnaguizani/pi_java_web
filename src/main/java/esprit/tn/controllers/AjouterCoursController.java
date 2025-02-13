@@ -127,7 +127,7 @@ public class AjouterCoursController implements Initializable {
         newCourse.setIdFormateur(formateurId);
         newCourse.setStatus(Status.valueOf(status));
         newCourse.setNiveau(Niveau.valueOf(niveau));
-        newCourse.setVideoPaths(List.of(videoPaths.split(","))); // Assuming video paths are separated by commas
+        newCourse.setVideoPaths(List.of(videoPaths.split(",")));
 
         service.add(newCourse);
 
