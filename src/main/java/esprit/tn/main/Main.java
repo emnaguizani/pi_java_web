@@ -15,9 +15,8 @@ public class Main {
         CoursController.listById();
         CoursController.deleteCourse();
         CoursController.updateCourse();
-
-        */
         ProgressController.updateProgress();
+        */
 
 
     }

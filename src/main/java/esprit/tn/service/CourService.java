@@ -17,7 +17,7 @@ public class CourService implements CourServiceInterface<Cours> {
 
     Connection con ;
     public CourService() {
-        con= DatabaseConnection.instance.getCon();
+        con= DatabaseConnection.getInstance().getCon();
     }
     @Override
     public void add(Cours cours) {
