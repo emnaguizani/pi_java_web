@@ -44,15 +44,18 @@ public class SeanceService implements Iservice<Seance> {
     }
 
     @Override
-    public void supprimer(Seance seance) {
-        String req = "DELETE FROM seance WHERE idSeance = ?";
-        try (PreparedStatement stm = cnx.prepareStatement(req)) {
-            stm.setInt(1, seance.getIdSeance());
-            stm.executeUpdate();
+    public void supprimer(Seance seance) { // ✅ Correct
+        String query = "DELETE FROM seance WHERE idSeance = ?";
+        try (PreparedStatement statement = cnx.prepareStatement(query)) {
+            statement.setInt(1, seance.getIdSeance()); // Utilisation de l'ID de l'objet
+            statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
+
+
+
 
     // Méthode pour supprimer toutes les séances
     public void supprimerToutesLesSeances() {

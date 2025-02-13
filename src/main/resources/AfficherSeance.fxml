@@ -7,25 +7,35 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="esprit.tn.controllers.AfficherSeanceController">
-    <children>
-        <Label layoutX="30" layoutY="20" text="Rechercher :" />
-        <TextField fx:id="searchField" layoutX="120" layoutY="20" promptText="Titre ou Date (yyyy-MM-dd)" />
-        <Button layoutX="300" layoutY="20" text="Rechercher" onAction="#rechercherSeance" />
-        <Button layoutX="400" layoutY="20" text="Réinitialiser" onAction="#resetSearch" />
+<AnchorPane xmlns="http://javafx.com/javafx/21.0.2"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="esprit.tn.controllers.AfficherSeanceController"
+            stylesheets="@css/style.css"
+            prefHeight="450" prefWidth="600">
 
-        <TableView fx:id="tableView" layoutX="30" layoutY="60" prefHeight="300" prefWidth="500">
+    <children>
+        <!-- Titre de la page -->
+        <Label layoutX="220" layoutY="10" text="📋 Liste des Séances" style="-fx-font-size: 18px; -fx-text-fill: white;"/>
+
+        <!-- Zone de recherche -->
+        <Label layoutX="30" layoutY="50" text="🔎 Rechercher :" />
+        <TextField fx:id="searchField" layoutX="150" layoutY="50" prefWidth="200" promptText="Titre ou Date (yyyy-MM-dd)" />
+        <Button layoutX="360" layoutY="50" text="Rechercher" onAction="#rechercherSeance" />
+        <Button layoutX="460" layoutY="50" text="Réinitialiser" onAction="#resetSearch" />
+
+        <!-- Tableau d'affichage des séances -->
+        <TableView fx:id="tableView" layoutX="30" layoutY="100" prefHeight="280" prefWidth="540">
             <columns>
                 <TableColumn fx:id="idSeance" text="ID" prefWidth="50"/>
-                <TableColumn fx:id="titre" text="Titre" prefWidth="100"/>
+                <TableColumn fx:id="titre" text="Titre" prefWidth="120"/>
                 <TableColumn fx:id="contenu" text="Contenu" prefWidth="150"/>
-                <TableColumn fx:id="datetime" text="Date &amp; Heure" prefWidth="120"/>
+                <TableColumn fx:id="datetime" text="Date &amp; Heure" prefWidth="140"/>
 
                 <TableColumn fx:id="idFormateur" text="ID Formateur" prefWidth="80"/>
             </columns>
         </TableView>
 
-        <Button layoutX="30" layoutY="380" text="Retour" onAction="#retour"/>
+        <!-- Bouton retour -->
+        <Button layoutX="30" layoutY="400" text="⬅ Retour" onAction="#retour"/>
     </children>
 </AnchorPane>

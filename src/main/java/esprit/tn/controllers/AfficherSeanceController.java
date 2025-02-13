@@ -13,7 +13,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;  // ✅ Import de URL pour corriger l'erreur
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,10 +37,10 @@ public class AfficherSeanceController {
     private TableColumn<Seance, Integer> idFormateur;
 
     @FXML
-    private TextField searchField; // ✅ Champ de recherche
+    private TextField searchField;
 
     private final SeanceService seanceService = new SeanceService();
-    private ObservableList<Seance> allSeances; // ✅ Liste complète des séances
+    private ObservableList<Seance> allSeances;
 
     @FXML
     void initialize() {
@@ -55,7 +54,6 @@ public class AfficherSeanceController {
         idFormateur.setCellValueFactory(new PropertyValueFactory<>("idFormateur"));
     }
 
-    // ✅ Méthode pour rechercher une séance par titre ou date
     @FXML
     void rechercherSeance() {
         String searchText = searchField.getText().trim().toLowerCase();
@@ -67,7 +65,7 @@ public class AfficherSeanceController {
 
         List<Seance> filteredList = allSeances.stream()
                 .filter(seance -> seance.getTitre().toLowerCase().contains(searchText)
-                        || seance.getDatetime().toString().contains(searchText)) // Recherche aussi par date
+                        || seance.getDatetime().toString().contains(searchText))
                 .collect(Collectors.toList());
 
         if (filteredList.isEmpty()) {
@@ -77,39 +75,28 @@ public class AfficherSeanceController {
         tableView.setItems(FXCollections.observableList(filteredList));
     }
 
-    // ✅ Réinitialiser la recherche
     @FXML
     void resetSearch() {
         searchField.clear();
         tableView.setItems(allSeances);
     }
 
-    // ✅ Retour au menu Ajouter Séance
     @FXML
     void retour() {
         try {
-            URL fxmlLocation = getClass().getResource("/AjouterSeance.fxml");
-            if (fxmlLocation == null) {
-                showError("Erreur", "Le fichier AjouterSeance.fxml est introuvable !");
-                return;
-            }
-
-            Parent root = FXMLLoader.load(fxmlLocation);
+            Parent root = FXMLLoader.load(getClass().getResource("/AjouterSeance.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
-            tableView.getScene().getWindow().hide(); // Ferme l'ancienne fenêtre
+            tableView.getScene().getWindow().hide();
         } catch (IOException e) {
-            e.printStackTrace();
             showError("Erreur", "Impossible de charger la fenêtre.");
         }
     }
 
-    // ✅ Méthode pour afficher une alerte en cas d'erreur
     private void showError(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
-        alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
