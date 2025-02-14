@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AjouterQuizController">
+
+   <children>
+      <Label alignment="TOP_LEFT" layoutX="255.0" layoutY="21.0" style="-fx-font-size: 24px; -fx-text-fill: #333; -fx-font-weight: bold;" text="Add Quiz" textFill="#24a7cf" AnchorPane.leftAnchor="255.0" AnchorPane.topAnchor="21.0" />
+
+      <VBox alignment="CENTER" layoutX="177.0" layoutY="57.0" prefHeight="635.0" prefWidth="260.0" spacing="10">
+         <Label graphicTextGap="3.0" style="-fx-font-size: 16px; -fx-text-fill: #333; -fx-font-weight: bold;" text="Quiz Title" />
+         <TextField fx:id="titleId" promptText="Enter quiz title" style="-fx-padding: 8; -fx-font-size: 14px; -fx-background-color: #e9ecef; -fx-border-radius: 5px; -fx-border-color: #ccc;" />
+
+         <Label style="-fx-font-size: 16px; -fx-text-fill: #333; -fx-font-weight: bold;" text="Description" />
+         <TextField fx:id="descriptionid" promptText="Enter description" style="-fx-padding: 8; -fx-font-size: 14px; -fx-background-color: #e9ecef; -fx-border-radius: 5px; -fx-border-color: #ccc;" />
+
+         <Label style="-fx-font-size: 16px; -fx-text-fill: #333; -fx-font-weight: bold;" text="Duration (minutes)" />
+         <TextField fx:id="durationid" promptText="Enter duration" style="-fx-padding: 8; -fx-font-size: 14px; -fx-background-color: #e9ecef; -fx-border-radius: 5px; -fx-border-color: #ccc;" />
+
+         <Label style="-fx-font-size: 16px; -fx-text-fill: #333; -fx-font-weight: bold;" text="Total Score" />
+         <TextField fx:id="totalScoreid" promptText="Enter total score" style="-fx-padding: 8; -fx-font-size: 14px; -fx-background-color: #e9ecef; -fx-border-radius: 5px; -fx-border-color: #ccc;" />
+
+         <Label style="-fx-font-size: 16px; -fx-text-fill: #333; -fx-font-weight: bold;" text="Creation Date" />
+         <TextField fx:id="creationDateid" promptText="Enter creation date" style="-fx-padding: 8; -fx-font-size: 14px; -fx-background-color: #e9ecef; -fx-border-radius: 5px; -fx-border-color: #ccc;" />
+
+         <Label style="-fx-font-size: 16px; -fx-text-fill: #333; -fx-font-weight: bold;" text="Author" />
+         <TextField fx:id="authorid" promptText="Enter author's name" style="-fx-padding: 8; -fx-font-size: 14px; -fx-background-color: #e9ecef; -fx-border-radius: 5px; -fx-border-color: #ccc;" />
+
+         <Label fx:id="error" style="-fx-text-fill: red; -fx-font-size: 12px; -fx-padding: 5; -fx-visible: false;" text="Error Message" />
+
+         <HBox alignment="CENTER" spacing="15">
+            <Button fx:id="ajouterButton" onAction="#handleAjouterAction" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-padding: 12 20; -fx-font-size: 14px; -fx-border-radius: 5px; -fx-min-width: 100px;" text="Ajouter" />
+            <Button fx:id="nextButton" onAction="#handleNextAction" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-padding: 12 20; -fx-font-size: 14px; -fx-border-radius: 5px; -fx-min-width: 100px;" text="Next" />
+         </HBox>
+      </VBox>
+   </children>
+</AnchorPane>

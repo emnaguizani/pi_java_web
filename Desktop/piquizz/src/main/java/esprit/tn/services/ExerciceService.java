@@ -17,7 +17,7 @@ public class ExerciceService {
         this.cnx = cnx;
     }
 
-    public void ajouterExercice(Exercice exercice) throws SQLException {
+    public void ajouterExercice(Exercice exercice, int quiz_id) throws SQLException {
         String query = "INSERT INTO exercice (question, options, answer, correctAnswer, score, imagePath, isMandatory, quiz_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = cnx.prepareStatement(query);
         stmt.setString(1, exercice.getQuestion());
@@ -27,7 +27,7 @@ public class ExerciceService {
         stmt.setInt(5, exercice.getScore());
         stmt.setString(6, exercice.getImagePath());
         stmt.setBoolean(7, exercice.isMandatory());
-        stmt.setInt(8, exercice.getquiz_id());
+        stmt.setInt(8, quiz_id);
         stmt.executeUpdate();
     }
 

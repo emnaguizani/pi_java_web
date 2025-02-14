@@ -14,7 +14,7 @@ public class QuizService {
         this.cnx = cnx;
     }
 
-    public void ajouterQuiz(Quiz quiz) throws SQLException {
+    public int ajouterQuiz(Quiz quiz) throws SQLException {
         String query = "INSERT INTO quiz (title, description, duration, totalScore, creationDate, author) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = cnx.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         stmt.setString(1, quiz.getTitle());
@@ -23,23 +23,23 @@ public class QuizService {
         stmt.setInt(4, quiz.getTotalScore());
         stmt.setTimestamp(5, Timestamp.valueOf(quiz.getCreationDate()));
         stmt.setString(6, quiz.getAuthor());
-        stmt.executeUpdate();
+
+        int rowsInserted = stmt.executeUpdate();
+        if (rowsInserted == 0) {
+            throw new SQLException("Creating quiz failed, no rows affected.");
+        }
 
         ResultSet rs = stmt.getGeneratedKeys();
         if (rs.next()) {
-            int quizId = rs.getInt(1);
-            quiz.setquiz_id(quizId);
-
-            ExerciceService exerciceService = new ExerciceService(cnx);
-            for (Exercice exercice : quiz.getExercices()) {
-                exercice.setquiz_id(quizId);
-                exerciceService.ajouterExercice(exercice);
-            }
-            quiz.setExercices(exerciceService.getExercicesByQuizId(quizId));  // Suppose que getExercicesByQuizId() récupère les exercices du quiz
-
-
+            int generatedId = rs.getInt(1);
+            quiz.setquiz_id(generatedId);
+            return generatedId;
+        } else {
+            throw new SQLException("Creating quiz failed, no ID obtained.");
         }
     }
+
+
 
     public Quiz getQuizById(int id) throws SQLException {
         String query = "SELECT * FROM quiz WHERE quiz_id = ?";

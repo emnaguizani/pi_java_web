@@ -34,11 +34,11 @@ public class Main {
             int quizId = newQuiz.getquiz_id();
             System.out.println("Generated quiz ID: " + quizId);
 
-            Exercice newExercice1 = new Exercice("What is the default value of an int?", Arrays.asList("0", "1", "undefined"), "0", "0", 10, "/ex1.jpg",true, quizId);
-            Exercice newExercice2 = new Exercice("What is the default value of a boolean?", Arrays.asList("true", "false", "undefined"), "true", "false", 10,"/ex2.jpg", true, quizId);
+            Exercice newExercice1 = new Exercice("What is the default value of an int?", Arrays.asList("0", "1", "undefined"), "0", "0", 10, "/ex1.jpg",true,0);
+            Exercice newExercice2 = new Exercice("What is the default value of a boolean?", Arrays.asList("true", "false", "undefined"), "true", "false", 10,"/ex2.jpg", true, 0);
 
-            exerciceService.ajouterExercice(newExercice1);
-            exerciceService.ajouterExercice(newExercice2);
+            exerciceService.ajouterExercice(newExercice1,quizId);
+            exerciceService.ajouterExercice(newExercice2,quizId);
             System.out.println("Exercises added for Quiz ID " + quizId);
 
             Quiz quizWithExercises = quizService.getQuizById(quizId);
