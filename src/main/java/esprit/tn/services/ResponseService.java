@@ -8,10 +8,11 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class ResponseService {
-    private Connection cnx;
+     Connection cnx;
 
     public ResponseService() {
-        this.cnx = DatabaseConnection.getInstance().getCnx();
+
+        cnx = DatabaseConnection.getInstance().getCnx();
     }
 
     public void ajouter(Response response, int forumId) {

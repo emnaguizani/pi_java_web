@@ -38,7 +38,7 @@ public class Main {
         int authorId = getValidInt(scanner, "Enter author ID: ");
 
         Forum forum = new Forum(title, description, authorId, new ArrayList<>());
-        forumService.ajouter(forum);
+        forumService.ajouterForum(forum);
         System.out.println("Forum added");
         return forum.getIdForum();
     }

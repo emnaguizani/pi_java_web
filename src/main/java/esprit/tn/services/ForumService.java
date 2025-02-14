@@ -20,7 +20,7 @@ public class ForumService {
         cnx = DatabaseConnection.getInstance().getCnx();
     }
 
-    public void ajouter(Forum forum) {
+    public void ajouterForum(Forum forum) {
         String req = "INSERT INTO forum (title, description, idAuthor, dateCreation) VALUES (?, ?, ?, ?)";
 
         try {
