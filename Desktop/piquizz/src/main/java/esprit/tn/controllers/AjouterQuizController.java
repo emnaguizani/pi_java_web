@@ -104,23 +104,18 @@ public class AjouterQuizController {
     @FXML
     private void handleNextAction(ActionEvent event) {
         try {
-            // Load the FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherQuiz.fxml"));
 
-            // Ensure the root is loaded correctly
             Parent root = loader.load();
 
-            // Get the current stage and set the new scene
             Stage stage = (Stage) nextButton.getScene().getWindow();
             Scene scene = new Scene(root);
 
-            // Set the new scene and show the stage
             stage.setScene(scene);
             stage.setTitle("Afficher Quiz");
             stage.show();
 
         } catch (IOException e) {
-            // Handle the error by displaying a message in the error label
             error.setText("Erreur lors du chargement de la page AfficherQuiz.");
             e.printStackTrace();
         }

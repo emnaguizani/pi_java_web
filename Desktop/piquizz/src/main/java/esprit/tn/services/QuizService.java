@@ -72,14 +72,11 @@ public class QuizService {
         try (PreparedStatement stmt = cnx.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
 
-            // Create a single instance of ExerciceService to reuse
             ExerciceService exerciceService = new ExerciceService(cnx);
 
             while (rs.next()) {
-                // Fetch exercises for each quiz
                 List<Exercice> exercices = exerciceService.getExercicesByQuizId(rs.getInt("quiz_id"));
 
-                // Create the Quiz object
                 Quiz quiz = new Quiz(
                         rs.getString("title"),
                         rs.getString("description"),
@@ -90,7 +87,7 @@ public class QuizService {
                         exercices
                 );
 
-                quizzes.add(quiz);  // Add the quiz to the list
+                quizzes.add(quiz);
             }
         } catch (SQLException e) {
             System.err.println("Database error: " + e.getMessage());

@@ -43,7 +43,7 @@ public class AfficherQuizController {
         quizService = new QuizService(cnx);
 
         // Set up columns
-        quizId.setCellValueFactory(new PropertyValueFactory<>("quiz_id")); // Correct if 'quiz_id' is the field name in your Quiz class
+        quizId.setCellValueFactory(new PropertyValueFactory<>("quiz_id"));
         title.setCellValueFactory(new PropertyValueFactory<>("title"));
         description.setCellValueFactory(new PropertyValueFactory<>("description"));
         duration.setCellValueFactory(new PropertyValueFactory<>("duration"));
