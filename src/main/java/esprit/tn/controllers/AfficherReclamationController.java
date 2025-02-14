@@ -19,8 +19,11 @@ import javafx.stage.Stage;
 
 import javax.swing.text.html.ImageView;
 import java.awt.*;
+//import java.awt.event.MouseEvent;
+import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class AfficherReclamationController {
 
@@ -163,9 +166,9 @@ public class AfficherReclamationController {
     }
 
     @FXML
-    void GestionFeedback(ActionEvent event) {
+    void GestionFeedback(MouseEvent event) { // Utilisez MouseEvent
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/AfficherFeedback.fxml"));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/AfficherFeedback.fxml")));
             Scene scene = new Scene(root);
 
             // Obtenir la fenêtre actuelle (stage) à partir de l'événement

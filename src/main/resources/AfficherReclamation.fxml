@@ -11,13 +11,13 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AfficherReclamationController">
    <children>
-      <TableView fx:id="TableViewR" layoutX="25.0" layoutY="69.0" prefHeight="200.0" prefWidth="548.0">
+      <TableView fx:id="TableViewR" layoutX="7.0" layoutY="68.0" prefHeight="200.0" prefWidth="586.0" stylesheets="@CSS/StyleTableViewReclamation.css">
         <columns>
-          <TableColumn id="idR" fx:id="idR" prefWidth="49.60000228881836" text="ID" />
-          <TableColumn id="titreR" fx:id="titreR" prefWidth="100.0" text="Titre" />
-            <TableColumn id="descriptionR" fx:id="descriptionR" prefWidth="153.59999084472656" text="Description" />
-            <TableColumn id="statusR" fx:id="statusR" prefWidth="105.60003662109375" text="Status" />
-            <TableColumn id="dateCreationR" fx:id="dateCreationR" prefWidth="145.60001220703123" text="Date de création" />
+          <TableColumn id="idR" fx:id="idR" minWidth="0.0" prefWidth="0.0" text="ID" />
+          <TableColumn id="titreR" fx:id="titreR" minWidth="0.0" prefWidth="121.60003662109375" text="Titre" />
+            <TableColumn id="descriptionR" fx:id="descriptionR" prefWidth="171.20001220703125" text="Description" />
+            <TableColumn id="statusR" fx:id="statusR" prefWidth="112.0" text="Status" />
+            <TableColumn id="dateCreationR" fx:id="dateCreationR" prefWidth="173.60001220703123" text="Date de création" />
         </columns>
       </TableView>
       <Button layoutX="25.0" layoutY="290.0" mnemonicParsing="false" onAction="#AjouterRecAff" prefHeight="26.0" prefWidth="140.0" text="Ajouter Reclamation" />
@@ -29,7 +29,7 @@
          </font>
       </Label>
       <Button fx:id="soumettreFeedback" layoutX="154.0" layoutY="346.0" mnemonicParsing="false" onAction="#SoumettreFeed" prefHeight="30.0" prefWidth="254.0" text="Soumettre un feedback" />
-      <ImageView fx:id="gestionFeedback" accessibleRole="BUTTON" fitHeight="30.0" fitWidth="34.0" layoutX="413.0" layoutY="346.0" onMouseClicked="#GestionFeedback" pickOnBounds="true" preserveRatio="true">
+       <ImageView fx:id="gestionFeedback" accessibleRole="BUTTON" fitHeight="30.0" fitWidth="34.0" layoutX="413.0" layoutY="346.0" onMouseClicked="#GestionFeedback" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Images/iconeGestionFeedback.jpg" />
          </image>

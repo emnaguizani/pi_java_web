@@ -1,0 +1,62 @@
+/* Appliquer un style général à la TableView */
+.table-view {
+    -fx-background-color: #f5f5f5;
+    -fx-border-color: #b0b0b0;
+    -fx-border-width: 2px;
+    -fx-border-radius: 8px;
+    -fx-padding: 4px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);
+}
+
+/* Style des colonnes de la TableView */
+.table-column {
+    -fx-alignment: CENTER;
+    -fx-font-size: 12px;
+    -fx-font-weight: italic;
+    -fx-text-fill: #333333;
+}
+
+/* Style de l'en-tête des colonnes */
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(to bottom, #4a90e2, #357abd);
+    -fx-border-radius: 8px 8px 0 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 4px;
+}
+
+/* Style des lignes */
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: #d0d0d0;
+    -fx-border-width: 0 0 1px 0;
+}
+
+/* Alternance des couleurs des lignes */
+.table-row-cell:odd {
+    -fx-background-color: #f0f8ff;
+}
+
+/* Effet de survol sur les lignes */
+.table-row-cell:hover {
+    -fx-background-color: #cce7ff;
+    -fx-text-fill: #000000;
+}
+
+/* Style pour une ligne sélectionnée */
+.table-row-cell:selected {
+    -fx-background-color: #74bdff;
+    -fx-text-fill: white;
+    font-weight: bold;
+}
+
+/* Style du texte des cellules */
+.table-cell {
+    -fx-padding: 6px;
+    -fx-text-fill: #222222;
+}
