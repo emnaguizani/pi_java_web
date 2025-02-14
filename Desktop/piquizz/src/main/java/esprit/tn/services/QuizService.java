@@ -4,6 +4,7 @@ import esprit.tn.entities.Quiz;
 import esprit.tn.entities.Exercice;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +33,8 @@ public class QuizService {
         ResultSet rs = stmt.getGeneratedKeys();
         if (rs.next()) {
             int generatedId = rs.getInt(1);
-            quiz.setquiz_id(generatedId);
+            quiz.setQuiz_id(generatedId);
+            System.out.println("Generated ID: " + generatedId);
             return generatedId;
         } else {
             throw new SQLException("Creating quiz failed, no ID obtained.");
@@ -66,23 +68,38 @@ public class QuizService {
     public List<Quiz> getAllQuizzes() throws SQLException {
         List<Quiz> quizzes = new ArrayList<>();
         String query = "SELECT * FROM quiz";
-        PreparedStatement stmt = cnx.prepareStatement(query);
-        ResultSet rs = stmt.executeQuery();
 
-        while (rs.next()) {
-            List<Exercice> exercices = new ExerciceService(cnx).getExercicesByQuizId(rs.getInt("quiz_id"));
-            quizzes.add(new Quiz(
-                    rs.getString("title"),
-                    rs.getString("description"),
-                    rs.getInt("duration"),
-                    rs.getInt("totalScore"),
-                    rs.getTimestamp("creationDate").toLocalDateTime(),
-                    rs.getString("author"),
-                    exercices
-            ));
+        try (PreparedStatement stmt = cnx.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            // Create a single instance of ExerciceService to reuse
+            ExerciceService exerciceService = new ExerciceService(cnx);
+
+            while (rs.next()) {
+                // Fetch exercises for each quiz
+                List<Exercice> exercices = exerciceService.getExercicesByQuizId(rs.getInt("quiz_id"));
+
+                // Create the Quiz object
+                Quiz quiz = new Quiz(
+                        rs.getString("title"),
+                        rs.getString("description"),
+                        rs.getInt("duration"),
+                        rs.getInt("totalScore"),
+                        rs.getTimestamp("creationDate").toLocalDateTime(),
+                        rs.getString("author"),
+                        exercices
+                );
+
+                quizzes.add(quiz);  // Add the quiz to the list
+            }
+        } catch (SQLException e) {
+            System.err.println("Database error: " + e.getMessage());
+            throw e;
         }
+
         return quizzes;
     }
+
 
     public void updateQuiz(Quiz quiz) throws SQLException {
         String query = "UPDATE quiz SET title = ?, description = ?, duration = ?, totalScore = ?, creationDate = ?, author = ? WHERE quiz_id = ?";
@@ -93,7 +110,7 @@ public class QuizService {
         stmt.setInt(4, quiz.getTotalScore());
         stmt.setTimestamp(5, Timestamp.valueOf(quiz.getCreationDate()));
         stmt.setString(6, quiz.getAuthor());
-        stmt.setInt(7, quiz.getquiz_id());
+        stmt.setInt(7, quiz.getQuiz_id());
         stmt.executeUpdate();
 
         ExerciceService exerciceService = new ExerciceService(cnx);

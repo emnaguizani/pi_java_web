@@ -32,11 +32,11 @@ public class Quiz {
         this.exercices = (exercices != null) ? exercices : new ArrayList<>();
         }
 
-    public int getquiz_id() {
+    public int getQuiz_id() {
         return quiz_id;
     }
 
-    public void setquiz_id(int quiz_id) {
+    public void setQuiz_id(int quiz_id) {
         this.quiz_id = quiz_id;
     }
 

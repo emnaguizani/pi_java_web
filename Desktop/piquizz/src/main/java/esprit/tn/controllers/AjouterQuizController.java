@@ -1,7 +1,9 @@
 package esprit.tn.controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,6 +15,7 @@ import esprit.tn.main.DatabaseConnection;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -71,7 +74,7 @@ public class AjouterQuizController {
             QuizService quizService = new QuizService(cnx);
             quizService.ajouterQuiz(quiz);
 
-            int quizId = quiz.getquiz_id();
+            int quizId = quiz.getQuiz_id();
             error.setText("Quiz ajouté avec succès!");
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterExercice.fxml"));
@@ -99,7 +102,29 @@ public class AjouterQuizController {
     }
 
     @FXML
-    private void handleNextAction() {
-        System.out.println("Next button clicked!");
+    private void handleNextAction(ActionEvent event) {
+        try {
+            // Load the FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherQuiz.fxml"));
+
+            // Ensure the root is loaded correctly
+            Parent root = loader.load();
+
+            // Get the current stage and set the new scene
+            Stage stage = (Stage) nextButton.getScene().getWindow();
+            Scene scene = new Scene(root);
+
+            // Set the new scene and show the stage
+            stage.setScene(scene);
+            stage.setTitle("Afficher Quiz");
+            stage.show();
+
+        } catch (IOException e) {
+            // Handle the error by displaying a message in the error label
+            error.setText("Erreur lors du chargement de la page AfficherQuiz.");
+            e.printStackTrace();
+        }
     }
+
+
 }

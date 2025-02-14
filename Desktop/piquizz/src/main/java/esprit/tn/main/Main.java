@@ -31,7 +31,7 @@ public class Main {
             quizService.ajouterQuiz(newQuiz);
             System.out.println("Quiz added: " + newQuiz.getTitle());
 
-            int quizId = newQuiz.getquiz_id();
+            int quizId = newQuiz.getQuiz_id();
             System.out.println("Generated quiz ID: " + quizId);
 
             Exercice newExercice1 = new Exercice("What is the default value of an int?", Arrays.asList("0", "1", "undefined"), "0", "0", 10, "/ex1.jpg",true,0);
