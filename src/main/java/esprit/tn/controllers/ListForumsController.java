@@ -4,13 +4,18 @@ import esprit.tn.entities.Forum;
 import esprit.tn.services.ForumService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import javax.swing.*;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -55,4 +60,13 @@ public class ListForumsController {
         });
     }
 
+    @FXML
+    public void RedirectToCreateForum(ActionEvent actionEvent) {
+        try {
+            Parent root= FXMLLoader.load(getClass().getResource("/AjouterForum.fxml"));
+            ForumsTable.getScene().setRoot(root);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

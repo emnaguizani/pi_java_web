@@ -4,10 +4,13 @@ import esprit.tn.entities.Forum;
 import esprit.tn.services.ForumService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
@@ -45,6 +48,14 @@ public class AjouterForumController {
         }
 
         showSuccessAlert("Forum Added", "Forum added successfully!");
+
+        try {
+            Parent root= FXMLLoader.load(getClass().getResource("/ListForums.fxml"));
+            forumAuthorId.getScene().setRoot(root);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     // Validate user input

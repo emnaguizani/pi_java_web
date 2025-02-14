@@ -41,7 +41,7 @@
             </Text>
          </children>
       </Pane>
-      <Button fx:id="CreateButton" layoutX="468.0" layoutY="73.0" mnemonicParsing="false" text="Create a Forum" />
+      <Button fx:id="CreateButton" layoutX="468.0" layoutY="73.0" mnemonicParsing="false" onAction="#RedirectToCreateForum" text="Create a Forum" />
       <TableView fx:id="ForumsTable" layoutX="129.0" layoutY="100.0" prefHeight="200.0" prefWidth="336.0">
         <columns>
           <TableColumn fx:id="ForumTitle" prefWidth="75.0" text="Title" />
