@@ -64,7 +64,7 @@ public class AjouterExerciceController {
             String imagePath = imagePathId.getText();
             boolean isMandatory = mandatoryCheckBox.isSelected();
 
-            Exercice exercice = new Exercice(question, options, answer, correctAnswer, score, imagePath, isMandatory, quizId);
+            Exercice exercice = new Exercice(question, options, answer, correctAnswer, score, imagePath, isMandatory);
 
             ExerciceService exerciceService = new ExerciceService(cnx);
             exerciceService.ajouterExercice(exercice,quizId);

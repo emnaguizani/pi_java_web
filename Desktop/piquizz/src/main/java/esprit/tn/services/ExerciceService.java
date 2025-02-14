@@ -29,6 +29,7 @@ public class ExerciceService {
         stmt.setBoolean(7, exercice.isMandatory());
         stmt.setInt(8, quiz_id);
         stmt.executeUpdate();
+
     }
 
     public List<Exercice> getExercicesByQuizId(int quizId) throws SQLException {
@@ -46,8 +47,7 @@ public class ExerciceService {
                     rs.getString("correctAnswer"),
                     rs.getInt("score"),
                     rs.getString("imagePath"),
-                    rs.getBoolean("isMandatory"),
-                    rs.getInt("quiz_id")
+                    rs.getBoolean("isMandatory")
             ));
         }
         return exercices;

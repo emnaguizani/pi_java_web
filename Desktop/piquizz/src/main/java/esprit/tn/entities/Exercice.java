@@ -19,14 +19,13 @@ public class Exercice {
 
     public Exercice() {}
 
-    public Exercice( String question, List<String> options, String answer,String correctAnswer, int score, String imagePath, boolean isMandatory,int quiz_id) {
+    public Exercice( String question, List<String> options, String answer,String correctAnswer, int score, String imagePath, boolean isMandatory) {
         this.question = question;
         this.options = options;
         this.correctAnswer = correctAnswer;
         this.answer=answer;
         this.score = score;
         this.isMandatory = isMandatory;
-        this.quiz_id=quiz_id;
         this.imagePath=imagePath;
     }
 

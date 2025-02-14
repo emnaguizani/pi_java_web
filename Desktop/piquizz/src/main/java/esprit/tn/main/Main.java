@@ -22,7 +22,7 @@ public class Main {
                     "Quiz3",
                     "A quiz to test Java knowledge",
                     60,
-                    10,
+                    0,
                     LocalDateTime.now(),
                     "John ",
                     null
@@ -34,8 +34,8 @@ public class Main {
             int quizId = newQuiz.getQuiz_id();
             System.out.println("Generated quiz ID: " + quizId);
 
-            Exercice newExercice1 = new Exercice("What is the default value of an int?", Arrays.asList("0", "1", "undefined"), "0", "0", 10, "/ex1.jpg",true,0);
-            Exercice newExercice2 = new Exercice("What is the default value of a boolean?", Arrays.asList("true", "false", "undefined"), "true", "false", 10,"/ex2.jpg", true, 0);
+            Exercice newExercice1 = new Exercice("?????", Arrays.asList("0", "1", "undefined"), "0", "0", 50, "/ex1.jpg",true);
+            Exercice newExercice2 = new Exercice("?????", Arrays.asList("true", "false", "undefined"), "true", "false", 10,"/ex2.jpg", true);
 
             exerciceService.ajouterExercice(newExercice1,quizId);
             exerciceService.ajouterExercice(newExercice2,quizId);
@@ -50,7 +50,6 @@ public class Main {
             newQuiz.setTitle("anisossss");
             newQuiz.setDescription("Updated Description");
             newQuiz.setDuration(90);
-            newQuiz.setTotalScore(15);
             quizService.updateQuiz(newQuiz);
             System.out.println("Quiz updated: " + newQuiz.getTitle());
 

@@ -73,15 +73,18 @@ public class QuizService {
              ResultSet rs = stmt.executeQuery()) {
 
             ExerciceService exerciceService = new ExerciceService(cnx);
+            QuizService quizService = new QuizService(cnx);
 
             while (rs.next()) {
                 List<Exercice> exercices = exerciceService.getExercicesByQuizId(rs.getInt("quiz_id"));
+
+                int totalScore = quizService.calculateTotalScore(rs.getInt("quiz_id"));
 
                 Quiz quiz = new Quiz(
                         rs.getString("title"),
                         rs.getString("description"),
                         rs.getInt("duration"),
-                        rs.getInt("totalScore"),
+                        totalScore,
                         rs.getTimestamp("creationDate").toLocalDateTime(),
                         rs.getString("author"),
                         exercices
@@ -114,6 +117,8 @@ public class QuizService {
         for (Exercice exercice : quiz.getExercices()) {
             exerciceService.updateExercice(exercice);
         }
+        updateTotalScore(quiz.getQuiz_id());
+
     }
 
     public void deleteQuiz(int id) throws SQLException {
@@ -125,4 +130,25 @@ public class QuizService {
         stmt.setInt(1, id);
         stmt.executeUpdate();
     }
+
+    private void updateTotalScore(int quizId) throws SQLException {
+        int totalScore = calculateTotalScore(quizId);
+
+        String updateQuery = "UPDATE quiz SET totalScore = ? WHERE quiz_id = ?";
+        PreparedStatement updateStmt = cnx.prepareStatement(updateQuery);
+        updateStmt.setInt(1, totalScore);
+        updateStmt.setInt(2, quizId);
+        updateStmt.executeUpdate();
+    }
+    public int calculateTotalScore(int quizId) throws SQLException {
+        List<Exercice> exercices = new ExerciceService(cnx).getExercicesByQuizId(quizId);
+
+        int totalScore = 0;
+        for (Exercice exercice : exercices) {
+            totalScore += exercice.getScore();
+        }
+
+        return totalScore;
+    }
+
 }
