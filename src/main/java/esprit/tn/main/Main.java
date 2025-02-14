@@ -5,6 +5,7 @@ import esprit.tn.entities.Response;
 import esprit.tn.services.ForumService;
 import esprit.tn.services.ResponseService;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,11 @@ public class Main {
         int authorId = getValidInt(scanner, "Enter author ID: ");
 
         Forum forum = new Forum(title, description, authorId, new ArrayList<>());
-        forumService.ajouterForum(forum);
+        try {
+            forumService.ajouterForum(forum);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         System.out.println("Forum added");
         return forum.getIdForum();
     }

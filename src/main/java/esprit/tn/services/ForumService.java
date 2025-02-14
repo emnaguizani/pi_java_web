@@ -20,10 +20,10 @@ public class ForumService {
         cnx = DatabaseConnection.getInstance().getCnx();
     }
 
-    public void ajouterForum(Forum forum) {
+    public void ajouterForum(Forum forum) throws SQLException {
         String req = "INSERT INTO forum (title, description, idAuthor, dateCreation) VALUES (?, ?, ?, ?)";
 
-        try {
+
             PreparedStatement stm = cnx.prepareStatement(req);
             stm.setString(1, forum.getTitle());
             stm.setString(2, forum.getDescription());
@@ -32,9 +32,9 @@ public class ForumService {
 
             stm.executeUpdate();
             System.out.println("Forum added successfully!");
-        } catch (SQLException e) {
-            throw new RuntimeException("Error adding forum: " + e.getMessage());
-        }
+
+
+
     }
 
     public List<Forum> getAllForumsWithResponses() {
