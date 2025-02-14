@@ -46,8 +46,13 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="videoPathField" layoutX="14.0" layoutY="400.0" prefHeight="26.0" prefWidth="241.0" promptText="Video Paths" />
-      <Button fx:id="importVideoButton" layoutX="260.0" layoutY="400.0" text="Import Videos" />
+      <TextField fx:id="videoPathField" layoutX="14.0" layoutY="374.0" prefHeight="26.0" prefWidth="241.0" promptText="Video Paths" />
+      <Button fx:id="importVideoButton" layoutX="260.0" layoutY="374.0" text="Import Videos" />
+      <Label fx:id="videoErrorLabel" alignment="TOP_LEFT" layoutX="14.0" layoutY="400.0" prefHeight="20.0" prefWidth="447.0" text="Video Label is null !" textFill="RED">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
 
    </children>
 </AnchorPane>

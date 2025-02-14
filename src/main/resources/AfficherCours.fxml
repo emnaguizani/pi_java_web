@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AfficherCoursController">
+    <Label text="Liste des Cours" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+    <TableView fx:id="courseTable">
+        <columns>
+            <TableColumn fx:id="titleColumn" text="Title" prefWidth="150"/>
+            <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="200"/>
+            <TableColumn fx:id="dateColumn" text="Creation Date" prefWidth="120"/>
+            <TableColumn fx:id="statusColumn" text="Statut" prefWidth="100"/>
+            <TableColumn fx:id="levelColumn" text="Level" prefWidth="100"/>
+            <TableColumn fx:id="videoColumn" text="Course Videos" prefWidth="200"/>
+            <TableColumn fx:id="modifyColumn" text="Update" prefWidth="100"/>
+            <TableColumn fx:id="deleteColumn" text="Delete" prefWidth="100"/>
+        </columns>
+    </TableView>
+</VBox>

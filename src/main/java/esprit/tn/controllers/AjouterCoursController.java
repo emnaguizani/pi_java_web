@@ -47,6 +47,9 @@ public class AjouterCoursController implements Initializable {
     @FXML
     private Button createButton;
 
+    @FXML
+    private Label videoErrorLabel;
+
     private static final CourService service = new CourService();
 
     @Override
@@ -56,6 +59,7 @@ public class AjouterCoursController implements Initializable {
 
         titleErrorLabel.setVisible(false);
         descriptionErrorLabel.setVisible(false);
+        videoErrorLabel.setVisible(false);
 
         StatusBox.setValue("PUBLIC");
         LevelBox.setValue("BEGINNER");
@@ -93,7 +97,6 @@ public class AjouterCoursController implements Initializable {
         String title = titleField.getText();
         String description = descriptionField.getText();
 
-        boolean isValid = true;
 
         if (title.isEmpty()) {
             titleErrorLabel.setVisible(true);
@@ -117,6 +120,12 @@ public class AjouterCoursController implements Initializable {
         String niveau = LevelBox.getValue();
 
         String videoPaths = videoPathField.getText();
+
+        if (videoPaths.isEmpty()) {
+            videoErrorLabel.setVisible(true);
+            return;
+        }
+        videoErrorLabel.setVisible(false);
 
         Cours newCourse = new Cours();
         newCourse.setTitle(title);
