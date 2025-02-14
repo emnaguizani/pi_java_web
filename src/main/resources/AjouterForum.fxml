@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="622.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AjouterForumController">
+   <children>
+      <Pane prefHeight="400.0" prefWidth="622.0">
+         <children>
+            <Text fill="#002fff" layoutX="191.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Une Question ? Créez Un Forum !" wrappingWidth="261.15234375">
+               <font>
+                  <Font name="Yu Gothic UI Regular" size="15.0" />
+               </font>
+            </Text>
+            <Text layoutX="87.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Titre" wrappingWidth="30.70703125" />
+            <TextField fx:id="forumTitle" layoutX="87.0" layoutY="145.0" prefHeight="25.0" prefWidth="282.0" />
+            <Text layoutX="87.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description" wrappingWidth="81.70703125" />
+            <TextArea fx:id="forumDescription" layoutX="91.0" layoutY="193.0" prefHeight="75.0" prefWidth="282.0" />
+            <Button layoutX="168.0" layoutY="283.0" mnemonicParsing="false" onAction="#AjouteForum" text="Creez" />
+            <Button layoutX="95.0" layoutY="283.0" mnemonicParsing="false" text="Reset" />
+            <Pane layoutX="-2.0" prefHeight="45.0" prefWidth="624.0" style="-fx-background-color: #2667FF;">
+               <children>
+                  <ImageView fitHeight="44.0" fitWidth="45.0" layoutX="7.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../Downloads/logoPi.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="34.0" fitWidth="31.0" layoutX="592.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../Downloads/user.png" />
+                     </image>
+                  </ImageView>
+                  <Text fill="#fffbfb" layoutX="522.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reclamation">
+                     <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#fffbfb" layoutX="466.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seance">
+                     <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#fffbfb" layoutX="417.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cours">
+                     <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Text layoutX="87.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID de le createur" wrappingWidth="106.70703125" />
+            <TextField fx:id="forumAuthorId" layoutX="87.0" layoutY="100.0" prefHeight="25.0" prefWidth="282.0" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
