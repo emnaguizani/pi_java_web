@@ -19,7 +19,13 @@ public class Forum {
 
 
     public Forum(){};
-
+    public Forum(int id, String title, String description,int idAuthor) {
+        idForum = id;
+        this.titleForum = title;
+        this.descriptionForum = description;
+        this.idAuthor = idAuthor;
+        this.dateCreationForum=LocalDateTime.now();
+    }
     public Forum(int id, String title, String description,int idAuthor,List<Response> responses) {
         idForum = id;
         this.titleForum = title;

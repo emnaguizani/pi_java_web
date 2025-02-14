@@ -125,5 +125,31 @@ public class ForumService {
         }
     }
 
+    public List<Forum> getAllForums() {
+        List<Forum> forums = new ArrayList<>();
+        String query = "SELECT * FROM forum";
+
+        try {
+            PreparedStatement stmt = cnx.prepareStatement(query);
+            ResultSet resultSet = stmt.executeQuery();
+
+            while (resultSet.next()) {
+                int idForum = resultSet.getInt("idForum");
+                String title = resultSet.getString("title");
+                String description = resultSet.getString("description");
+                int idAuthor = resultSet.getInt("idAuthor");
+                LocalDateTime dateCreation = resultSet.getTimestamp("dateCreation").toLocalDateTime();
+
+                forums.add(new Forum(idForum, title, description, idAuthor));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving forums: " + e.getMessage());
+        }
+
+        return forums;
+    }
+
+
 
 }
