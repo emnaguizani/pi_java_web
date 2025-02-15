@@ -13,7 +13,7 @@ public class MainFX extends Application {
         Scene scene = new Scene(root);
 
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Add a Forum");
+        primaryStage.setTitle("List des forums");
 
         primaryStage.show();
     }

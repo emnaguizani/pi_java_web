@@ -140,7 +140,7 @@ public class ForumService {
                 int idAuthor = resultSet.getInt("idAuthor");
                 LocalDateTime dateCreation = resultSet.getTimestamp("dateCreation").toLocalDateTime();
 
-                forums.add(new Forum(idForum, title, description, idAuthor));
+                forums.add(new Forum(idForum, title, description, idAuthor, dateCreation));
             }
 
         } catch (SQLException e) {

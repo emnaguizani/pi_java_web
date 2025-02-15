@@ -108,4 +108,21 @@ public class AjouterForumController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    @FXML
+    private void resetFields(ActionEvent event) {
+        forumAuthorId.clear();
+        forumTitle.clear();
+        forumDescription.clear();
+    }
+
+    @FXML
+    private void goToListForums(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/ListForums.fxml"));
+            forumAuthorId.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

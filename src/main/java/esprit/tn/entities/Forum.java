@@ -34,7 +34,13 @@ public class Forum {
         this.responses = responses;
         this.dateCreationForum=LocalDateTime.now();
     }
-
+    public Forum(int idForum, String title, String description, int idAuthor, LocalDateTime dateCreation) {
+        this.idForum = idForum;
+        this.titleForum = title;
+        this.descriptionForum = description;
+        this.idAuthor = idAuthor;
+        this.dateCreationForum = dateCreation;
+    }
 
     public Forum(String title, String description,int idAuthor,List<Response> responses) {
         this.titleForum = title;

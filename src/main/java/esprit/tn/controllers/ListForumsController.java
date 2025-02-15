@@ -8,13 +8,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -34,39 +33,124 @@ public class ListForumsController {
     private TableColumn<Forum, String> ForumTitle;
 
     @FXML
-    private TableView<Forum> ForumsTable;
+    private TableColumn<Forum, Void> ForumActions;
 
     @FXML
-    void initialize(){
-        ForumService fs = new ForumService();
-        ObservableList<Forum> observableForumList = FXCollections.observableList(fs.getAllForums());
+    private TableView<Forum> ForumsTable;
 
+    private final ForumService fs = new ForumService();
+
+    @FXML
+    void initialize() {
+        ObservableList<Forum> observableForumList = FXCollections.observableList(fs.getAllForums());
         ForumsTable.setItems(observableForumList);
 
         ForumTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         ForumDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+        // Corrected Date Formatting
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
+
         ForumDateCreation.setCellValueFactory(new PropertyValueFactory<>("dateCreation"));
-        ForumDateCreation.setCellFactory(column -> new TableCell<Forum, LocalDateTime>() {
+        ForumDateCreation.setCellFactory(column -> new TableCell<>() {
             @Override
             protected void updateItem(LocalDateTime date, boolean empty) {
                 super.updateItem(date, empty);
                 if (empty || date == null) {
                     setText(null);
                 } else {
-                    setText(date.format(formatter));
+                    setText(date.format(formatter)); // Ensure the correct date is shown
+                }
+            }
+        });
+
+        addActionButtons();
+    }
+
+    private void addActionButtons() {
+        ForumActions.setCellFactory(param -> new TableCell<>() {
+            private final Button reponsesButton = new Button("Réponses");
+            private final Button editerButton = new Button("Éditer");
+            private final Button supprimerButton = new Button("Supprimer");
+            private final HBox buttonsBox = new HBox(5, reponsesButton, editerButton, supprimerButton);
+
+            {
+                reponsesButton.setStyle("-fx-background-color: #007bff; -fx-text-fill: white;");
+                editerButton.setStyle("-fx-background-color: #ffc107; -fx-text-fill: black;");
+                supprimerButton.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white;");
+
+                reponsesButton.setOnAction(event -> {
+                    Forum forum = getTableView().getItems().get(getIndex());
+                    handleReponses(forum);
+                });
+
+                editerButton.setOnAction(event -> {
+                    Forum forum = getTableView().getItems().get(getIndex());
+                    handleEdit(forum);
+                });
+
+                supprimerButton.setOnAction(event -> {
+                    Forum forum = getTableView().getItems().get(getIndex());
+                    handleDelete(forum);
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(buttonsBox);
                 }
             }
         });
     }
 
+    private void handleReponses(Forum forum) {
+        System.out.println("Réponses clicked for forum: " + forum.getTitle());
+        // Redirect to responses page (implement as needed)
+    }
+
+    private void handleEdit(Forum forum) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/UpdateForum.fxml"));
+            Parent root = loader.load();
+
+            // Get the controller and set the forum data
+            UpdateForumController controller = loader.getController();
+            controller.setForum(forum);
+
+            // Set the new scene
+            ForumsTable.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleDelete(Forum forum) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation de suppression");
+        alert.setHeaderText("Voulez-vous vraiment supprimer ce forum ?");
+        alert.setContentText("Forum: " + forum.getTitle());
+
+        if (alert.showAndWait().get() == ButtonType.OK) {
+            fs.deleteForum(forum.getIdForum());
+            ForumsTable.getItems().remove(forum);
+        }
+    }
+
     @FXML
     public void RedirectToCreateForum(ActionEvent actionEvent) {
         try {
-            Parent root= FXMLLoader.load(getClass().getResource("/AjouterForum.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/AjouterForum.fxml"));
             ForumsTable.getScene().setRoot(root);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
     }
+
+
+
 }

@@ -10,52 +10,53 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="622.0" xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AjouterForumController">
+<AnchorPane prefHeight="514.0" prefWidth="773.0" xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AjouterForumController">
    <children>
       <Pane prefHeight="400.0" prefWidth="622.0">
          <children>
-            <Text fill="#002fff" layoutX="191.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Une Question ? Créez Un Forum !" wrappingWidth="261.15234375">
+            <Text fill="#002fff" layoutX="220.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20px;" text="Une Question ? Créez Un Forum !" wrappingWidth="303.15234375">
                <font>
                   <Font name="Yu Gothic UI Regular" size="15.0" />
                </font>
             </Text>
-            <Text layoutX="87.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Titre" wrappingWidth="30.70703125" />
-            <TextField fx:id="forumTitle" layoutX="87.0" layoutY="145.0" prefHeight="25.0" prefWidth="282.0" />
-            <Text layoutX="87.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description" wrappingWidth="81.70703125" />
-            <TextArea fx:id="forumDescription" layoutX="91.0" layoutY="193.0" prefHeight="75.0" prefWidth="282.0" />
-            <Button layoutX="168.0" layoutY="283.0" mnemonicParsing="false" onAction="#AjouteForum" text="Creez" />
-            <Button layoutX="95.0" layoutY="283.0" mnemonicParsing="false" text="Reset" />
-            <Pane layoutX="-2.0" prefHeight="45.0" prefWidth="624.0" style="-fx-background-color: #2667FF;">
+            <Text layoutX="229.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 18px;" text="Titre" wrappingWidth="44.09734344482422" />
+            <TextField fx:id="forumTitle" layoutX="226.0" layoutY="220.0" prefHeight="31.0" prefWidth="291.0" />
+            <Text layoutX="223.0" layoutY="273.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 18px;" text="Description" wrappingWidth="100.70703125" />
+            <TextArea fx:id="forumDescription" layoutX="226.0" layoutY="279.0" prefHeight="82.0" prefWidth="291.0" />
+            <Button layoutX="324.0" layoutY="376.0" mnemonicParsing="false" onAction="#AjouteForum" prefHeight="31.0" prefWidth="65.0" text="Creez" />
+            <Button fx:id="ResetForum" layoutX="235.0" layoutY="376.0" mnemonicParsing="false" onAction="#resetFields" prefHeight="31.0" prefWidth="53.0" text="Reset" />
+            <Pane layoutX="-2.0" prefHeight="45.0" prefWidth="779.0" style="-fx-background-color: #2667FF;">
                <children>
-                  <ImageView fitHeight="44.0" fitWidth="45.0" layoutX="7.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="44.0" fitWidth="45.0" layoutX="7.0" pickOnBounds="true" preserveRatio="true" scaleZ="1000.0">
                      <image>
                         <Image url="@../../../../../Downloads/logoPi.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="34.0" fitWidth="31.0" layoutX="592.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="34.0" fitWidth="31.0" layoutX="738.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../Downloads/user.png" />
                      </image>
                   </ImageView>
-                  <Text fill="#fffbfb" layoutX="522.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reclamation">
+                  <Text fill="#fffbfb" layoutX="653.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reclamation">
                      <font>
                         <Font name="Times New Roman Bold" size="12.0" />
                      </font>
                   </Text>
-                  <Text fill="#fffbfb" layoutX="466.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seance">
+                  <Text fill="#fffbfb" layoutX="599.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seance">
                      <font>
                         <Font name="Times New Roman Bold" size="12.0" />
                      </font>
                   </Text>
-                  <Text fill="#fffbfb" layoutX="417.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cours">
+                  <Text fill="#fffbfb" layoutX="542.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cours">
                      <font>
                         <Font name="Times New Roman Bold" size="12.0" />
                      </font>
                   </Text>
                </children>
             </Pane>
-            <Text layoutX="87.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID de le createur" wrappingWidth="106.70703125" />
-            <TextField fx:id="forumAuthorId" layoutX="87.0" layoutY="100.0" prefHeight="25.0" prefWidth="282.0" />
+            <Text layoutX="225.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 18px;" text="ID De Le Createur" wrappingWidth="146.70703125" />
+            <TextField fx:id="forumAuthorId" layoutX="226.0" layoutY="162.0" prefHeight="31.0" prefWidth="291.0" />
+            <Button fx:id="backButton" layoutX="26.0" layoutY="55.0" onAction="#goToListForums" prefHeight="62.0" prefWidth="80.0" style="-fx-background-color: transparent; -fx-font-size: 30px;" text="⬅" />
          </children>
       </Pane>
    </children>
