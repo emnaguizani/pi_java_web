@@ -27,12 +27,11 @@ public class AjouterForumController {
 
     @FXML
     void AjouteForum(ActionEvent event) {
-        // Validate input fields
         if (!validateInput()) {
-            return; // Stop execution if validation fails
+            return;
         }
 
-        // Create Forum object
+
         Forum f = new Forum();
         f.setIdAuthor(Integer.parseInt(forumAuthorId.getText()));
         f.setTitle(forumTitle.getText().trim());
@@ -81,7 +80,7 @@ public class AjouterForumController {
             return false;
         }
 
-        // Author ID validation (must be a positive integer)
+
         if (!authorIdText.matches("\\d+")) {
             showErrorAlert("Invalid Author ID", "Author ID must be a positive number.");
             return false;
@@ -90,7 +89,7 @@ public class AjouterForumController {
         return true;
     }
 
-    // Show error alert
+
     private void showErrorAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
@@ -98,7 +97,7 @@ public class AjouterForumController {
         alert.showAndWait();
     }
 
-    // Show success alert
+
     private void showSuccessAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

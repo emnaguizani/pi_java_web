@@ -24,7 +24,7 @@ public class UpdateForumController {
     @FXML
     private TextField forumTitle;
 
-    // Declare the forum variable as a class-level field
+
     private Forum forum;
 
     public void setForum(Forum forum) {
@@ -38,9 +38,9 @@ public class UpdateForumController {
         String newTitle = forumTitle.getText();
         String newDescription = forumDescription.getText();
 
-        // Validate input fields
+
         if (newTitle.isEmpty() || newDescription.isEmpty()) {
-            // Show error alert if fields are empty
+
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
             errorAlert.setTitle("Error");
             errorAlert.setHeaderText("Invalid Input");
@@ -49,22 +49,22 @@ public class UpdateForumController {
             return;
         }
 
-        // Update the forum object
+
         forum.setTitle(newTitle);
         forum.setDescription(newDescription);
 
-        // Save the updated forum to the database
+
         ForumService fs = new ForumService();
         fs.updateForum(forum);
 
-        // Show success alert
+
         Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
         successAlert.setTitle("Success");
         successAlert.setHeaderText("Forum Updated");
         successAlert.setContentText("The forum has been updated successfully.");
         successAlert.showAndWait();
 
-        // Redirect to the ListForums page
+
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/ListForums.fxml"));
             forumTitle.getScene().setRoot(root);

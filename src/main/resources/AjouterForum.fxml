@@ -29,12 +29,12 @@
                <children>
                   <ImageView fitHeight="44.0" fitWidth="45.0" layoutX="7.0" pickOnBounds="true" preserveRatio="true" scaleZ="1000.0">
                      <image>
-                        <Image url="@../../../../../Downloads/logoPi.png" />
+                        <Image url="@/logoPi.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="34.0" fitWidth="31.0" layoutX="738.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../Downloads/user.png" />
+                        <Image url="user.png" />
                      </image>
                   </ImageView>
                   <Text fill="#fffbfb" layoutX="653.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reclamation">

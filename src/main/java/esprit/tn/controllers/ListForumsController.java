@@ -1,5 +1,6 @@
 package esprit.tn.controllers;
 
+
 import esprit.tn.entities.Forum;
 import esprit.tn.services.ForumService;
 import javafx.collections.FXCollections;
@@ -48,7 +49,6 @@ public class ListForumsController {
         ForumTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         ForumDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
 
-        // Corrected Date Formatting
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
 
         ForumDateCreation.setCellValueFactory(new PropertyValueFactory<>("dateCreation"));
@@ -59,7 +59,7 @@ public class ListForumsController {
                 if (empty || date == null) {
                     setText(null);
                 } else {
-                    setText(date.format(formatter)); // Ensure the correct date is shown
+                    setText(date.format(formatter));
                 }
             }
         });
@@ -109,9 +109,13 @@ public class ListForumsController {
 
     private void handleReponses(Forum forum) {
         try {
-            // Load the ListResponses.fxml file
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListResponses.fxml"));
             Parent root = loader.load();
+
+
+            ListResponsesController controller = loader.getController();
+            controller.setForum(forum);
 
 
             ForumsTable.getScene().setRoot(root);
@@ -125,11 +129,11 @@ public class ListForumsController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/UpdateForum.fxml"));
             Parent root = loader.load();
 
-            // Get the controller and set the forum data
+
             UpdateForumController controller = loader.getController();
             controller.setForum(forum);
 
-            // Set the new scene
+
             ForumsTable.getScene().setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();

@@ -124,18 +124,18 @@ public class Main {
         return forums.stream().anyMatch(f -> f.getIdForum() == forumId);
     }
 
-    // Helper functions for input validation
+
 
     private static int getValidInt(Scanner scanner, String prompt) {
         while (true) {
             System.out.print(prompt);
             if (scanner.hasNextInt()) {
                 int value = scanner.nextInt();
-                scanner.nextLine();  // Consume newline
+                scanner.nextLine();
                 return value;
             } else {
                 System.out.println("Invalid input. Please enter a valid number.");
-                scanner.next();  // Discard invalid input
+                scanner.next();
             }
         }
     }
