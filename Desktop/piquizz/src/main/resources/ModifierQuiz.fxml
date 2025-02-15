@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="esprit.tn.controllers.ModifierQuizController">
+    <VBox alignment="CENTER" spacing="15" >
+
+        <!-- Title Field with Label -->
+        <Label text="Quiz Title" styleClass="label-title" textFill="#3b28cc">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <TextField fx:id="titleField" promptText="Enter Quiz Title" styleClass="input-field" prefWidth="300" />
+
+        <!-- Description Field with Label -->
+        <Label text="Quiz Description" styleClass="label-description" textFill="#3b28cc">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <TextArea fx:id="descriptionField" promptText="Enter Quiz Description" styleClass="input-field" prefWidth="300" />
+
+        <!-- Duration Field with Label -->
+        <Label text="Duration (min)" styleClass="label-duration" textFill="#3b28cc">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <TextField fx:id="durationField" promptText="Enter Duration (min)" styleClass="input-field" prefWidth="300" />
+
+        <!-- Total Score Field with Label -->
+        <Label text="Total Score" styleClass="label-score" textFill="#3b28cc">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <TextField fx:id="totalScoreField" promptText="Enter Total Score" styleClass="input-field" prefWidth="300" />
+
+        <!-- Author Field with Label -->
+        <Label text="Author Name" styleClass="label-author" textFill="#3b28cc">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <TextField fx:id="authorField" promptText="Enter Author Name" styleClass="input-field" prefWidth="300" />
+
+        <!-- Buttons -->
+        <HBox spacing="15" alignment="CENTER">
+            <Button text="Save" onAction="#saveQuiz" styleClass="btn-primary" prefWidth="100"/>
+            <Button text="Cancel" onAction="#cancelQuiz" styleClass="btn-secondary" prefWidth="100"/>
+        </HBox>
+
+    </VBox>
+</AnchorPane>

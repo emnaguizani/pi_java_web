@@ -108,10 +108,6 @@ public class QuizService {
         stmt.setInt(7, quiz.getQuiz_id());
         stmt.executeUpdate();
 
-        ExerciceService exerciceService = new ExerciceService(cnx);
-        for (Exercice exercice : quiz.getExercices()) {
-            exerciceService.updateExercice(exercice);
-        }
 
     }
 

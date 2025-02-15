@@ -117,7 +117,7 @@ public class AfficherQuizController {
         loadQuizzes();
     }
 
-    private void loadQuizzes() {
+    public void loadQuizzes() {
         try {
             List<Quiz> quizzes = quizService.getAllQuizzes();
             quizTableView.getItems().setAll(quizzes);
@@ -166,6 +166,26 @@ public class AfficherQuizController {
     }
 
     private void handleModify(Quiz quiz) {
-        System.out.println("Modify button clicked for quiz: " + quiz.getTitle());
+        try {
+            // Load the Modify Quiz FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierQuiz.fxml"));
+            Parent root = loader.load();
+
+            // Get the controller of the Modify Quiz page
+            ModifierQuizController modifierQuizController = loader.getController();
+
+            // Pass the selected quiz data to the controller of the Modify page
+            modifierQuizController.setQuizData(quiz);
+
+            // Create a new scene and show the Modify Quiz page
+            Stage stage = (Stage) quizTableView.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showMessage("Error loading modify quiz page.");
+        }
     }
+
 }
