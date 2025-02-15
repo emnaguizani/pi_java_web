@@ -150,6 +150,28 @@ public class ForumService {
         return forums;
     }
 
+    public List<Response> getResponsesForForum(int forumId) {
+        List<Response> responses = new ArrayList<>();
+        String query = "SELECT * FROM response WHERE forumId = ?";
+
+        try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+            stmt.setInt(1, forumId);
+            ResultSet resultSet = stmt.executeQuery();
+
+            while (resultSet.next()) {
+                int responseId = resultSet.getInt("idResponse");
+                String content = resultSet.getString("content");
+                int authorId = resultSet.getInt("authorId");
+                LocalDateTime createdAt = resultSet.getTimestamp("dateCreation").toLocalDateTime();
+
+                responses.add(new Response(responseId, content, authorId, createdAt));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error fetching responses for forum: " + e.getMessage());
+        }
+
+        return responses;
+    }
 
 
 }

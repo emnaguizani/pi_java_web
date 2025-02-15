@@ -108,8 +108,16 @@ public class ListForumsController {
     }
 
     private void handleReponses(Forum forum) {
-        System.out.println("Réponses clicked for forum: " + forum.getTitle());
-        // Redirect to responses page (implement as needed)
+        try {
+            // Load the ListResponses.fxml file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListResponses.fxml"));
+            Parent root = loader.load();
+
+
+            ForumsTable.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void handleEdit(Forum forum) {

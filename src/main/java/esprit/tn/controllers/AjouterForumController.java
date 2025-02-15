@@ -58,13 +58,11 @@ public class AjouterForumController {
 
     }
 
-    // Validate user input
     private boolean validateInput() {
         String title = forumTitle.getText().trim();
         String description = forumDescription.getText().trim();
         String authorIdText = forumAuthorId.getText().trim();
 
-        // Title validation (no special characters, not empty)
         if (title.isEmpty()) {
             showErrorAlert("Invalid Title", "Title cannot be empty.");
             return false;
@@ -74,7 +72,6 @@ public class AjouterForumController {
             return false;
         }
 
-        // Description validation (at least 20 characters)
         if (description.isEmpty()) {
             showErrorAlert("Invalid Description", "Description cannot be empty.");
             return false;
