@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AfficherCoursController">
+<VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AfficherCoursAdminController">
     <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Courses List" />
     <TableView fx:id="courseTable">
         <columns>
@@ -13,8 +13,6 @@
             <TableColumn fx:id="statusColumn" prefWidth="100" text="Statut" />
             <TableColumn fx:id="levelColumn" prefWidth="100" text="Level" />
             <TableColumn fx:id="videoColumn" prefWidth="200" text="Course Videos" />
-            <TableColumn fx:id="modifyColumn" prefWidth="100" text="Update" />
-            <TableColumn fx:id="deleteColumn" prefWidth="100" text="Delete" />
         </columns>
     </TableView>
 </VBox>
