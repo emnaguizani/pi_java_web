@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="563.0" prefWidth="0.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.ModifierCoursController">
+
+    <children>
+        <Button fx:id="updateButton" layoutX="139.0" layoutY="522.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="183.0" text="Confirm" textFill="#2667ff" />
+        <Label alignment="CENTER" layoutX="164.0" layoutY="14.0" prefHeight="18.0" prefWidth="133.0" text="Course Update" textFill="#2667ff">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="16.0" />
+            </font>
+        </Label>
+        <Label alignment="TOP_LEFT" layoutX="14.0" layoutY="60.0" prefHeight="20.0" prefWidth="109.0" text="Course Title :" textFill="#3b28cc">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <TextField fx:id="titleField" layoutX="14.0" layoutY="80.0" prefHeight="26.0" prefWidth="241.0" />
+        <Label alignment="TOP_LEFT" layoutX="14.0" layoutY="126.0" prefHeight="20.0" prefWidth="109.0" text="Description :" textFill="#3b28cc">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <TextArea fx:id="descriptionField" layoutX="14.0" layoutY="146.0" prefHeight="78.0" prefWidth="242.0" />
+        <ChoiceBox fx:id="StatusBox" layoutX="14.0" layoutY="264.0" prefHeight="26.0" prefWidth="242.0" />
+        <Label alignment="TOP_LEFT" layoutX="14.0" layoutY="244.0" prefHeight="20.0" prefWidth="109.0" text="Status :" textFill="#3b28cc">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <ChoiceBox fx:id="LevelBox" layoutX="13.0" layoutY="330.0" prefHeight="26.0" prefWidth="242.0" />
+        <Label alignment="TOP_LEFT" layoutX="13.0" layoutY="310.0" prefHeight="20.0" prefWidth="109.0" text="Level :" textFill="#3b28cc">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <Label fx:id="titleErrorLabel" alignment="TOP_LEFT" layoutX="14.0" layoutY="106.0" prefHeight="20.0" prefWidth="447.0" text="Title Label is null !" textFill="RED">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <Label fx:id="descriptionErrorLabel" alignment="TOP_LEFT" layoutX="13.0" layoutY="224.0" prefHeight="20.0" prefWidth="447.0" text="Description Label is null !" textFill="RED">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <TextField fx:id="videoPathField" layoutX="14.0" layoutY="374.0" prefHeight="26.0" prefWidth="241.0" promptText="Video Paths" />
+        <Button fx:id="importVideoButton" layoutX="260.0" layoutY="374.0" text="Import Videos" />
+        <Label fx:id="videoErrorLabel" alignment="TOP_LEFT" layoutX="14.0" layoutY="400.0" prefHeight="20.0" prefWidth="447.0" text="Video Label is null !" textFill="RED">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+
+    </children>
+
+</AnchorPane>

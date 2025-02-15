@@ -5,10 +5,16 @@ import esprit.tn.service.CourService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import javafx.util.Callback;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -120,10 +126,23 @@ public class AfficherCoursController implements Initializable {
 
         deleteColumn.setCellFactory(cellFactory);
     }
-    // kif na3mlou click 3al l update bech tall3elna interface mta3 l modification fiha les attribut a modifier
+    // kif na3mlou click 3al l update bech tall3elna interface mta3 l modification fiha les attribut a modifier avec controle de saisie
     private void openModifyCourseWindow(Cours course) {
         System.out.println("Modify Course: " + course.getTitle());
-        // l'appel  mta3 l interface de modification
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierCours.fxml"));
+            Parent root = loader.load();
+
+            ModifierCoursController controller = loader.getController();
+            controller.setCourse(course);
+
+            Stage stage = new Stage();
+            stage.setTitle("Modify Course");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     // fn ta3mel delete l cours mais 9balha t5arrjelna alert kan n7ebbou nfass5ou si ok if ifPresent bech texecuti la fn delete du service w ba3d ta3mel reload lil liste mta3 les cours li 3anna
     private void deleteCourse(Cours course) {
@@ -135,7 +154,7 @@ public class AfficherCoursController implements Initializable {
         confirmationAlert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
                 service.delete(course.getIdCours());
-                loadCourses(); // Refresh list
+                loadCourses();
             }
         });
     }
