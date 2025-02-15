@@ -34,7 +34,7 @@
                   </ImageView>
                   <ImageView fitHeight="34.0" fitWidth="31.0" layoutX="738.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="user.png" />
+                        <Image url="@/user.png" />
                      </image>
                   </ImageView>
                   <Text fill="#fffbfb" layoutX="653.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reclamation">

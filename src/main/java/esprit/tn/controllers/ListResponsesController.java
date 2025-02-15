@@ -82,4 +82,22 @@ public class ListResponsesController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void handleAjouterReponse(ActionEvent event) {
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterReponse.fxml"));
+            Parent root = loader.load();
+
+
+            AjouterResponseController controller = loader.getController();
+            controller.setForum(forum);
+
+
+            ListResponses.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
