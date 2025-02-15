@@ -25,9 +25,6 @@ public class AjouterExerciceController {
     private TextField optionsId;
 
     @FXML
-    private TextField answerId;
-
-    @FXML
     private TextField correctAnswerId;
 
     @FXML
@@ -58,13 +55,12 @@ public class AjouterExerciceController {
             for (String option : optionsArray) {
                 options.add(option.trim());
             }
-            String answer = answerId.getText();
             String correctAnswer = correctAnswerId.getText();
             int score = Integer.parseInt(scoreId.getText());
             String imagePath = imagePathId.getText();
             boolean isMandatory = mandatoryCheckBox.isSelected();
 
-            Exercice exercice = new Exercice(question, options, answer, correctAnswer, score, imagePath, isMandatory);
+            Exercice exercice = new Exercice(question, options, correctAnswer, score, imagePath, isMandatory);
 
             ExerciceService exerciceService = new ExerciceService(cnx);
             exerciceService.ajouterExercice(exercice,quizId);

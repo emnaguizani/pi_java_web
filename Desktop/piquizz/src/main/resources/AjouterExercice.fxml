@@ -16,9 +16,6 @@
         <Label alignment="TOP_RIGHT" contentDisplay="CENTER" style="-fx-font-size: 16px; -fx-text-fill: #444; -fx-font-weight: bold;" text="Options (comma separated)" />
         <TextField fx:id="optionsId" promptText="Option1, Option2, Option3..." style="-fx-padding: 8; -fx-font-size: 14px; -fx-background-color: #e9f2f7; -fx-border-color: #a6c8e3; -fx-border-radius: 5px;" />
 
-        <Label style="-fx-font-size: 16px; -fx-text-fill: #444; -fx-font-weight: bold;" text="Answer" />
-        <TextField fx:id="answerId" promptText="Answer" style="-fx-padding: 8; -fx-font-size: 14px; -fx-background-color: #e9f2f7; -fx-border-color: #a6c8e3; -fx-border-radius: 5px;" />
-
         <Label style="-fx-font-size: 16px; -fx-text-fill: #444; -fx-font-weight: bold;" text="Correct Answer" />
         <TextField fx:id="correctAnswerId" promptText="Correct answer" style="-fx-padding: 8; -fx-font-size: 14px; -fx-background-color: #e9f2f7; -fx-border-color: #a6c8e3; -fx-border-radius: 5px;" />
 

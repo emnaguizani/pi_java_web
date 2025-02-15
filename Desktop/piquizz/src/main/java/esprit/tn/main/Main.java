@@ -34,17 +34,23 @@ public class Main {
             int quizId = newQuiz.getQuiz_id();
             System.out.println("Generated quiz ID: " + quizId);
 
-            Exercice newExercice1 = new Exercice("?????", Arrays.asList("0", "1", "undefined"), "0", "0", 50, "/ex1.jpg",true);
-            Exercice newExercice2 = new Exercice("?????", Arrays.asList("true", "false", "undefined"), "true", "false", 10,"/ex2.jpg", true);
+            Exercice newExercice1 = new Exercice("?????", Arrays.asList("0", "1", "undefined"), "", 50, "/ex1.jpg",true);
+            Exercice newExercice2 = new Exercice("?????", Arrays.asList("true", "false", "undefined"), "false", 10,"/ex2.jpg", true);
+            Exercice newExercice3 = new Exercice("?????", Arrays.asList("0", "1", "undefined"), "0", 50, "/ex1.jpg",true);
+            Exercice newExercice4 = new Exercice("?????", Arrays.asList("0", "1", "undefined"), "0", 50, "/ex1.jpg",true);
 
             exerciceService.ajouterExercice(newExercice1,quizId);
             exerciceService.ajouterExercice(newExercice2,quizId);
+            exerciceService.ajouterExercice(newExercice4,quizId);
+            exerciceService.ajouterExercice(newExercice3,quizId);
+
+
             System.out.println("Exercises added for Quiz ID " + quizId);
 
             Quiz quizWithExercises = quizService.getQuizById(quizId);
             System.out.println("Quiz with exercises: " + quizWithExercises.getTitle());
             for (Exercice ex : quizWithExercises.getExercices()) {
-                System.out.println(" - " + ex.getQuestion() + ' '+ ex.getImagePath()+' ' + ex.getAnswer() + ' ' + ex.getCorrectAnswer());
+                System.out.println(" - " + ex.getQuestion() + ' '+ ex.getImagePath()+' ' + ' ' + ex.getCorrectAnswer());
             }
 
             newQuiz.setTitle("anisossss");
@@ -53,11 +59,6 @@ public class Main {
             quizService.updateQuiz(newQuiz);
             System.out.println("Quiz updated: " + newQuiz.getTitle());
 
-            Exercice updatedExercice = quizWithExercises.getExercices().get(0);
-            updatedExercice.setQuestion("Updated question for int default value?");
-            updatedExercice.setAnswer("1");
-            exerciceService.updateExercice(updatedExercice);
-            System.out.println("Exercise updated: " + updatedExercice.getQuestion());
 
 
 

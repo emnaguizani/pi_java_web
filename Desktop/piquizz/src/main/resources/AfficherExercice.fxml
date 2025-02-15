@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane layoutX="134.0" layoutY="22.0" prefWidth="983.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="22.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AfficherExerciceController">
+    <VBox alignment="TOP_CENTER" layoutX="50" layoutY="66.0" prefHeight="630.0" prefWidth="908.0" spacing="25" style="-fx-background-color: #f4f6f9; -fx-border-radius: 15; -fx-padding: 30 40; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 15, 0.0, 0, 5);">
+
+        <Label style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #2c3e50; -fx-padding: 10 0; -fx-font-family: 'Segoe UI';" text="Exercices pour le Quiz" />
+
+            <TableView fx:id="exercicesTable" prefHeight="200.0" prefWidth="713.0" style="-fx-border-color: #ddd; -fx-border-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 15, 0.0, 0, 5);">
+                <columns>
+                    <TableColumn fx:id="exerciceIdColumn" prefWidth="41.6" text="ID" />
+                    <TableColumn fx:id="questionColumn" prefWidth="195.2" text="Question" />
+                    <TableColumn fx:id="optionsColumn" prefWidth="119.8" text="Options" />
+                    <TableColumn fx:id="correctAnswerColumn" prefWidth="117.8" text="Réponse Correcte" />
+                    <TableColumn fx:id="scoreColumn" prefWidth="65.0" text="Score" />
+                    <TableColumn fx:id="mandatoryColumn" prefWidth="81.6" text="Obligatoire" />
+                    <TableColumn fx:id="imageColumn" prefWidth="88.6" text="Image" />
+                    <TableColumn fx:id="actions" prefWidth="103.6" text="Actions" />
+                </columns>
+            </TableView>
+
+        <HBox alignment="CENTER" style="-fx-padding: 20 0;">
+            <Button onAction="#goBackToQuiz" style="-fx-font-size: 16; -fx-background-color: #3498db; -fx-text-fill: white; -fx-padding: 12 25; -fx-border-radius: 10; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0.0, 0, 3);" text="Retour au Quiz" />
+        </HBox>
+    </VBox>
+</AnchorPane>

@@ -68,35 +68,30 @@ public class QuizService {
     public List<Quiz> getAllQuizzes() throws SQLException {
         List<Quiz> quizzes = new ArrayList<>();
         String query = "SELECT * FROM quiz";
-
         try (PreparedStatement stmt = cnx.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
 
             ExerciceService exerciceService = new ExerciceService(cnx);
-            QuizService quizService = new QuizService(cnx);
-
             while (rs.next()) {
                 List<Exercice> exercices = exerciceService.getExercicesByQuizId(rs.getInt("quiz_id"));
-
-                int totalScore = quizService.calculateTotalScore(rs.getInt("quiz_id"));
 
                 Quiz quiz = new Quiz(
                         rs.getString("title"),
                         rs.getString("description"),
                         rs.getInt("duration"),
-                        totalScore,
+                        rs.getInt("totalScore"),
                         rs.getTimestamp("creationDate").toLocalDateTime(),
                         rs.getString("author"),
                         exercices
                 );
 
+                quiz.setQuiz_id(rs.getInt("quiz_id"));
                 quizzes.add(quiz);
             }
         } catch (SQLException e) {
             System.err.println("Database error: " + e.getMessage());
             throw e;
         }
-
         return quizzes;
     }
 
@@ -117,7 +112,6 @@ public class QuizService {
         for (Exercice exercice : quiz.getExercices()) {
             exerciceService.updateExercice(exercice);
         }
-        updateTotalScore(quiz.getQuiz_id());
 
     }
 
@@ -131,24 +125,7 @@ public class QuizService {
         stmt.executeUpdate();
     }
 
-    private void updateTotalScore(int quizId) throws SQLException {
-        int totalScore = calculateTotalScore(quizId);
 
-        String updateQuery = "UPDATE quiz SET totalScore = ? WHERE quiz_id = ?";
-        PreparedStatement updateStmt = cnx.prepareStatement(updateQuery);
-        updateStmt.setInt(1, totalScore);
-        updateStmt.setInt(2, quizId);
-        updateStmt.executeUpdate();
-    }
-    public int calculateTotalScore(int quizId) throws SQLException {
-        List<Exercice> exercices = new ExerciceService(cnx).getExercicesByQuizId(quizId);
 
-        int totalScore = 0;
-        for (Exercice exercice : exercices) {
-            totalScore += exercice.getScore();
-        }
-
-        return totalScore;
-    }
 
 }

@@ -7,7 +7,6 @@ public class Exercice {
     private int idE;
     private String question;
     private List<String> options;
-    private String answer;
 
     private String correctAnswer;
     private int score;
@@ -19,11 +18,10 @@ public class Exercice {
 
     public Exercice() {}
 
-    public Exercice( String question, List<String> options, String answer,String correctAnswer, int score, String imagePath, boolean isMandatory) {
+    public Exercice( String question, List<String> options,String correctAnswer, int score, String imagePath, boolean isMandatory) {
         this.question = question;
         this.options = options;
         this.correctAnswer = correctAnswer;
-        this.answer=answer;
         this.score = score;
         this.isMandatory = isMandatory;
         this.imagePath=imagePath;
@@ -43,9 +41,7 @@ public class Exercice {
     }
 
     public void setQuestion(String question) {
-        if (question == null || question.trim().isEmpty()) {
-            throw new IllegalArgumentException("La question ne peut pas être vide.");
-        }
+
         this.question = question;
     }
 
@@ -55,13 +51,6 @@ public class Exercice {
 
     public void setOptions(List<String> options) {
         this.options = options;
-    }
-    public String getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
     }
 
     public String getCorrectAnswer() {
@@ -116,4 +105,5 @@ public class Exercice {
                 ", quiz_id="+quiz_id+
                 '}';
     }
+
 }

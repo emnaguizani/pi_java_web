@@ -95,6 +95,7 @@ public class Quiz {
     public void setExercices(List<Exercice> exercices) {
 
         this.exercices = exercices;
+
     }
     @Override
     public String toString() {
@@ -109,4 +110,6 @@ public class Quiz {
                 ", number of exercices=" + exercices.size() +
                 '}';
     }
+
+
 }

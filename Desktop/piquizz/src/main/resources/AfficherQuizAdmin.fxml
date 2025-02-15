@@ -3,10 +3,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AfficherQuizController">
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AfficherQuizAdminController">
     <TableView fx:id="quizTableView" layoutX="134.0" layoutY="22.0" prefHeight="682.0" prefWidth="682.0" AnchorPane.leftAnchor="134.0" AnchorPane.rightAnchor="92.0" AnchorPane.topAnchor="22.0">
         <columns>
-            <TableColumn fx:id="quiz_Id" prefWidth="53.0" text="Quiz ID" />
+            <TableColumn fx:id="quizId" prefWidth="53.0" text="Quiz ID" />
             <TableColumn fx:id="title" prefWidth="130.20001220703125" text="Title" />
             <TableColumn fx:id="description" prefWidth="93.60000610351562" text="Description" />
             <TableColumn fx:id="duration" prefWidth="68.0" text="Duration" />
@@ -14,7 +14,6 @@
             <TableColumn fx:id="author" prefWidth="55.60003662109375" text="Author" />
             <TableColumn fx:id="exercices" prefWidth="107.5999755859375" text="exercices" />
 
-            <TableColumn fx:id="actions" prefWidth="130.60003662109375" text="Actions" />
         </columns>
     </TableView>
 
