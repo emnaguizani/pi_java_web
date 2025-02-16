@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="esprit.tn.controllers.AfficherAbsenceController"
+            stylesheets="@css/style.css"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <children>
+        <Label layoutX="30" layoutY="20" text="🔎 Rechercher :" />
+        <TextField fx:id="searchField" layoutX="120" layoutY="20" promptText="ID Élève ou ID Séance"/>
+        <Button layoutX="320" layoutY="20" text="Rechercher" onAction="#rechercherAbsence"/>
+        <Button layoutX="420" layoutY="20" text="Réinitialiser" onAction="#resetSearch"/>
+
+        <TableView fx:id="tableView" layoutX="30" layoutY="60" prefHeight="280" prefWidth="540">
+            <columns>
+                <TableColumn fx:id="idAbsence" text="ID" prefWidth="50"/>
+                <TableColumn fx:id="idSeance" text="ID Séance" prefWidth="120"/>
+                <TableColumn fx:id="idEleve" text="ID Élève" prefWidth="120"/>
+                <TableColumn fx:id="etat" text="État" prefWidth="100"/>
+            </columns>
+        </TableView>
+
+        <Button layoutX="30" layoutY="350" text="⬅ Retour" onAction="#retour"/>
+    </children>
+</AnchorPane>
