@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0" >
+<AnchorPane xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="esprit.tn.controllers.AjouterAbsenceController"
+            stylesheets="@css/style.css"
+            prefHeight="300.0" prefWidth="350.0">
 
+    <children>
+        <Label layoutX="20" layoutY="20" text="ID Séance :" />
+        <TextField fx:id="idSeanceField" layoutX="120" layoutY="20" promptText="ID Séance"/>
+
+        <Label layoutX="20" layoutY="60" text="ID Élève :" />
+        <TextField fx:id="idEleveField" layoutX="120" layoutY="60" promptText="ID Élève"/>
+
+        <Label layoutX="20" layoutY="100" text="État :" />
+        <ComboBox fx:id="etatComboBox" layoutX="120" layoutY="100" prefWidth="150"/>
+
+        <Button layoutX="20" layoutY="150" text="Ajouter" onAction="#ajouterAbsence"/>
+        <Button layoutX="120" layoutY="150" text="Voir Absences" onAction="#afficherAbsences"/>
+    </children>
 </AnchorPane>

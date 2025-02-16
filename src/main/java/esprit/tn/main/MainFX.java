@@ -10,10 +10,10 @@ public class MainFX extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("AjouterSeance.fxml"));
 
-        // Vérifie le chemin
-        primaryStage.setTitle("Gestion des Séances");
+        Parent root = FXMLLoader.load(getClass().getResource("/AjouterSeance.fxml"));
+
+        primaryStage.setTitle("Gestion des Absences");
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
     }
