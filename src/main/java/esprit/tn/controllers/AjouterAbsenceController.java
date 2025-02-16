@@ -1,4 +1,5 @@
 package esprit.tn.controllers;
+import esprit.tn.services.SeanceService;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -38,13 +39,23 @@ public class AjouterAbsenceController {
             int idEleve = Integer.parseInt(idEleveField.getText().trim());
             String etat = etatComboBox.getValue();
 
+            // Vérifier si la séance existe
+            SeanceService seanceService = new SeanceService();
+            if (seanceService.getone(idSeance) == null) {
+                showAlert("Erreur", "L'ID de la séance n'existe pas !");
+                return;
+            }
+
             Absence absence = new Absence(0, idSeance, idEleve, etat);
             absenceService.ajouter(absence);
             showAlert("Succès", "Absence ajoutée avec succès !");
+        } catch (NumberFormatException e) {
+            showAlert("Erreur", "L'ID doit être un nombre valide !");
         } catch (Exception e) {
             showAlert("Erreur", "Vérifiez vos saisies !");
         }
     }
+
 
     @FXML
     public void afficherAbsences() {

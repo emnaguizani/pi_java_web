@@ -1,11 +1,11 @@
 package esprit.tn.services;
 
 import esprit.tn.entities.Absence;
+import esprit.tn.main.DatabaseConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import esprit.tn.main.DatabaseConnection;
 
 public class AbsenceService implements Iservice<Absence> {
     private Connection cnx;
@@ -34,18 +34,7 @@ public class AbsenceService implements Iservice<Absence> {
             stm.setInt(1, absence.getIdSeance());
             stm.setInt(2, absence.getIdEleve());
             stm.setString(3, absence.getEtat());
-            stm.setInt(4, absence.getIdAbsence());
-            stm.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public void supprimer(Absence absence) {
-        String req = "DELETE FROM absence WHERE idAbsence = ?";
-        try (PreparedStatement stm = cnx.prepareStatement(req)) {
-            stm.setInt(1, absence.getIdAbsence());
+            stm.setInt(4, absence.getIdAbsence()); // Assurez-vous que idAbsence est bien défini
             stm.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -84,7 +73,7 @@ public class AbsenceService implements Iservice<Absence> {
                         rs.getInt("idAbsence"),
                         rs.getInt("idSeance"),
                         rs.getInt("idEleve"),
-                        rs.getString("etat")
+                        rs.getString("Etat")
                 );
             }
         } catch (SQLException e) {
@@ -93,4 +82,14 @@ public class AbsenceService implements Iservice<Absence> {
         return null;
     }
 
+    @Override
+    public void supprimer(Absence absence) {
+        String req = "DELETE FROM absence WHERE idAbsence = ?";
+        try (PreparedStatement stm = cnx.prepareStatement(req)) {
+            stm.setInt(1, absence.getIdAbsence());
+            stm.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
