@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="esprit.tn.controllers.ModifierAbsenceController"
+            stylesheets="@css/style.css"
+            prefHeight="300.0" prefWidth="350.0">
+
+    <children>
+        <Label layoutX="20" layoutY="20" text="ID Séance :" />
+        <TextField fx:id="idSeanceField" layoutX="120" layoutY="20" promptText="ID Séance"/>
+
+        <Label layoutX="20" layoutY="60" text="ID Élève :" />
+        <TextField fx:id="idEleveField" layoutX="120" layoutY="60" promptText="ID Élève"/>
+
+        <Label layoutX="20" layoutY="100" text="État :" />
+        <ComboBox fx:id="etatComboBox" layoutX="120" layoutY="100" prefWidth="150"/>
+
+        <Button layoutX="20" layoutY="150" text="Modifier" onAction="#modifierAbsence"/>
+        <Button layoutX="120" layoutY="150" text="Annuler" onAction="#annuler"/>
+    </children>
+</AnchorPane>
