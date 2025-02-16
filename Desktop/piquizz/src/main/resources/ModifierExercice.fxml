@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.ModifierExerciceController">
+    <VBox alignment="CENTER" prefHeight="500" prefWidth="400" spacing="10" style="-fx-padding: 20;">
+        <Label style="-fx-font-size: 20; -fx-font-weight: bold; -fx-padding: 0 0 10 0;" text="UPDATE EXERCICE" />
+
+        <Label text="Question:" />
+        <TextField fx:id="questionField" promptText="Entrez la question" />
+
+        <Label text="Options(comma separated):" />
+        <TextField fx:id="optionsField" promptText="Option1,Option2,Option3" />
+
+        <Label text="Correct Answer:" />
+        <TextField fx:id="correctAnswerField" promptText="Entrez la réponse correcte" />
+
+        <Label text="Score" />
+        <TextField fx:id="scoreField" promptText="Entrez le score" />
+
+        <Label text="Image Path:" />
+        <TextField fx:id="imagePathField" promptText="Entrez le chemin de l'image" />
+
+        <CheckBox fx:id="mandatoryCheckBox" text="Obligatoire" />
+
+        <HBox alignment="CENTER" spacing="10">
+            <Button onAction="#handleSave" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="SAVE" />
+            <Button onAction="#handleCancel" prefHeight="26.0" prefWidth="72.0" style="-fx-background-color: #f44336; -fx-text-fill: white;" text="CANCEL" />
+        </HBox>
+    </VBox>
+</AnchorPane>

@@ -50,6 +50,22 @@ public class ModifierQuizController {
             int duration = Integer.parseInt(durationField.getText());
             int totalScore = Integer.parseInt(totalScoreField.getText());
 
+            if (titleField.getText().trim().isEmpty()) {
+                showErrorMessage("Title cannot be empty.");
+                return;
+            }
+
+            if (descriptionField.getText().trim().isEmpty()) {
+                showErrorMessage("Description cannot be empty.");
+                return;
+            }
+
+            if (authorField.getText().trim().isEmpty()) {
+                showErrorMessage("Author cannot be empty.");
+                return;
+            }
+
+            // Set quiz data
             quizToModify.setTitle(titleField.getText());
             quizToModify.setDescription(descriptionField.getText());
             quizToModify.setDuration(duration);
@@ -58,13 +74,19 @@ public class ModifierQuizController {
 
             QuizService quizService = new QuizService(DatabaseConnection.getInstance().getCnx());
             quizService.updateQuiz(quizToModify);
+
             showMessage("Quiz updated successfully.");
             navigateToQuizList();
         } catch (NumberFormatException e) {
             showErrorMessage("Invalid input. Please enter valid numbers for duration and total score.");
         } catch (SQLException e) {
-            showErrorMessage("Error updating the quiz.");
+            showErrorMessage("Error updating the quiz: " + e.getMessage());
         }
+    }
+
+    @FXML
+    private void cancelQuiz() {
+        navigateToQuizList();
     }
 
     private void navigateToQuizList() {
@@ -79,7 +101,7 @@ public class ModifierQuizController {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            showErrorMessage("Error navigating back to quiz list.");
+            showErrorMessage("Error navigating back to quiz list: " + e.getMessage());
         }
     }
 
@@ -97,21 +119,5 @@ public class ModifierQuizController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
-    }
-    @FXML
-    private void cancelQuiz() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherQuiz.fxml"));
-            Parent root = loader.load();
-
-            AfficherQuizController afficherQuizController = loader.getController();
-            afficherQuizController.loadQuizzes();
-
-            Stage stage = (Stage) titleField.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            showErrorMessage("Error navigating back to quiz list.");
-        }
     }
 }

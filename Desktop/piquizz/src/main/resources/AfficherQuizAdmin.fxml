@@ -3,18 +3,62 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AfficherQuizAdminController">
-    <TableView fx:id="quizTableView" layoutX="134.0" layoutY="22.0" prefHeight="682.0" prefWidth="682.0" AnchorPane.leftAnchor="134.0" AnchorPane.rightAnchor="92.0" AnchorPane.topAnchor="22.0">
-        <columns>
-            <TableColumn fx:id="quizId" prefWidth="53.0" text="Quiz ID" />
-            <TableColumn fx:id="title" prefWidth="130.20001220703125" text="Title" />
-            <TableColumn fx:id="description" prefWidth="93.60000610351562" text="Description" />
-            <TableColumn fx:id="duration" prefWidth="68.0" text="Duration" />
-            <TableColumn fx:id="totalScore" prefWidth="74.0" text="Total Score" />
-            <TableColumn fx:id="author" prefWidth="55.60003662109375" text="Author" />
-            <TableColumn fx:id="exercices" prefWidth="107.5999755859375" text="exercices" />
 
-        </columns>
-    </TableView>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AfficherQuizAdminController">
+    <children>
+        <Label layoutX="20.0" layoutY="20.0" style="-fx-font-size: 24px; -fx-text-fill: #24a7cf; -fx-font-weight: bold;" text="Quiz List" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
 
+        <TableView fx:id="quizTableView" layoutX="20.0" layoutY="70.0" prefHeight="550.0" prefWidth="860.0" style="-fx-background-color: #ffffff; -fx-border-color: #e0e0e0; -fx-border-radius: 10px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 0);" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="70.0">
+            <columns>
+                <TableColumn fx:id="title" prefWidth="180.0" text="Title" style="-fx-alignment: CENTER-LEFT;" />
+                <TableColumn fx:id="description" prefWidth="200.0" text="Description" style="-fx-alignment: CENTER-LEFT;" />
+                <TableColumn fx:id="duration" prefWidth="100.0" text="Duration (min)" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="totalScore" prefWidth="100.0" text="Total Score" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="author" prefWidth="120.0" text="Author" style="-fx-alignment: CENTER-LEFT;" />
+                <TableColumn fx:id="exercices" prefWidth="120.0" text="Exercises" style="-fx-alignment: CENTER;" />
+            </columns>
+        </TableView>
+        <Pane layoutX="-6.0" prefHeight="45.0" prefWidth="779.0" style="-fx-background-color: #2667FF;">
+            <children>
+                <ImageView fitHeight="44.0" fitWidth="45.0" layoutX="14.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@/logo.png" />
+                    </image>
+                </ImageView>
+
+                <Text fill="#fffbfb" layoutX="734.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Forum">
+                    <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                    </font>
+                </Text>
+                <Text fill="#fffbfb" layoutX="657.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reclamation">
+                    <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                    </font>
+                </Text>
+                <Text fill="#fffbfb" layoutX="603.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seance">
+                    <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                    </font>
+                </Text>
+                <Text fill="#fffbfb" layoutX="505.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cours">
+                    <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                    </font>
+                </Text>
+                <Text fill="#fffbfb" layoutX="560.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz">
+                    <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                    </font>
+                </Text>
+            </children>
+        </Pane>
+
+
+
+    </children>
 </AnchorPane>

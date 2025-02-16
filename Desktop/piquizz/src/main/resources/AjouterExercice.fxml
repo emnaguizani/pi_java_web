@@ -1,36 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="250.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AjouterExerciceController">
-    <Label alignment="TOP_LEFT" layoutX="240.0" layoutY="14.0" style="-fx-font-size: 24px; -fx-text-fill: #333; -fx-font-weight: bold;" text="Add Exercice" textFill="#24a7cf" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="14.0" />
+<AnchorPane prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AjouterExerciceController">
+    <children>
 
-    <VBox alignment="CENTER" layoutX="177.0" layoutY="57.0" prefHeight="635.0" prefWidth="269.0" spacing="10">
-        <AnchorPane.topAnchor>57.0</AnchorPane.topAnchor>
-        <AnchorPane.leftAnchor>177.0</AnchorPane.leftAnchor>
+        <VBox alignment="CENTER" layoutX="175.0" layoutY="53.0" prefHeight="690.0" prefWidth="422.0" spacing="15" style="-fx-padding: 20; -fx-background-color: #ffffff; -fx-border-radius: 10px; -fx-border-color: #e0e0e0; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 0);">
+           <Label alignment="TOP_LEFT" style="-fx-font-size: 24px; -fx-text-fill: #24a7cf; -fx-font-weight: bold;" text="ADD EXERCICE" />
+            <Label style="-fx-font-size: 16px; -fx-text-fill: #333; -fx-font-weight: bold;" text="Question" />
+            <TextField fx:id="questionId" promptText="Enter question" style="-fx-padding: 8; -fx-font-size: 14px; -fx-background-color: #f9f9f9; -fx-border-radius: 5px; -fx-border-color: #ccc; -fx-border-width: 1px;" />
 
-        <Label style="-fx-font-size: 16px; -fx-text-fill: #444; -fx-font-weight: bold;" text="Question" />
-        <TextField fx:id="questionId" prefHeight="35.0" prefWidth="300.0" promptText="Enter question" style="-fx-padding: 8; -fx-font-size: 14px; -fx-background-color: #e9f2f7; -fx-border-color: #a6c8e3; -fx-border-radius: 5px;" />
+            <Label style="-fx-font-size: 16px; -fx-text-fill: #333; -fx-font-weight: bold;" text="Options (comma separated)" />
+            <TextField fx:id="optionsId" promptText="Option1, Option2, Option3..." style="-fx-padding: 8; -fx-font-size: 14px; -fx-background-color: #f9f9f9; -fx-border-radius: 5px; -fx-border-color: #ccc; -fx-border-width: 1px;" />
 
-        <Label alignment="TOP_RIGHT" contentDisplay="CENTER" style="-fx-font-size: 16px; -fx-text-fill: #444; -fx-font-weight: bold;" text="Options (comma separated)" />
-        <TextField fx:id="optionsId" promptText="Option1, Option2, Option3..." style="-fx-padding: 8; -fx-font-size: 14px; -fx-background-color: #e9f2f7; -fx-border-color: #a6c8e3; -fx-border-radius: 5px;" />
+            <Label style="-fx-font-size: 16px; -fx-text-fill: #333; -fx-font-weight: bold;" text="Correct Answer" />
+            <TextField fx:id="correctAnswerId" promptText="Correct answer" style="-fx-padding: 8; -fx-font-size: 14px; -fx-background-color: #f9f9f9; -fx-border-radius: 5px; -fx-border-color: #ccc; -fx-border-width: 1px;" />
 
-        <Label style="-fx-font-size: 16px; -fx-text-fill: #444; -fx-font-weight: bold;" text="Correct Answer" />
-        <TextField fx:id="correctAnswerId" promptText="Correct answer" style="-fx-padding: 8; -fx-font-size: 14px; -fx-background-color: #e9f2f7; -fx-border-color: #a6c8e3; -fx-border-radius: 5px;" />
+            <Label style="-fx-font-size: 16px; -fx-text-fill: #333; -fx-font-weight: bold;" text="Score" />
+            <TextField fx:id="scoreId" promptText="Score" style="-fx-padding: 8; -fx-font-size: 14px; -fx-background-color: #f9f9f9; -fx-border-radius: 5px; -fx-border-color: #ccc; -fx-border-width: 1px;" />
 
-        <Label style="-fx-font-size: 16px; -fx-text-fill: #444; -fx-font-weight: bold;" text="Score" />
-        <TextField fx:id="scoreId" promptText="Score" style="-fx-padding: 8; -fx-font-size: 14px; -fx-background-color: #e9f2f7; -fx-border-color: #a6c8e3; -fx-border-radius: 5px;" />
+            <Label style="-fx-font-size: 16px; -fx-text-fill: #333; -fx-font-weight: bold;" text="Image Path" />
+            <TextField fx:id="imagePathId" promptText="Path to Image" style="-fx-padding: 8; -fx-font-size: 14px; -fx-background-color: #f9f9f9; -fx-border-radius: 5px; -fx-border-color: #ccc; -fx-border-width: 1px;" />
 
-        <Label style="-fx-font-size: 16px; -fx-text-fill: #444; -fx-font-weight: bold;" text="Image Path" />
-        <TextField fx:id="imagePathId" promptText="Path to Image" style="-fx-padding: 8; -fx-font-size: 14px; -fx-background-color: #e9f2f7; -fx-border-color: #a6c8e3; -fx-border-radius: 5px;" />
+            <Label style="-fx-font-size: 16px; -fx-text-fill: #333; -fx-font-weight: bold;" text="Mandatory" />
+            <CheckBox fx:id="mandatoryCheckBox" />
 
-        <Label style="-fx-font-size: 16px; -fx-text-fill: #444; -fx-font-weight: bold;" text="Mandatory" />
-        <CheckBox fx:id="mandatoryCheckBox" />
+            <Label fx:id="error" style="-fx-text-fill: #ff4444; -fx-font-size: 12px; -fx-padding: 5; -fx-visible: false;" text="Error Message" />
 
-        <Label fx:id="error" style="-fx-text-fill: red; -fx-font-size: 12px; -fx-padding: 5; -fx-visible: false;" text="Error Message" />
+            <HBox alignment="CENTER" spacing="15">
 
-        <Button fx:id="ajouterButton" onAction="#handleAjouterExercice" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-padding: 15; -fx-font-size: 16px; -fx-border-radius: 8px; -fx-font-weight: bold;" AnchorPane.bottomAnchor="10.0" text="Ajouter" />
-    </VBox>
+                <Button fx:id="ajouterButton" onAction="#handleAjouterExercice" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-padding: 12 20; -fx-font-size: 14px; -fx-border-radius: 5px; -fx-min-width: 100px; -fx-cursor: hand;" text="ADD" />
+                <Button fx:id="retourbutton" onAction="#handleretourAction" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-padding: 12 20; -fx-font-size: 14px; -fx-border-radius: 5px; -fx-min-width: 100px; -fx-cursor: hand;" text="BACK" />
 
+            </HBox>
+        </VBox>
+        <Pane layoutX="-6.0" layoutY="-3.0" prefHeight="45.0" prefWidth="779.0" style="-fx-background-color: #2667FF;">
+            <children>
+                <ImageView fitHeight="44.0" fitWidth="45.0" layoutX="14.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@/logo.png" />
+                    </image>
+                </ImageView>
+
+                <Text fill="#fffbfb" layoutX="734.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Forum">
+                    <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                    </font>
+                </Text>
+                <Text fill="#fffbfb" layoutX="657.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reclamation">
+                    <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                    </font>
+                </Text>
+                <Text fill="#fffbfb" layoutX="603.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seance">
+                    <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                    </font>
+                </Text>
+                <Text fill="#fffbfb" layoutX="505.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cours">
+                    <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                    </font>
+                </Text>
+                <Text fill="#fffbfb" layoutX="560.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz">
+                    <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                    </font>
+                </Text>
+            </children>
+        </Pane>
+
+    </children>
 </AnchorPane>

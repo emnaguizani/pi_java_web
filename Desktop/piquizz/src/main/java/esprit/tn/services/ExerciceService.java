@@ -68,11 +68,11 @@ public class ExerciceService {
         try (PreparedStatement stmt = cnx.prepareStatement(query)) {
             stmt.setString(1, exercice.getQuestion());
             stmt.setString(2, String.join(",", exercice.getOptions()));
-            stmt.setString(4, exercice.getCorrectAnswer());
-            stmt.setInt(5, exercice.getScore());
-            stmt.setString(6, exercice.getImagePath());
-            stmt.setBoolean(7, exercice.isMandatory());
-            stmt.setInt(8, exercice.getIdE());
+            stmt.setString(3, exercice.getCorrectAnswer());
+            stmt.setInt(4, exercice.getScore());
+            stmt.setString(5, exercice.getImagePath());
+            stmt.setBoolean(6, exercice.isMandatory());
+            stmt.setInt(7, exercice.getIdE());
 
             int affectedRows = stmt.executeUpdate();
             if (affectedRows == 0) {

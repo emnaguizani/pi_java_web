@@ -32,7 +32,7 @@ public class AjouterQuizController {
     private TextField authorid;
 
     @FXML
-    private TextField creationDateid;
+    private TextField Dateid;
 
     @FXML
     private TextField descriptionid;
@@ -57,31 +57,65 @@ public class AjouterQuizController {
     @FXML
     private void handleAjouterAction() {
         try {
-            String title = titleId.getText();
-            String description = descriptionid.getText();
-            int duration = Integer.parseInt(durationid.getText());
-            int totalScore = Integer.parseInt(totalScoreid.getText());
+            if (titleId.getText().isEmpty() || descriptionid.getText().isEmpty() ||
+                    durationid.getText().isEmpty() || totalScoreid.getText().isEmpty() ||
+                    Dateid.getText().isEmpty() || authorid.getText().isEmpty()) {
+                error.setText("All fields must be completed!");
+                return;
+            }
 
-            String creationDateString = creationDateid.getText();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            LocalDateTime creationDate = LocalDateTime.parse(creationDateString, formatter);
+            String title = titleId.getText().trim();
+            String description = descriptionid.getText().trim();
+            String author = authorid.getText().trim();
 
-            String author = authorid.getText();
+            if (title.length() < 3) {
+                error.setText("The title must contain at least 3 characters.");
+                return;
+            }
+            if (description.length() < 10) {
+                error.setText("The description must contain at least 10 characters.");
+                return;
+            }
+            if (author.length() < 3) {
+                error.setText("The author must contain at least 3 characters.");
+                return;
+            }
+
+            int duration;
+            int totalScore;
+            try {
+                duration = Integer.parseInt(durationid.getText().trim());
+                totalScore = Integer.parseInt(totalScoreid.getText().trim());
+
+                if (duration <= 0 || totalScore <= 0) {
+                    error.setText("Duration and total score must be positive numbers.");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                error.setText("Please enter valid numerical values ​​for duration and total score.");
+                return;
+            }
+
+            LocalDateTime creationDate;
+            try {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                creationDate = LocalDateTime.parse(Dateid.getText().trim(), formatter);
+            } catch (Exception e) {
+                error.setText("Invalid date format! Use 'YYYY-MM-DD HH:mm:ss'.");
+                return;
+            }
+
             List<Exercice> exercices = new ArrayList<>();
-
             Quiz quiz = new Quiz(title, description, duration, totalScore, creationDate, author, exercices);
 
             QuizService quizService = new QuizService(cnx);
             quizService.ajouterQuiz(quiz);
 
             int quizId = quiz.getQuiz_id();
-            error.setText("Quiz ajouté avec succès!");
-
+            error.setText("Quiz added successfully!");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterExercice.fxml"));
             Pane root = loader.load();
-
             AjouterExerciceController ajouterExerciceController = loader.getController();
-
             ajouterExerciceController.setQuizId(quizId);
 
             Stage stage = (Stage) ajouterButton.getScene().getWindow();
@@ -91,12 +125,10 @@ public class AjouterQuizController {
             stage.show();
 
         } catch (SQLException e) {
-            error.setText("Erreur lors de l'ajout du quiz: " + e.getMessage());
+            error.setText("Error adding quiz: " + e.getMessage());
             e.printStackTrace();
-        } catch (NumberFormatException e) {
-            error.setText("Veuillez entrer des valeurs valides pour la durée et le score total.");
-        } catch (Exception e) {
-            error.setText("Erreur lors de la conversion de la date ou autres erreurs.");
+        } catch (IOException e) {
+            error.setText("Error loading interface.");
             e.printStackTrace();
         }
     }
@@ -112,11 +144,11 @@ public class AjouterQuizController {
             Scene scene = new Scene(root);
 
             stage.setScene(scene);
-            stage.setTitle("Afficher Quiz");
+            stage.setTitle("Show Quiz");
             stage.show();
 
         } catch (IOException e) {
-            error.setText("Erreur lors du chargement de la page AfficherQuiz.");
+            error.setText("Error loading the ShowQuiz page.");
             e.printStackTrace();
         }
     }

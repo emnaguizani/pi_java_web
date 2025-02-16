@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -50,9 +51,12 @@ public class AfficherExerciceController {
 
     private ExerciceService exerciceService;
     private Connection cnx = DatabaseConnection.getInstance().getCnx();
+    private int quizId;
 
     @FXML
     public void initialize() {
+        exerciceIdColumn.setVisible(false);
+
         exerciceService = new ExerciceService(cnx);
         exerciceIdColumn.setCellValueFactory(new PropertyValueFactory<>("idE"));
         questionColumn.setCellValueFactory(new PropertyValueFactory<>("question"));
@@ -89,10 +93,11 @@ public class AfficherExerciceController {
     }
 
     public void setQuizId(int quizId) {
+        this.quizId = quizId;
         loadExercises(quizId);
     }
 
-    private void loadExercises(int quizId) {
+    public void loadExercises(int quizId) {
         try {
             List<Exercice> exercices = exerciceService.getExercicesByQuizId(quizId);
             exercicesTable.getItems().setAll(exercices);
@@ -101,7 +106,6 @@ public class AfficherExerciceController {
             showMessage("Error loading exercises from the database.");
         }
     }
-
 
     private void handleDelete(Exercice exercice) {
         try {
@@ -113,10 +117,25 @@ public class AfficherExerciceController {
             showMessage("Error deleting the exercice.");
         }
     }
-
     private void handleModify(Exercice exercice) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierExercice.fxml"));
+            Parent root = loader.load();
 
-        showMessage("Modify action triggered for Exercice: " + exercice.getIdE());
+            ModifierExerciceController exerciceController = loader.getController();
+            exerciceController.setExercice(exercice);
+            exerciceController.setAfficherExerciceController(this);
+            exerciceController.setQuizId(quizId);
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Edit Exercise");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showMessage("Error loading edit view.");
+        }
     }
     private void showMessage(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -124,8 +143,8 @@ public class AfficherExerciceController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
-
     }
+
     public void goBackToQuiz() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherQuiz.fxml"));
@@ -140,6 +159,4 @@ public class AfficherExerciceController {
             showMessage("Error loading the quiz view.");
         }
     }
-
-
 }

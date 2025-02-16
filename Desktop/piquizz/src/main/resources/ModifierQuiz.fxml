@@ -2,56 +2,29 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="esprit.tn.controllers.ModifierQuizController">
-    <VBox alignment="CENTER" spacing="15" >
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="esprit.tn.controllers.ModifierQuizController">
+    <VBox alignment="CENTER" spacing="15" style="-fx-padding: 20;">
+        <Label style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: #3b28cc;" text="UPDATE QUIZ" />
 
-        <!-- Title Field with Label -->
-        <Label text="Quiz Title" styleClass="label-title" textFill="#3b28cc">
-            <font>
-                <Font size="14.0" />
-            </font>
-        </Label>
-        <TextField fx:id="titleField" promptText="Enter Quiz Title" styleClass="input-field" prefWidth="300" />
+        <Label style="-fx-font-size: 14; -fx-text-fill: #3b28cc;" text="Quiz Title:" />
+        <TextField fx:id="titleField" promptText="Enter Quiz Title" style="-fx-pref-width: 300; -fx-padding: 5;" />
 
-        <!-- Description Field with Label -->
-        <Label text="Quiz Description" styleClass="label-description" textFill="#3b28cc">
-            <font>
-                <Font size="14.0" />
-            </font>
-        </Label>
-        <TextArea fx:id="descriptionField" promptText="Enter Quiz Description" styleClass="input-field" prefWidth="300" />
+        <Label style="-fx-font-size: 14; -fx-text-fill: #3b28cc;" text="Quiz Description:" />
+        <TextArea fx:id="descriptionField" promptText="Enter Quiz Description" style="-fx-pref-width: 300; -fx-pref-height: 100; -fx-padding: 5;" />
 
-        <!-- Duration Field with Label -->
-        <Label text="Duration (min)" styleClass="label-duration" textFill="#3b28cc">
-            <font>
-                <Font size="14.0" />
-            </font>
-        </Label>
-        <TextField fx:id="durationField" promptText="Enter Duration (min)" styleClass="input-field" prefWidth="300" />
+        <Label style="-fx-font-size: 14; -fx-text-fill: #3b28cc;" text="Duration (min):" />
+        <TextField fx:id="durationField" promptText="Enter Duration (min)" style="-fx-pref-width: 300; -fx-padding: 5;" />
 
-        <!-- Total Score Field with Label -->
-        <Label text="Total Score" styleClass="label-score" textFill="#3b28cc">
-            <font>
-                <Font size="14.0" />
-            </font>
-        </Label>
-        <TextField fx:id="totalScoreField" promptText="Enter Total Score" styleClass="input-field" prefWidth="300" />
+        <Label style="-fx-font-size: 14; -fx-text-fill: #3b28cc;" text="Total Score:" />
+        <TextField fx:id="totalScoreField" promptText="Enter Total Score" style="-fx-pref-width: 300; -fx-padding: 5;" />
 
-        <!-- Author Field with Label -->
-        <Label text="Author Name" styleClass="label-author" textFill="#3b28cc">
-            <font>
-                <Font size="14.0" />
-            </font>
-        </Label>
-        <TextField fx:id="authorField" promptText="Enter Author Name" styleClass="input-field" prefWidth="300" />
+        <Label style="-fx-font-size: 14; -fx-text-fill: #3b28cc;" text="Author Name:" />
+        <TextField fx:id="authorField" promptText="Enter Author Name" style="-fx-pref-width: 300; -fx-padding: 5;" />
 
-        <!-- Buttons -->
-        <HBox spacing="15" alignment="CENTER">
-            <Button text="Save" onAction="#saveQuiz" styleClass="btn-primary" prefWidth="100"/>
-            <Button text="Cancel" onAction="#cancelQuiz" styleClass="btn-secondary" prefWidth="100"/>
+        <HBox alignment="CENTER" spacing="15">
+            <Button onAction="#saveQuiz" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-pref-width: 100; -fx-padding: 5;" text="Save" />
+            <Button onAction="#cancelQuiz" style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-pref-width: 100; -fx-padding: 5;" text="Cancel" />
         </HBox>
-
     </VBox>
 </AnchorPane>

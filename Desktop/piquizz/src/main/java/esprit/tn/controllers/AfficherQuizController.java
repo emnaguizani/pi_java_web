@@ -1,5 +1,6 @@
 package esprit.tn.controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -53,6 +54,8 @@ public class AfficherQuizController {
 
     @FXML
     public void initialize() {
+        quiz_Id.setVisible(false);
+
         quizService = new QuizService(cnx);
 
         quiz_Id.setCellValueFactory(new PropertyValueFactory<>("quiz_id"));
@@ -155,29 +158,41 @@ public class AfficherQuizController {
     }
 
     private void handleDelete(Quiz quiz) {
-        try {
-            quizService.deleteQuiz(quiz.getQuiz_id());
-            loadQuizzes();
-            showMessage("Quiz deleted successfully.");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            showMessage("Error deleting the quiz.");
+        if (quiz != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation de suppression");
+            alert.setHeaderText("Supprimer le quiz");
+            alert.setContentText("Êtes-vous sûr de vouloir supprimer ce quiz : " + quiz.getTitle() + " ?");
+
+            ButtonType buttonYes = new ButtonType("Oui", ButtonBar.ButtonData.YES);
+            ButtonType buttonNo = new ButtonType("Non", ButtonBar.ButtonData.NO);
+
+            alert.getButtonTypes().setAll(buttonYes, buttonNo);
+
+            alert.showAndWait().ifPresent(response -> {
+                if (response == buttonYes) {
+                    try {
+                        quizService.deleteQuiz(quiz.getQuiz_id());
+                        loadQuizzes(); // Rafraîchir la liste après suppression
+                        showMessage("Quiz supprimé avec succès !");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        showMessage("Erreur lors de la suppression du quiz.");
+                    }
+                }
+            });
         }
     }
 
     private void handleModify(Quiz quiz) {
         try {
-            // Load the Modify Quiz FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierQuiz.fxml"));
             Parent root = loader.load();
 
-            // Get the controller of the Modify Quiz page
             ModifierQuizController modifierQuizController = loader.getController();
 
-            // Pass the selected quiz data to the controller of the Modify page
             modifierQuizController.setQuizData(quiz);
 
-            // Create a new scene and show the Modify Quiz page
             Stage stage = (Stage) quizTableView.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
@@ -185,6 +200,24 @@ public class AfficherQuizController {
         } catch (IOException e) {
             e.printStackTrace();
             showMessage("Error loading modify quiz page.");
+        }
+    }
+    @FXML
+    private void onCreateQuizClick(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterQuiz.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Create New Quiz");
+
+            stage.show();
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
