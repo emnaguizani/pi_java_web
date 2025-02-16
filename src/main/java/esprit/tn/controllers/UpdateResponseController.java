@@ -56,7 +56,7 @@ public class UpdateResponseController {
         if (forum != null) {
             // Populate forum details
             TitreForum.setText(forum.getTitle());
-            NomCreateur.setText("Author ID: " + forum.getIdAuthor());
+            NomCreateur.setText("Author: getAuthorNameById " );
             DescriptionForum.setText(forum.getDescription());
 
             // Format the date

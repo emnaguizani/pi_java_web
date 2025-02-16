@@ -28,7 +28,7 @@ public class ListResponsesController {
     private TextArea DescriptionForum;
 
     @FXML
-    private ListView<Response> ListResponses; // Change to display Response objects
+    private ListView<Response> ListResponses;
 
     @FXML
     private Text NomCreateur;
@@ -55,10 +55,10 @@ public class ListResponsesController {
     private void populateFields() {
         if (forum != null) {
             TitreForum.setText(forum.getTitle());
-            NomCreateur.setText("Author ID: " + forum.getIdAuthor());
+            NomCreateur.setText("Author: getAuthorNameById " );
             DescriptionForum.setText(forum.getDescription());
 
-            // Format the date
+
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
             String formattedDate = forum.getDateCreation().format(formatter);
             DateCreation.setText(formattedDate);
@@ -67,11 +67,11 @@ public class ListResponsesController {
 
     private void populateResponses() {
         if (forum != null) {
-            // Fetch responses for the forum using ForumService
+
             List<Response> responses = forumService.getResponsesForForum(forum.getIdForum());
             ListResponses.getItems().setAll(responses);
 
-            // Set a custom cell factory to display author info, buttons, and date
+
             ListResponses.setCellFactory(new Callback<>() {
                 @Override
                 public ListCell<Response> call(ListView<Response> param) {
@@ -82,26 +82,26 @@ public class ListResponsesController {
                         private final Text dateText = new Text();
                         private final Text contentText = new Text();
                         private final HBox buttonsBox = new HBox(10, updateButton, deleteButton);
-                        private final HBox authorDateBox = new HBox(10, authorText, dateText); // Author + Date on same row
+                        private final HBox authorDateBox = new HBox(10, authorText, dateText);
                         private final VBox vbox = new VBox(5, authorDateBox, contentText, buttonsBox);
 
                         {
-                            // Style buttons
+
                             updateButton.setStyle("-fx-background-color: #ffc107; -fx-text-fill: black;");
                             deleteButton.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white;");
 
-                            // Align the buttons box to the right
+
                             HBox.setHgrow(buttonsBox, javafx.scene.layout.Priority.ALWAYS);
                             buttonsBox.setAlignment(Pos.CENTER_RIGHT);
 
-                            // Align date to the right
+
                             HBox.setHgrow(dateText, javafx.scene.layout.Priority.ALWAYS);
                             dateText.setStyle("-fx-text-alignment: right;");
 
-                            // Ensure the author and date are spaced correctly
+
                             authorDateBox.setAlignment(Pos.CENTER_LEFT);
 
-                            // Handle update button click
+
                             updateButton.setOnAction(event -> {
                                 Response response = getItem();
                                 if (response != null) {
@@ -109,7 +109,7 @@ public class ListResponsesController {
                                 }
                             });
 
-                            // Handle delete button click
+
                             deleteButton.setOnAction(event -> {
                                 Response response = getItem();
                                 if (response != null) {
@@ -125,18 +125,14 @@ public class ListResponsesController {
                                 setText(null);
                                 setGraphic(null);
                             } else {
-                                // Set author info
-                                authorText.setText("Auteur: " + response.getAuthor());
+                                authorText.setText("Auteur:getAuthorNameById" );
 
-                                // Set response content
                                 contentText.setText(response.getContent());
 
-                                // Format creation date
                                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy, HH:mm");
                                 String formattedDate = response.getCreatedAt().format(formatter);
                                 dateText.setText(formattedDate);
 
-                                // Display VBox with author + date (same row), content, and buttons
                                 setGraphic(vbox);
                             }
                         }
@@ -149,16 +145,16 @@ public class ListResponsesController {
 
     private void handleUpdateResponse(Response response) {
         try {
-            // Load the UpdateResponse.fxml file
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/UpdateReponse.fxml"));
             Parent root = loader.load();
 
-            // Get the controller and set the response and forum data
-            UpdateResponseController controller = loader.getController();
-            controller.setResponse(response); // Pass the selected response
-            controller.setForum(forum); // Pass the forum
 
-            // Set the new scene
+            UpdateResponseController controller = loader.getController();
+            controller.setResponse(response);
+            controller.setForum(forum);
+
+
             ListResponses.getScene().setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();
@@ -167,28 +163,28 @@ public class ListResponsesController {
     }
 
     private void handleDeleteResponse(Response response) {
-        // Delete the response from the database
+
         responseService.deleteResponse(response.getIdResponse());
 
-        // Remove the response from the ListView
+
         ListResponses.getItems().remove(response);
 
-        // Show a success message
+
         showAlert("Success", "Response deleted successfully!");
     }
 
     @FXML
     private void handleAjouterReponse(ActionEvent event) {
         try {
-            // Load the AjouterResponse.fxml file
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterReponse.fxml"));
             Parent root = loader.load();
 
-            // Get the controller and set the forum data
+
             AjouterResponseController controller = loader.getController();
             controller.setForum(forum);
 
-            // Set the new scene
+
             ListResponses.getScene().setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();
@@ -198,7 +194,7 @@ public class ListResponsesController {
     @FXML
     private void goToListForums(ActionEvent event) {
         try {
-            // Load the ListForums.fxml file
+
             Parent root = FXMLLoader.load(getClass().getResource("/ListForums.fxml"));
             ListResponses.getScene().setRoot(root);
         } catch (IOException e) {

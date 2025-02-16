@@ -54,7 +54,7 @@ public class AjouterResponseController {
     private void populateFields() {
         if (forum != null) {
             TitreForum.setText(forum.getTitle());
-            NomCreateur.setText("Author ID: " + forum.getIdAuthor());
+            NomCreateur.setText("Author: getAuthorNameById " );
             DescriptionForum.setText(forum.getDescription());
 
 
