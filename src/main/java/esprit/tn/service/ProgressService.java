@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class ProgressService implements ProgressServiceInterface<Progress> {
     Connection con ;
     public ProgressService() {
-        con= DatabaseConnection.instance.getCon();
+        con= DatabaseConnection.getInstance().getCon();
     }
 
 
@@ -29,6 +29,20 @@ public class ProgressService implements ProgressServiceInterface<Progress> {
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void create(Progress progress) {
+        String req = "INSERT INTO progress (cours_id, eleve_id, statut_progression) VALUES (?, ?, ?)";
+
+        try (PreparedStatement stm = con.prepareStatement(req)) {
+            stm.setInt(1, progress.getIdCours());
+            stm.setInt(2, progress.getIdEleve());
+            stm.setString(3, progress.getProgress().name());
+            stm.executeUpdate();
+            System.out.println("Progress created successfully for Course ID: " + progress.getIdCours());
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

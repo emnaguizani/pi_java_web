@@ -114,7 +114,7 @@ public class AjouterCoursController implements Initializable {
 
         String creationDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
-        int formateurId = 1;
+        int formateurId = 1; // bech yetbaddell fl integration bl formateur.getIdformateur()
 
         String status = StatusBox.getValue();
         String niveau = LevelBox.getValue();
@@ -137,7 +137,7 @@ public class AjouterCoursController implements Initializable {
         newCourse.setVideoPaths(List.of(videoPaths.split(",")));
 
         service.add(newCourse);
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Course Added");
         alert.setContentText("The course has been successfully added.");
         alert.showAndWait();

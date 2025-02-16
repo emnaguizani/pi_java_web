@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.media.MediaView?>
+<?import javafx.scene.control.Button?>
+
+<VBox spacing="20" alignment="CENTER" xmlns:fx="http://javafx.com/fxml" fx:controller="esprit.tn.controllers.CourseDetailsController">
+    <Label fx:id="titleLabel" style="-fx-font-size: 20px;"/>
+    <Label fx:id="descriptionLabel" style="-fx-font-size: 16px;"/>
+    <VBox fx:id="videoContainer" spacing="10" alignment="CENTER"/>
+    <CheckBox fx:id="completedCheckBox" text="If you completed the course, check it"/>
+    <Button fx:id="submitButton" text="Submit" onAction="#handleCompletion"/>
+</VBox>
