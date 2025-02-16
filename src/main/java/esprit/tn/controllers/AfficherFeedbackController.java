@@ -91,12 +91,61 @@ public class AfficherFeedbackController {
 
     @FXML
     void ModifierFeedback() {
+        Feedback feedbackChoisi = TableViewF.getSelectionModel().getSelectedItem();
 
+        if (feedbackChoisi != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierFeedback.fxml"));
+                Parent root = loader.load();
+
+                // Passer la réclamation sélectionnée au contrôleur de la deuxième interface
+                ModifierFeedbackController controller = loader.getController();
+                controller.setFeedback(feedbackChoisi);
+
+                // Afficher la deuxième interface
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Aucune réclamation sélectionnée.");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Vous devez sélectionner une réclamation !");
+            alert.setContentText("Veuillez sélectionner une réclamation afin de modifier");
+            alert.showAndWait();
+        }
     }
 
-    @FXML
-    void SupprimerFeedback() {
 
+    @FXML
+    void SupprimerFeedback(ActionEvent event) {
+        // Récupérer le feedback sélectionné
+        Feedback feedbackChoisi = TableViewF.getSelectionModel().getSelectedItem();
+
+        if (feedbackChoisi != null) {
+            // Supprimer le feedback de la base de données
+            FeedbackService fs = new FeedbackService();
+            fs.supprimerF(feedbackChoisi);
+
+            // Rafraîchir la TableView
+            ObservableList<Feedback> observableList = FXCollections.observableList(fs.getallF());
+            TableViewF.setItems(observableList);
+
+            // Afficher un message de succès
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Succès");
+            alert.setContentText("Feedback supprimé avec succès !");
+            alert.showAndWait();
+        } else {
+            System.out.println("Aucun feedback sélectionné.");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Vous devez sélectionner un feedback !");
+            alert.setContentText("Veuillez sélectionner un feedback afin de le supprimer");
+            alert.showAndWait();
+        }
     }
 
 }

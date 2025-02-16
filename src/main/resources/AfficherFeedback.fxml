@@ -7,7 +7,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AfficherFeedbackController">
+<!--<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AfficherFeedbackController">-->
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AfficherFeedbackController">
    <children>
       <Label layoutX="194.0" layoutY="19.0" text="Gérer les feedbacks" textAlignment="CENTER" textFill="RED">
          <font>
@@ -25,7 +27,7 @@
          </columns>
       </TableView>
       <Button layoutX="351.0" layoutY="300.0" mnemonicParsing="false" onAction="#SupprimerFeedback" prefHeight="26.0" prefWidth="140.0" text="Supprimer Feedback" />
-      <Button layoutX="95.0" layoutY="300.0" mnemonicParsing="false" onAction="#ModifierFeedback" prefHeight="26.0" prefWidth="140.0" text="Modifier Feedback" />
+      <Button fx:id="ModifFeed" layoutX="95.0" layoutY="300.0" mnemonicParsing="false" onAction="#ModifierFeedback" prefHeight="26.0" prefWidth="140.0" text="Modifier Feedback" />
       <Button fx:id="backReclamation" layoutX="24.0" layoutY="21.0" mnemonicParsing="false" onAction="#BackReclamation" text="Back" />
    </children>
 </AnchorPane>
