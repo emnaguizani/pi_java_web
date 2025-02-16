@@ -55,9 +55,8 @@ public class ListResponsesController {
     private void populateFields() {
         if (forum != null) {
             TitreForum.setText(forum.getTitle());
-            NomCreateur.setText("Author: getAuthorNameById " );
+            NomCreateur.setText("Author: getAuthorNameById");
             DescriptionForum.setText(forum.getDescription());
-
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
             String formattedDate = forum.getDateCreation().format(formatter);
@@ -67,10 +66,8 @@ public class ListResponsesController {
 
     private void populateResponses() {
         if (forum != null) {
-
             List<Response> responses = forumService.getResponsesForForum(forum.getIdForum());
             ListResponses.getItems().setAll(responses);
-
 
             ListResponses.setCellFactory(new Callback<>() {
                 @Override
@@ -86,21 +83,16 @@ public class ListResponsesController {
                         private final VBox vbox = new VBox(5, authorDateBox, contentText, buttonsBox);
 
                         {
-
                             updateButton.setStyle("-fx-background-color: #ffc107; -fx-text-fill: black;");
                             deleteButton.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white;");
-
 
                             HBox.setHgrow(buttonsBox, javafx.scene.layout.Priority.ALWAYS);
                             buttonsBox.setAlignment(Pos.CENTER_RIGHT);
 
-
                             HBox.setHgrow(dateText, javafx.scene.layout.Priority.ALWAYS);
                             dateText.setStyle("-fx-text-alignment: right;");
 
-
                             authorDateBox.setAlignment(Pos.CENTER_LEFT);
-
 
                             updateButton.setOnAction(event -> {
                                 Response response = getItem();
@@ -108,7 +100,6 @@ public class ListResponsesController {
                                     handleUpdateResponse(response);
                                 }
                             });
-
 
                             deleteButton.setOnAction(event -> {
                                 Response response = getItem();
@@ -125,7 +116,7 @@ public class ListResponsesController {
                                 setText(null);
                                 setGraphic(null);
                             } else {
-                                authorText.setText("Auteur:getAuthorNameById" );
+                                authorText.setText("Auteur: getAuthorNameById");
 
                                 contentText.setText(response.getContent());
 
@@ -139,21 +130,17 @@ public class ListResponsesController {
                     };
                 }
             });
-
         }
     }
 
     private void handleUpdateResponse(Response response) {
         try {
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/UpdateReponse.fxml"));
             Parent root = loader.load();
-
 
             UpdateResponseController controller = loader.getController();
             controller.setResponse(response);
             controller.setForum(forum);
-
 
             ListResponses.getScene().setRoot(root);
         } catch (IOException e) {
@@ -164,26 +151,30 @@ public class ListResponsesController {
 
     private void handleDeleteResponse(Response response) {
 
-        responseService.deleteResponse(response.getIdResponse());
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Delete Response");
+        alert.setContentText("Are you sure you want to delete this response?");
 
+        alert.showAndWait().ifPresent(buttonType -> {
+            if (buttonType == ButtonType.OK) {
+                responseService.deleteResponse(response.getIdResponse());
 
-        ListResponses.getItems().remove(response);
+                ListResponses.getItems().remove(response);
 
-
-        showAlert("Success", "Response deleted successfully!");
+                showAlert("Success", "Response deleted successfully!");
+            }
+        });
     }
 
     @FXML
     private void handleAjouterReponse(ActionEvent event) {
         try {
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterReponse.fxml"));
             Parent root = loader.load();
 
-
             AjouterResponseController controller = loader.getController();
             controller.setForum(forum);
-
 
             ListResponses.getScene().setRoot(root);
         } catch (IOException e) {
@@ -194,7 +185,6 @@ public class ListResponsesController {
     @FXML
     private void goToListForums(ActionEvent event) {
         try {
-
             Parent root = FXMLLoader.load(getClass().getResource("/ListForums.fxml"));
             ListResponses.getScene().setRoot(root);
         } catch (IOException e) {

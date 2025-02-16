@@ -14,16 +14,16 @@
    <children>
       <Pane prefHeight="400.0" prefWidth="622.0">
          <children>
-            <Text fill="#002fff" layoutX="229.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20px;" text="Mettre a jour Votre Forum " wrappingWidth="481.15234375">
+            <Text fill="#002fff" layoutX="271.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20px;" text="Update Your Forum " wrappingWidth="481.15234375">
                <font>
                   <Font name="Yu Gothic UI Regular" size="15.0" />
                </font>
             </Text>
-            <Text layoutX="229.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 18px;" text="Titre" wrappingWidth="44.88671875" />
+            <Text layoutX="229.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 18px;" text="Title" wrappingWidth="44.88671875" />
             <TextField fx:id="forumTitle" layoutX="229.0" layoutY="154.0" prefHeight="31.0" prefWidth="282.0" />
             <Text layoutX="230.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 18;" text="Description" wrappingWidth="99.70703125" />
             <TextArea fx:id="forumDescription" layoutX="229.0" layoutY="219.0" prefHeight="97.0" prefWidth="282.0" />
-            <Button layoutX="393.0" layoutY="337.0" mnemonicParsing="false" onAction="#MettreAJourForum" style="-fx-font-size: 15px;" text="Mettre a Jour" />
+            <Button layoutX="393.0" layoutY="337.0" mnemonicParsing="false" onAction="#MettreAJourForum" style="-fx-font-size: 15px;" text="Update" />
             <Button fx:id="ResetForum" layoutX="249.0" layoutY="337.0" mnemonicParsing="false" onAction="#resetFields" prefHeight="31.0" prefWidth="65.0" style="-fx-font-size: 15px;" text="Reset" />
             <Pane layoutX="-2.0" prefHeight="45.0" prefWidth="779.0" style="-fx-background-color: #2667FF;">
                <children>

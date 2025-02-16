@@ -54,19 +54,19 @@ public class UpdateResponseController {
 
     private void populateFields() {
         if (forum != null) {
-            // Populate forum details
+
             TitreForum.setText(forum.getTitle());
             NomCreateur.setText("Author: getAuthorNameById " );
             DescriptionForum.setText(forum.getDescription());
 
-            // Format the date
+
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
             String formattedDate = forum.getDateCreation().format(formatter);
             DateCreation.setText(formattedDate);
         }
 
         if (response != null) {
-            // Populate the old response content
+
             ResponseContent.setText(response.getContent());
         }
     }
@@ -74,10 +74,10 @@ public class UpdateResponseController {
     @FXML
     private void AjouteResponse(ActionEvent event) {
         try {
-            // Get the updated content
+
             String updatedContent = ResponseContent.getText().trim();
 
-            // Validate the content
+
             if (updatedContent.isEmpty()) {
                 showAlert("Error", "Content cannot be empty.");
                 return;
@@ -88,14 +88,14 @@ public class UpdateResponseController {
                 return;
             }
 
-            // Update the response
+
             response.setContent(updatedContent);
             responseService.updateResponse(response);
 
-            // Show a success message
+
             showAlert("Success", "Response updated successfully!");
 
-            // Navigate back to the ListResponses page
+
             goToListResponses();
         } catch (Exception e) {
             showAlert("Error", "Failed to update response: " + e.getMessage());
@@ -104,22 +104,22 @@ public class UpdateResponseController {
 
     @FXML
     private void resetFields(ActionEvent event) {
-        // Reset the response content field
+
         ResponseContent.setText(response.getContent());
     }
 
     @FXML
     private void goToListResponses() {
         try {
-            // Load the ListResponses.fxml file
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListResponses.fxml"));
             Parent root = loader.load();
 
-            // Get the controller and set the forum data
+
             ListResponsesController controller = loader.getController();
             controller.setForum(forum);
 
-            // Set the new scene
+
             ResponseContent.getScene().setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();
@@ -129,7 +129,7 @@ public class UpdateResponseController {
     @FXML
     private void goToListForums(ActionEvent event) {
         try {
-            // Load the ListForums.fxml file
+
             Parent root = FXMLLoader.load(getClass().getResource("/ListForums.fxml"));
             ResponseContent.getScene().setRoot(root);
         } catch (IOException e) {

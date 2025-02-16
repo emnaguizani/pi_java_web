@@ -10,20 +10,20 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="514.0" prefWidth="773.0" xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AjouterForumController">
+<AnchorPane prefHeight="514.0" prefWidth="773.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AjouterForumController">
    <children>
       <Pane prefHeight="400.0" prefWidth="622.0">
          <children>
-            <Text fill="#002fff" layoutX="220.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20px;" text="Une Question ? Créez Un Forum !" wrappingWidth="303.15234375">
+            <Text fill="#002fff" layoutX="220.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20px;" text="Got a Question ? Create a Forum !" wrappingWidth="303.15234375">
                <font>
                   <Font name="Yu Gothic UI Regular" size="15.0" />
                </font>
             </Text>
-            <Text layoutX="229.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 18px;" text="Titre" wrappingWidth="44.09734344482422" />
+            <Text layoutX="229.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 18px;" text="Title" wrappingWidth="44.09734344482422" />
             <TextField fx:id="forumTitle" layoutX="226.0" layoutY="220.0" prefHeight="31.0" prefWidth="291.0" />
             <Text layoutX="223.0" layoutY="273.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 18px;" text="Description" wrappingWidth="100.70703125" />
             <TextArea fx:id="forumDescription" layoutX="226.0" layoutY="279.0" prefHeight="82.0" prefWidth="291.0" />
-            <Button layoutX="324.0" layoutY="376.0" mnemonicParsing="false" onAction="#AjouteForum" prefHeight="31.0" prefWidth="65.0" text="Creez" />
+            <Button layoutX="324.0" layoutY="376.0" mnemonicParsing="false" onAction="#AjouteForum" prefHeight="31.0" prefWidth="65.0" text="Create" />
             <Button fx:id="ResetForum" layoutX="235.0" layoutY="376.0" mnemonicParsing="false" onAction="#resetFields" prefHeight="31.0" prefWidth="53.0" text="Reset" />
             <Pane layoutX="-2.0" prefHeight="45.0" prefWidth="779.0" style="-fx-background-color: #2667FF;">
                <children>
@@ -54,7 +54,7 @@
                   </Text>
                </children>
             </Pane>
-            <Text layoutX="225.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 18px;" text="ID De Le Createur" wrappingWidth="146.70703125" />
+            <Text layoutX="225.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 18px;" text="Creator ID:" wrappingWidth="146.70703125" />
             <TextField fx:id="forumAuthorId" layoutX="226.0" layoutY="162.0" prefHeight="31.0" prefWidth="291.0" />
             <Button fx:id="backButton" layoutX="26.0" layoutY="55.0" onAction="#goToListForums" prefHeight="62.0" prefWidth="80.0" style="-fx-background-color: transparent; -fx-font-size: 30px;" text="⬅" />
          </children>

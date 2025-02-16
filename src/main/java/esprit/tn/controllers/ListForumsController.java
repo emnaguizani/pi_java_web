@@ -69,9 +69,9 @@ public class ListForumsController {
 
     private void addActionButtons() {
         ForumActions.setCellFactory(param -> new TableCell<>() {
-            private final Button reponsesButton = new Button("Réponses");
-            private final Button editerButton = new Button("Éditer");
-            private final Button supprimerButton = new Button("Supprimer");
+            private final Button reponsesButton = new Button("Responses");
+            private final Button editerButton = new Button("Update");
+            private final Button supprimerButton = new Button("Delete");
             private final HBox buttonsBox = new HBox(5, reponsesButton, editerButton, supprimerButton);
 
             {
@@ -142,8 +142,8 @@ public class ListForumsController {
 
     private void handleDelete(Forum forum) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation de suppression");
-        alert.setHeaderText("Voulez-vous vraiment supprimer ce forum ?");
+        alert.setTitle("Confirm Deletion");
+        alert.setHeaderText("Are you sure you want to delete this forum ?");
         alert.setContentText("Forum: " + forum.getTitle());
 
         if (alert.showAndWait().get() == ButtonType.OK) {
