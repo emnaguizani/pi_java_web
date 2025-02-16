@@ -10,14 +10,18 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class AjouterResponseController {
+public class UpdateResponseController {
+
+    @FXML
+    private Text TitreForum;
+
+    @FXML
+    private Text NomCreateur;
 
     @FXML
     private Text DateCreation;
@@ -26,25 +30,22 @@ public class AjouterResponseController {
     private TextArea DescriptionForum;
 
     @FXML
-    private Text NomCreateur;
-
-    @FXML
-    private Button ResetForum;
-
-    @FXML
-    private TextField ResponseAuthorId;
-
-    @FXML
     private TextArea ResponseContent;
-
-    @FXML
-    private Text TitreForum;
 
     @FXML
     private Button backButton;
 
+    @FXML
+    private Button ResetForum;
+
+    private Response response;
     private Forum forum;
     private final ResponseService responseService = new ResponseService();
+
+    public void setResponse(Response response) {
+        this.response = response;
+        populateFields();
+    }
 
     public void setForum(Forum forum) {
         this.forum = forum;
@@ -53,87 +54,84 @@ public class AjouterResponseController {
 
     private void populateFields() {
         if (forum != null) {
+            // Populate forum details
             TitreForum.setText(forum.getTitle());
             NomCreateur.setText("Author ID: " + forum.getIdAuthor());
             DescriptionForum.setText(forum.getDescription());
 
-
+            // Format the date
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
             String formattedDate = forum.getDateCreation().format(formatter);
             DateCreation.setText(formattedDate);
         }
-    }
 
-    @FXML
-    void AjouteResponse(ActionEvent event) {
-        try {
-
-            int authorId;
-            try {
-                authorId = Integer.parseInt(ResponseAuthorId.getText().trim());
-            } catch (NumberFormatException e) {
-                showAlert("Invalid Input", "Author ID must be a valid number.");
-                return;
-            }
-
-
-            String content = ResponseContent.getText().trim();
-            if (content.isEmpty()) {
-                showAlert("Invalid Input", "Content cannot be empty.");
-                return;
-            }
-
-
-            Response response = new Response(content, authorId, LocalDateTime.now());
-
-
-            responseService.ajouter(response, forum.getIdForum());
-
-
-            resetFields(null);
-
-
-            showAlert("Success", "Response created successfully!");
-
-
-            redirectToListResponses();
-        } catch (Exception e) {
-            showAlert("Error", "Error creating response: " + e.getMessage());
+        if (response != null) {
+            // Populate the old response content
+            ResponseContent.setText(response.getContent());
         }
     }
 
     @FXML
-    void goToListForums(ActionEvent event) {
-        redirectToListForums();
-    }
-
-    @FXML
-    void resetFields(ActionEvent event) {
-
-        ResponseAuthorId.clear();
-        ResponseContent.clear();
-    }
-
-    @FXML
-    private void redirectToListResponses() {
+    private void AjouteResponse(ActionEvent event) {
         try {
+            // Get the updated content
+            String updatedContent = ResponseContent.getText().trim();
 
+            // Validate the content
+            if (updatedContent.isEmpty()) {
+                showAlert("Error", "Content cannot be empty.");
+                return;
+            }
+
+            if (updatedContent.length() < 10) {
+                showAlert("Error", "Content must be at least 10 characters long.");
+                return;
+            }
+
+            // Update the response
+            response.setContent(updatedContent);
+            responseService.updateResponse(response);
+
+            // Show a success message
+            showAlert("Success", "Response updated successfully!");
+
+            // Navigate back to the ListResponses page
+            goToListResponses();
+        } catch (Exception e) {
+            showAlert("Error", "Failed to update response: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void resetFields(ActionEvent event) {
+        // Reset the response content field
+        ResponseContent.setText(response.getContent());
+    }
+
+    @FXML
+    private void goToListResponses() {
+        try {
+            // Load the ListResponses.fxml file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListResponses.fxml"));
             Parent root = loader.load();
 
+            // Get the controller and set the forum data
             ListResponsesController controller = loader.getController();
             controller.setForum(forum);
 
-            TitreForum.getScene().setRoot(root);
+            // Set the new scene
+            ResponseContent.getScene().setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void redirectToListForums() {
+    @FXML
+    private void goToListForums(ActionEvent event) {
         try {
+            // Load the ListForums.fxml file
             Parent root = FXMLLoader.load(getClass().getResource("/ListForums.fxml"));
-            TitreForum.getScene().setRoot(root);
+            ResponseContent.getScene().setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();
         }

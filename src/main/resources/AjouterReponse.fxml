@@ -16,12 +16,12 @@
          <children>
             <ImageView fitHeight="44.0" fitWidth="45.0" layoutX="7.0" pickOnBounds="true" preserveRatio="true" scaleZ="1000.0">
                <image>
-                  <Image url="@../../../../../Downloads/logoPi.png" />
+                  <Image url="@/logoPi.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="34.0" fitWidth="31.0" layoutX="738.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../Downloads/user.png" />
+                  <Image url="@/user.png" />
                </image>
             </ImageView>
             <Text fill="#fffbfb" layoutX="653.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reclamation">
@@ -41,7 +41,7 @@
             </Text>
          </children>
       </Pane>
-      <Button fx:id="backButton" layoutX="-10.0" layoutY="34.0" onAction="#goToListForums" prefHeight="62.0" prefWidth="80.0" style="-fx-background-color: transparent; -fx-font-size: 30px;" text="⬅" />
+      <Button fx:id="backButton" layoutX="-10.0" layoutY="34.0" onAction="#redirectToListResponses" prefHeight="62.0" prefWidth="80.0" style="-fx-background-color: transparent; -fx-font-size: 30px;" text="⬅" />
       <Text fx:id="TitreForum" layoutX="22.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 28px;" text="TitreForum" wrappingWidth="755.65234375" />
       <Text fx:id="NomCreateur" layoutX="24.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NomeCreateur" />
       <Text fx:id="DateCreation" layoutX="673.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DateCreation" />

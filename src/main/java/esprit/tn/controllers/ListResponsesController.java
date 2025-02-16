@@ -7,9 +7,11 @@ import esprit.tn.services.ResponseService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 
@@ -42,7 +44,7 @@ public class ListResponsesController {
 
     private Forum forum;
     private final ResponseService responseService = new ResponseService();
-
+    private final ForumService forumService = new ForumService();
 
     public void setForum(Forum forum) {
         this.forum = forum;
@@ -56,7 +58,7 @@ public class ListResponsesController {
             NomCreateur.setText("Author ID: " + forum.getIdAuthor());
             DescriptionForum.setText(forum.getDescription());
 
-
+            // Format the date
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
             String formattedDate = forum.getDateCreation().format(formatter);
             DateCreation.setText(formattedDate);
@@ -64,22 +66,40 @@ public class ListResponsesController {
     }
 
     private void populateResponses() {
-
         if (forum != null) {
-            // Fetch responses for the forum
+            // Fetch responses for the forum using ForumService
+            List<Response> responses = forumService.getResponsesForForum(forum.getIdForum());
+            ListResponses.getItems().setAll(responses);
 
-            // Set a custom cell factory to display buttons
+            // Set a custom cell factory to display author info, buttons, and date
             ListResponses.setCellFactory(new Callback<>() {
                 @Override
                 public ListCell<Response> call(ListView<Response> param) {
                     return new ListCell<>() {
                         private final Button updateButton = new Button("Update");
                         private final Button deleteButton = new Button("Delete");
-                        private final HBox buttonsBox = new HBox(5, updateButton, deleteButton);
+                        private final Text authorText = new Text();
+                        private final Text dateText = new Text();
+                        private final Text contentText = new Text();
+                        private final HBox buttonsBox = new HBox(10, updateButton, deleteButton);
+                        private final HBox authorDateBox = new HBox(10, authorText, dateText); // Author + Date on same row
+                        private final VBox vbox = new VBox(5, authorDateBox, contentText, buttonsBox);
 
                         {
-                            // Style the buttons
+                            // Style buttons
+                            updateButton.setStyle("-fx-background-color: #ffc107; -fx-text-fill: black;");
                             deleteButton.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white;");
+
+                            // Align the buttons box to the right
+                            HBox.setHgrow(buttonsBox, javafx.scene.layout.Priority.ALWAYS);
+                            buttonsBox.setAlignment(Pos.CENTER_RIGHT);
+
+                            // Align date to the right
+                            HBox.setHgrow(dateText, javafx.scene.layout.Priority.ALWAYS);
+                            dateText.setStyle("-fx-text-alignment: right;");
+
+                            // Ensure the author and date are spaced correctly
+                            authorDateBox.setAlignment(Pos.CENTER_LEFT);
 
                             // Handle update button click
                             updateButton.setOnAction(event -> {
@@ -105,20 +125,45 @@ public class ListResponsesController {
                                 setText(null);
                                 setGraphic(null);
                             } else {
-                                setText(response.getContent()); // Display response content
-                                setGraphic(buttonsBox); // Display buttons
+                                // Set author info
+                                authorText.setText("Auteur: " + response.getAuthor());
+
+                                // Set response content
+                                contentText.setText(response.getContent());
+
+                                // Format creation date
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy, HH:mm");
+                                String formattedDate = response.getCreatedAt().format(formatter);
+                                dateText.setText(formattedDate);
+
+                                // Display VBox with author + date (same row), content, and buttons
+                                setGraphic(vbox);
                             }
                         }
                     };
                 }
             });
+
         }
     }
 
     private void handleUpdateResponse(Response response) {
-        // Implement logic to update the response
-        System.out.println("Update response: " + response.getContent());
-        // You can open a new window or dialog for updating the response
+        try {
+            // Load the UpdateResponse.fxml file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/UpdateReponse.fxml"));
+            Parent root = loader.load();
+
+            // Get the controller and set the response and forum data
+            UpdateResponseController controller = loader.getController();
+            controller.setResponse(response); // Pass the selected response
+            controller.setForum(forum); // Pass the forum
+
+            // Set the new scene
+            ListResponses.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to load UpdateResponse page: " + e.getMessage());
+        }
     }
 
     private void handleDeleteResponse(Response response) {
@@ -136,7 +181,7 @@ public class ListResponsesController {
     private void handleAjouterReponse(ActionEvent event) {
         try {
             // Load the AjouterResponse.fxml file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterResponse.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterReponse.fxml"));
             Parent root = loader.load();
 
             // Get the controller and set the forum data
