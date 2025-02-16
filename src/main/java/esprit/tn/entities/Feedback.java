@@ -86,4 +86,8 @@ public class Feedback {
     public void setReclamation(Reclamation reclamation) {
         this.ReclamationId = reclamation;
     }
+
+    public int getReclamationIdValue() {
+        return ReclamationId != null ? ReclamationId.getId() : -1; // Retourne -1 si la réclamation est null
+    }
 }

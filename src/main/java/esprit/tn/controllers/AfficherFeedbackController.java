@@ -62,7 +62,8 @@ public class AfficherFeedbackController {
         messageF.setCellValueFactory(new PropertyValueFactory<>("Message"));
         noteF.setCellValueFactory(new PropertyValueFactory<>("Note"));
         dateCreationF.setCellValueFactory(new PropertyValueFactory<>("DateFeedback"));
-        ReclamationId.setCellValueFactory(new PropertyValueFactory<>("ReclamationId"));
+        //ReclamationId.setCellValueFactory(new PropertyValueFactory<>("ReclamationId"));
+        ReclamationId.setCellValueFactory(new PropertyValueFactory<>("ReclamationIdValue"));
     }
 
     @FXML

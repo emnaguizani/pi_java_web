@@ -16,14 +16,14 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <TableView fx:id="TableViewF" layoutX="24.0" layoutY="79.0" prefHeight="200.0" prefWidth="548.0">
+      <TableView fx:id="TableViewF" layoutX="24.0" layoutY="79.0" prefHeight="200.0" prefWidth="548.0" stylesheets="@CSS/StyleTableViewReclamation.css">
          <columns>
-            <TableColumn id="idR" fx:id="idF" prefWidth="36.800048828125" text="ID" />
-            <TableColumn id="typeF" fx:id="typeF" prefWidth="95.20001220703125" text="Type" />
-            <TableColumn id="messageF" fx:id="messageF" prefWidth="137.60003662109375" text="Message" />
-            <TableColumn id="noteF" fx:id="noteF" prefWidth="51.20001220703125" text="Note" />
-            <TableColumn id="dateCreationF" fx:id="dateCreationF" prefWidth="128.79998779296875" text="Date de création" />
-            <TableColumn id="ReclamationId" fx:id="ReclamationId" prefWidth="95.99993896484375" text="IdReclamation" />
+            <TableColumn id="idR" fx:id="idF" minWidth="0.0" prefWidth="0.0" text="ID" />
+            <TableColumn id="typeF" fx:id="typeF" prefWidth="111.9999942779541" text="Type" />
+            <TableColumn id="messageF" fx:id="messageF" prefWidth="154.4000244140625" text="Message" />
+            <TableColumn id="noteF" fx:id="noteF" prefWidth="48.0" text="Note" />
+            <TableColumn id="dateCreationF" fx:id="dateCreationF" prefWidth="131.199951171875" text="Date de création" />
+            <TableColumn id="ReclamationId" fx:id="ReclamationId" prefWidth="103.20004272460938" text="Id Recla" />
          </columns>
       </TableView>
       <Button layoutX="351.0" layoutY="300.0" mnemonicParsing="false" onAction="#SupprimerFeedback" prefHeight="26.0" prefWidth="140.0" text="Supprimer Feedback" />
