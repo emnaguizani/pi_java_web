@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="514.0" prefWidth="773.0" xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.ListResponsesController">
+<AnchorPane prefHeight="514.0" prefWidth="773.0" xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.backoffice.ListResponsesAdminController">
     <children>
         <Pane prefHeight="45.0" prefWidth="779.0" style="-fx-background-color: #2667FF;">
             <children>
@@ -46,6 +46,6 @@
         <Text fx:id="DateCreation" layoutX="663.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DateCreation" />
         <TextArea fx:id="DescriptionForum" layoutX="14.0" layoutY="120.0" prefHeight="67.0" prefWidth="745.0" />
         <ListView fx:id="ListResponses" layoutX="14.0" layoutY="191.0" prefHeight="317.0" prefWidth="745.0" />
-      <Button fx:id="backButton" layoutX="-20.0" layoutY="24.0" onAction="#goToListForums" prefHeight="62.0" prefWidth="80.0" style="-fx-background-color: transparent; -fx-font-size: 30px;" text="⬅" />
+        <Button fx:id="backButton" layoutX="-20.0" layoutY="24.0" onAction="#goToListForums" prefHeight="62.0" prefWidth="80.0" style="-fx-background-color: transparent; -fx-font-size: 30px;" text="⬅" />
         <Button fx:id="AjouterReponse" layoutX="613.0" layoutY="65.0" mnemonicParsing="false" onAction="#handleAjouterReponse" text="Respond To This Forum" />    </children>
 </AnchorPane>
