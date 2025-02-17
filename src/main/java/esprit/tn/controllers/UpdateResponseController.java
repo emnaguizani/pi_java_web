@@ -88,6 +88,11 @@ public class UpdateResponseController {
                 return;
             }
 
+            if (responseService.responseExists(updatedContent, forum.getIdForum())) {
+                showAlert("Duplicate Response", "A response with the same content already exists in this forum.");
+                return;
+            }
+
 
             response.setContent(updatedContent);
             responseService.updateResponse(response);

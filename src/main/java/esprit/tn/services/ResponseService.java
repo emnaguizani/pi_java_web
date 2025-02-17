@@ -70,6 +70,21 @@ public class ResponseService {
         }
     }
 
+    public boolean responseExists(String content, int forumId) {
+        String req = "SELECT COUNT(*) FROM response WHERE content = ? AND forumId = ?";
+        try {
+            PreparedStatement stm = cnx.prepareStatement(req);
+            stm.setString(1, content);
+            stm.setInt(2, forumId);
+            var resultSet = stm.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error checking response existence: " + e.getMessage());
+        }
+        return false;
+    }
 
 
 }

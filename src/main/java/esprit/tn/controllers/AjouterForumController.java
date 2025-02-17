@@ -32,6 +32,7 @@ public class AjouterForumController {
         }
 
 
+
         Forum f = new Forum();
         f.setIdAuthor(Integer.parseInt(forumAuthorId.getText()));
         f.setTitle(forumTitle.getText().trim());
@@ -61,6 +62,12 @@ public class AjouterForumController {
         String title = forumTitle.getText().trim();
         String description = forumDescription.getText().trim();
         String authorIdText = forumAuthorId.getText().trim();
+
+        ForumService fs = new ForumService();
+        if (fs.forumExists(title)) {
+            showErrorAlert("Duplicate Title", "A forum with this title already exists.");
+            return false;
+        }
 
         if (title.isEmpty()) {
             showErrorAlert("Invalid Title", "Title cannot be empty.");

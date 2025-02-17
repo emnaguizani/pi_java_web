@@ -83,6 +83,11 @@ public class AjouterResponseController {
                 return;
             }
 
+            if (responseService.responseExists(content, forum.getIdForum())) {
+                showAlert("Duplicate Response", "A response with the same content already exists in this forum.");
+                return;
+            }
+
 
             Response response = new Response(content, authorId, LocalDateTime.now());
 

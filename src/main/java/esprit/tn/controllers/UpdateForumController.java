@@ -38,6 +38,16 @@ public class UpdateForumController {
         String newTitle = forumTitle.getText();
         String newDescription = forumDescription.getText();
 
+        ForumService fs = new ForumService();
+        if (fs.forumExists(newTitle)) {
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("Error");
+            errorAlert.setHeaderText("Duplicat Forum");
+            errorAlert.setContentText("A forum with this title already exists.");
+            errorAlert.showAndWait();
+            return;
+        }
+
 
         if (newTitle.isEmpty() || newDescription.isEmpty()) {
 
@@ -54,7 +64,7 @@ public class UpdateForumController {
         forum.setDescription(newDescription);
 
 
-        ForumService fs = new ForumService();
+
         fs.updateForum(forum);
 
 
