@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="514.0" prefWidth="773.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.ListResponsesController">
+    <children>
+        <Pane prefHeight="45.0" prefWidth="779.0" style="-fx-background-color: #2667FF;">
+            <children>
+                <ImageView fitHeight="44.0" fitWidth="45.0" layoutX="7.0" pickOnBounds="true" preserveRatio="true" scaleZ="1000.0">
+                    <image>
+                        <Image url="@/logoPi.png" />
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="34.0" fitWidth="31.0" layoutX="738.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@/user.png" />
+                    </image>
+                </ImageView>
+                <Text fill="#fffbfb" layoutX="653.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reclamation">
+                    <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                    </font>
+                </Text>
+                <Text fill="#fffbfb" layoutX="599.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seance">
+                    <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                    </font>
+                </Text>
+                <Text fill="#fffbfb" layoutX="542.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cours">
+                    <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                    </font>
+                </Text>
+            </children>
+        </Pane>
+        <Text fx:id="TitreForum" layoutX="12.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 28px;" text="TitreForum" wrappingWidth="755.65234375" />
+        <Text fx:id="NomCreateur" layoutX="14.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NomeCreateur" />
+        <Text fx:id="DateCreation" layoutX="663.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DateCreation" />
+        <TextArea fx:id="DescriptionForum" layoutX="14.0" layoutY="120.0" prefHeight="67.0" prefWidth="745.0" />
+        <ListView fx:id="ListResponses" layoutX="14.0" layoutY="191.0" prefHeight="317.0" prefWidth="745.0" />
+      <Button fx:id="backButton" layoutX="-20.0" layoutY="24.0" onAction="#goToListForums" prefHeight="62.0" prefWidth="80.0" style="-fx-background-color: transparent; -fx-font-size: 30px;" text="⬅" />
+        <Button fx:id="AjouterReponse" layoutX="613.0" layoutY="65.0" mnemonicParsing="false" onAction="#handleAjouterReponse" text="Respond To This Forum" />    </children>
+</AnchorPane>

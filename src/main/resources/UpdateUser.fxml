@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.UpdateUser">
+   <children>
+      <Pane layoutX="19.0" layoutY="29.0" prefHeight="341.0" prefWidth="562.0">
+         <children>
+            <TextField fx:id="emailid" layoutX="169.0" layoutY="107.0" />
+            <TextField fx:id="fullnameid" layoutX="169.0" layoutY="65.0" />
+            <TextField fx:id="passwordid" layoutX="180.0" layoutY="179.0" />
+            <TextField fx:id="roleid" layoutX="180.0" layoutY="218.0" />
+            <DatePicker fx:id="dateofbirthid" layoutX="167.0" layoutY="146.0" promptText="Date Of birth" />
+            <Button fx:id="updaetid" layoutX="237.0" layoutY="265.0" mnemonicParsing="false" onAction="#Update" text="Update" />
+            <Button fx:id="backtothelistid" layoutX="32.0" layoutY="31.0" mnemonicParsing="false" onAction="#backtothelist" text="Go back To the List " />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
