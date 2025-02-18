@@ -64,4 +64,5 @@
             <TableColumn fx:id="deleteColumn" prefWidth="100" text="Delete" />
         </columns>
     </TableView>
+   <Button fx:id="addCourse" mnemonicParsing="false" onAction="#addCourse" text="Add Course" textFill="#3f8efc" />
 </VBox>

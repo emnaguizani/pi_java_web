@@ -4,6 +4,7 @@ import esprit.tn.entities.Cours;
 import esprit.tn.service.CourService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -74,6 +75,7 @@ public class AfficherCoursController implements Initializable {
         ObservableList<Cours> courseList = FXCollections.observableArrayList(courses);
         courseTable.setItems(courseList);
     }
+
     // lhna bech na3mlou ajout mta3 new update button m3a lcours jdid illi bech ytajouta w bech yetzedlou action illi howa openModifyCourseWindow
     private void addModifyButton() {
         Callback<TableColumn<Cours, Void>, TableCell<Cours, Void>> cellFactory = param -> new TableCell<>() {
@@ -126,6 +128,7 @@ public class AfficherCoursController implements Initializable {
 
         deleteColumn.setCellFactory(cellFactory);
     }
+
     // kif na3mlou click 3al l update bech tall3elna interface mta3 l modification fiha les attribut a modifier avec controle de saisie
     private void openModifyCourseWindow(Cours course) {
         System.out.println("Modify Course: " + course.getTitle());
@@ -144,6 +147,7 @@ public class AfficherCoursController implements Initializable {
             e.printStackTrace();
         }
     }
+
     // fn ta3mel delete l cours mais 9balha t5arrjelna alert kan n7ebbou nfass5ou si ok if ifPresent bech texecuti la fn delete du service w ba3d ta3mel reload lil liste mta3 les cours li 3anna
     private void deleteCourse(Cours course) {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -157,5 +161,22 @@ public class AfficherCoursController implements Initializable {
                 loadCourses();
             }
         });
+    }
+
+    public void addCourse(ActionEvent actionEvent) {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterCours.fxml"));
+            Parent root = loader.load();
+
+
+
+            Stage stage = new Stage();
+            stage.setTitle("Add Course");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

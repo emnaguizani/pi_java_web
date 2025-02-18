@@ -6,6 +6,8 @@ import java.sql.SQLException;
 
 public class DatabaseConnection {
 
+    //le patron de conception singleton
+
     Connection con;
     public static DatabaseConnection instance ;
     public DatabaseConnection(){
