@@ -4,26 +4,31 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<!--<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AfficherFeedbackController">-->
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AfficherFeedbackController">
+<AnchorPane prefHeight="600.0" prefWidth="751.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AfficherFeedbackController">
    <children>
       <Label layoutX="194.0" layoutY="19.0" text="Gérer les feedbacks" textAlignment="CENTER" textFill="RED">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <TableView fx:id="TableViewF" layoutX="24.0" layoutY="79.0" prefHeight="200.0" prefWidth="548.0" stylesheets="@CSS/StyleTableViewReclamation.css">
+      <TableView fx:id="TableViewF" layoutX="24.0" layoutY="79.0" prefHeight="200.0" prefWidth="700.0" stylesheets="@CSS/StyleTableViewReclamation.css">
          <columns>
-            <TableColumn id="idR" fx:id="idF" minWidth="0.0" prefWidth="0.0" text="ID" />
-            <TableColumn id="typeF" fx:id="typeF" prefWidth="111.9999942779541" text="Type" />
-            <TableColumn id="messageF" fx:id="messageF" prefWidth="154.4000244140625" text="Message" />
-            <TableColumn id="noteF" fx:id="noteF" prefWidth="48.0" text="Note" />
-            <TableColumn id="dateCreationF" fx:id="dateCreationF" prefWidth="131.199951171875" text="Date de création" />
-            <TableColumn id="ReclamationId" fx:id="ReclamationId" prefWidth="103.20004272460938" text="Id Recla" />
+            <TableColumn id="idF" fx:id="idF" minWidth="0.0" prefWidth="0.0" text="ID" />
+            <TableColumn id="typeF" fx:id="typeF" prefWidth="94.40005493164062" text="Type" />
+            <TableColumn id="messageF" fx:id="messageF" prefWidth="144.800048828125" text="Message" />
+            <TableColumn id="noteF" fx:id="noteF" prefWidth="68.79998779296875" text="Note" />
+            <!-- Nouvelle colonne pour l'image -->
+            <TableColumn id="imageF" fx:id="imageF" prefWidth="224.79998779296875" text="Image">
+               <cellValueFactory>
+                  <PropertyValueFactory property="pieceJointeF" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn id="dateCreationF" fx:id="dateCreationF" prefWidth="160.0" text="Date de création" />
+            <TableColumn id="ReclamationId" fx:id="ReclamationId" minWidth="0.0" prefWidth="0.0" text="Id Recla" />
          </columns>
       </TableView>
       <Button layoutX="351.0" layoutY="300.0" mnemonicParsing="false" onAction="#SupprimerFeedback" prefHeight="26.0" prefWidth="140.0" text="Supprimer Feedback" />

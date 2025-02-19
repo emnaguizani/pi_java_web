@@ -7,10 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -26,17 +23,26 @@ public class AjouterReclamationController{
     private TextField titreid;
 
     @FXML
+    private ComboBox<String> prioriteid;
+
+    @FXML
+    void initialize() {
+        // Initialiser le ComboBox avec les types de feedback
+        prioriteid.getItems().addAll("Basse", "Moyenne", "Haute");
+    }
+    @FXML
     void AjouterRec() {
         try {
             String titre = titreid.getText().trim();
             String description = descriptionid.getText().trim();
+            String prioriteIdValue = prioriteid.getValue();
 
             // Vérifier si le titre est vide
             if (titre.isEmpty()) {
                 throw new IllegalArgumentException("Le titre de la réclamation ne peut pas être vide.");
             }
 
-            Reclamation rec = saisirReclamationAjout(titre, description);
+            Reclamation rec = saisirReclamationAjout(titre, description, prioriteIdValue);
             ReclamationService rs = new ReclamationService();
             rs.ajouter(rec);
 

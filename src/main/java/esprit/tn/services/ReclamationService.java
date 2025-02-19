@@ -3,6 +3,8 @@ package esprit.tn.services;
 import esprit.tn.entities.Feedback;
 import esprit.tn.entities.Reclamation;
 import esprit.tn.main.DatabaseConnection;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -21,7 +23,7 @@ public class ReclamationService implements IserviceR<Reclamation> {
 
     @Override
     public void ajouter(Reclamation reclamation) {
-        String req = "INSERT INTO Reclamation (Titre, Description, Status, DateCreation) VALUES (?, ?, ?, ?)";
+        String req = "INSERT INTO Reclamation (Titre, Description, Status, Priorite, DateCreation) VALUES (?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement stm = cnx.prepareStatement(req);
@@ -29,13 +31,14 @@ public class ReclamationService implements IserviceR<Reclamation> {
             stm.setString(1, reclamation.getTitre());
             stm.setString(2, reclamation.getDescription());
             stm.setString(3, reclamation.getStatus());
+            stm.setString(4, reclamation.getPriorite());
 
             // Convertir LocalDateTime en Timestamp
                 LocalDateTime dateCreation = reclamation.getDateCreation();
             if (dateCreation != null) {
-                stm.setTimestamp(4, java.sql.Timestamp.valueOf(dateCreation)); // Conversion en Timestamp
+                stm.setTimestamp(5, java.sql.Timestamp.valueOf(dateCreation)); // Conversion en Timestamp
             } else {
-                stm.setNull(4, java.sql.Types.TIMESTAMP); // Gérer le cas où dateCreation est null
+                stm.setNull(5, java.sql.Types.TIMESTAMP); // Gérer le cas où dateCreation est null
             }
             stm.executeUpdate();
             System.out.println("Réclamation ajoutée avec succès !");
@@ -44,14 +47,14 @@ public class ReclamationService implements IserviceR<Reclamation> {
         }
     }
 
-    public static Reclamation saisirReclamationAjout(String titre, String description) {
+    public static Reclamation saisirReclamationAjout(String titre, String description, String priorite) {
         LocalDateTime dateCreation = LocalDateTime.now(); // Date actuelle
-        return new Reclamation(titre, description, "Soumise", dateCreation);
+        return new Reclamation(titre, description, "Soumise", priorite, dateCreation);
     }
 
     @Override
     public void modifier(Reclamation reclamation) {
-        String req = "UPDATE Reclamation SET Titre = ?, Description = ?, Status = ?, DateCreation = ? WHERE Id = ?";
+        String req = "UPDATE Reclamation SET Titre = ?, Description = ?, Status = ?, Priorite = ?, DateCreation = ? WHERE Id = ?";
 
         try {
             PreparedStatement stm = cnx.prepareStatement(req);
@@ -59,6 +62,7 @@ public class ReclamationService implements IserviceR<Reclamation> {
             stm.setString(1, reclamation.getTitre());
             stm.setString(2, reclamation.getDescription());
             stm.setString(3, reclamation.getStatus());
+            stm.setString(4, reclamation.getPriorite());
 
             if (!reclamation.getStatus().equalsIgnoreCase("Soumise") & !reclamation.getStatus().equalsIgnoreCase("En cours de traitement") && !reclamation.getStatus().equalsIgnoreCase("Résolue") && !reclamation.getStatus().equalsIgnoreCase("Fermée")) {
                 throw new IllegalArgumentException("Le status doit être 'Soumise' ou 'En cours de traitement' ou 'Résolue' ou 'Fermée'.");
@@ -67,12 +71,12 @@ public class ReclamationService implements IserviceR<Reclamation> {
             // Convertir LocalDateTime en Timestamp
             LocalDateTime dateCreation = reclamation.getDateCreation();
             if (dateCreation != null) {
-                stm.setTimestamp(4, java.sql.Timestamp.valueOf(dateCreation)); // Conversion en Timestamp
+                stm.setTimestamp(5, java.sql.Timestamp.valueOf(dateCreation)); // Conversion en Timestamp
             } else {
-                stm.setNull(4, java.sql.Types.TIMESTAMP); // Gérer le cas où dateCreation est null
+                stm.setNull(5, java.sql.Types.TIMESTAMP); // Gérer le cas où dateCreation est null
             }
 
-            stm.setInt(5, reclamation.getId()); // ID de la réclamation à modifier
+            stm.setInt(6, reclamation.getId()); // ID de la réclamation à modifier
             stm.executeUpdate();
             System.out.println("Réclamation modifiée avec succès !");
         } catch (SQLException e) {
@@ -109,6 +113,7 @@ public class ReclamationService implements IserviceR<Reclamation> {
                 p.setTitre(rs.getString("Titre"));
                 p.setDescription(rs.getString("Description"));
                 p.setStatus(rs.getString("Status"));
+                p.setPriorite(rs.getString("Priorite"));
                 java.sql.Timestamp timestamp = rs.getTimestamp("DateCreation");
                 if (timestamp != null) {
                     p.setDateCreation(timestamp.toLocalDateTime());
@@ -125,15 +130,13 @@ public class ReclamationService implements IserviceR<Reclamation> {
     @Override
     public List<Reclamation> rechercherRec(String critere) {
         List<Reclamation> reclamations = new ArrayList<>();
-        String req = "SELECT * FROM Reclamation WHERE Titre LIKE ? OR Description LIKE ? OR Status LIKE ?";
+        String req = "SELECT * FROM Reclamation WHERE Status LIKE ?";
 
         try {
             PreparedStatement stm = cnx.prepareStatement(req);
 
             // Ajouter des wildcards (%) pour rechercher des correspondances partielles
             stm.setString(1, "%" + critere + "%");
-            stm.setString(2, "%" + critere + "%");
-            stm.setString(3, "%" + critere + "%");
 
             ResultSet rs = stm.executeQuery();
 
@@ -143,6 +146,7 @@ public class ReclamationService implements IserviceR<Reclamation> {
                 reclamation.setTitre(rs.getString("Titre"));
                 reclamation.setDescription(rs.getString("Description"));
                 reclamation.setStatus(rs.getString("Status"));
+                reclamation.setPriorite(rs.getString("Priorite"));
                 reclamation.setDateCreation(rs.getTimestamp("DateCreation").toLocalDateTime());
 
                 reclamations.add(reclamation);
@@ -194,8 +198,13 @@ public class ReclamationService implements IserviceR<Reclamation> {
         System.out.print("Entrez le status de la réclamation : ");
         String status = scanner.nextLine();
 
+        System.out.print("Entrez la priorité de la réclamation : ");
+        String priorite = scanner.nextLine();
+
         // Créer et retourner un nouveau feedback
         LocalDateTime dateCreation = LocalDateTime.now(); // Date actuelle
-        return new Reclamation(titre, description, status, dateCreation);
+        return new Reclamation(titre, description, status, priorite, dateCreation);
     }
+
+
 }

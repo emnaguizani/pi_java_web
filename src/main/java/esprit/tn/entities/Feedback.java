@@ -9,24 +9,27 @@ public class Feedback {
     private String TypeFeedback;
     private  String Message;
     private int Note;
+    private String PieceJointeF;
     private LocalDateTime DateFeedback;
     private Reclamation ReclamationId;
 
     public Feedback(){}
 
-    public Feedback(int idFeedback, String typeFeedback, String message, int note, LocalDateTime dateFeedback, Reclamation reclamationId) {
+    public Feedback(int idFeedback, String typeFeedback, String message, int note, String pieceJointeF, LocalDateTime dateFeedback, Reclamation reclamationId) {
         IdFeedback = idFeedback;
         this.TypeFeedback = typeFeedback;
         this.Message = message;
         this.Note = note;
+        this.PieceJointeF = pieceJointeF;
         DateFeedback = dateFeedback;
         ReclamationId = reclamationId;
     }
 
-    public Feedback(String typeFeedback, String message, int note, LocalDateTime dateFeedback, Reclamation reclamationId) {
+    public Feedback(String typeFeedback, String message, int note, String pieceJointeF, LocalDateTime dateFeedback, Reclamation reclamationId) {
         this.TypeFeedback = typeFeedback;
         this.Message = message;
         this.Note = note;
+        this.PieceJointeF = pieceJointeF;
         DateFeedback = dateFeedback;
         ReclamationId = reclamationId;
     }
@@ -61,6 +64,14 @@ public class Feedback {
 
     public void setNote(int note) {
         this.Note = note;
+    }
+
+    public String getPieceJointeF() {
+        return PieceJointeF;
+    }
+
+    public void setPieceJointeF(String pieceJointeF) {
+        this.PieceJointeF = pieceJointeF;
     }
 
     public LocalDateTime getDateFeedback() {

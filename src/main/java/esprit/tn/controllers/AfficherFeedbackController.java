@@ -11,18 +11,23 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.w3c.dom.Text;
 
-import javax.swing.*;
+//import javax.swing.*;
+//import javax.swing.text.html.ImageView;
+import java.awt.*;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class AfficherFeedbackController {
 
@@ -45,6 +50,9 @@ public class AfficherFeedbackController {
     private TableColumn<Feedback, String> typeF;
 
     @FXML
+    private TableColumn<Feedback, String> imageF;
+
+    @FXML
     private TableColumn<Feedback, Integer> ReclamationId;
 
     @FXML
@@ -62,9 +70,31 @@ public class AfficherFeedbackController {
         messageF.setCellValueFactory(new PropertyValueFactory<>("Message"));
         noteF.setCellValueFactory(new PropertyValueFactory<>("Note"));
         dateCreationF.setCellValueFactory(new PropertyValueFactory<>("DateFeedback"));
-        //ReclamationId.setCellValueFactory(new PropertyValueFactory<>("ReclamationId"));
         ReclamationId.setCellValueFactory(new PropertyValueFactory<>("ReclamationIdValue"));
+
+        imageF.setCellValueFactory(new PropertyValueFactory<>("PieceJointeF"));
+        imageF.setCellFactory(column -> new TableCell<Feedback, String>() {
+            private final ImageView imageView = new ImageView();
+
+            @Override
+            protected void updateItem(String imagePath, boolean empty) {
+                super.updateItem(imagePath, empty);
+
+                if (empty || imagePath == null || imagePath.isEmpty()) {
+                    setGraphic(null); // Afficher rien si l'image est vide
+                } else {
+                    // Charger l'image depuis le chemin
+                    Image image = new Image(new File(imagePath).toURI().toString());
+                    imageView.setImage(image); // Définir l'image dans l'ImageView
+                    imageView.setFitWidth(50); // Ajuster la largeur de l'image
+                    imageView.setFitHeight(50); // Ajuster la hauteur de l'image
+                    imageView.setPreserveRatio(true); // Conserver le ratio de l'image
+                    setGraphic(imageView); // Afficher l'ImageView dans la cellule
+                }
+            }
+        });
     }
+
 
     @FXML
     void BackReclamation(ActionEvent event) {

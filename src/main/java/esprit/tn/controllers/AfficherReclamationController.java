@@ -46,6 +46,12 @@ public class AfficherReclamationController {
     private TableColumn<Reclamation, String> titreR;
 
     @FXML
+    private TableColumn<Reclamation, String> prioriteR;
+
+    @FXML
+    private TextField RechercheRec;
+
+    @FXML
     void initialize() {
         ReclamationService rs = new ReclamationService();
 
@@ -56,6 +62,7 @@ public class AfficherReclamationController {
         titreR.setCellValueFactory(new PropertyValueFactory<>("titre"));
         descriptionR.setCellValueFactory(new PropertyValueFactory<>("description"));
         statusR.setCellValueFactory(new PropertyValueFactory<>("status"));
+        prioriteR.setCellValueFactory(new PropertyValueFactory<>("priorite"));
         dateCreationR.setCellValueFactory(new PropertyValueFactory<>("dateCreation"));
     }
 

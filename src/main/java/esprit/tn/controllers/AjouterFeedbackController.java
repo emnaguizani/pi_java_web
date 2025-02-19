@@ -9,8 +9,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import java.io.File;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class AjouterFeedbackController {
 
@@ -22,6 +27,12 @@ public class AjouterFeedbackController {
 
     @FXML
     private TextField NoteF;
+
+    @FXML
+    private TextField PieceJointeF;
+
+    @FXML
+    private Button importPhotoButton;
 
     @FXML
     private ComboBox<String> TypeFeedbackF;
@@ -36,6 +47,27 @@ public class AjouterFeedbackController {
     void initialize() {
         // Initialiser le ComboBox avec les types de feedback
         TypeFeedbackF.getItems().addAll("Positif", "Correctif", "Négatif");
+
+        importPhotoButton.setOnAction(event -> importPhoto());
+    }
+
+    @FXML
+    private void importPhoto() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Video Files");
+
+        // video types illi ynajjem y7otthom
+
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Video Files", "*.jpg", "*.png", "*.jpeg")
+        );
+
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
+
+        if (selectedFile != null) {
+            // Mettre le chemin du fichier dans le champ de texte
+            PieceJointeF.setText(selectedFile.getAbsolutePath());
+        }
     }
 
     @FXML
@@ -44,6 +76,7 @@ public class AjouterFeedbackController {
         String message = MessageF.getText();
         int note = Integer.parseInt(NoteF.getText());
         String typeFeedback = TypeFeedbackF.getValue();
+        String pieceJointe = PieceJointeF.getText();
         LocalDateTime dateFeedback = LocalDateTime.now();
 
         // Créer un nouveau feedback
@@ -51,6 +84,7 @@ public class AjouterFeedbackController {
         feedback.setMessage(message);
         feedback.setNote(note);
         feedback.setTypeFeedback(typeFeedback);
+        feedback.setPieceJointeF(pieceJointe);
         feedback.setDateFeedback(dateFeedback);
         feedback.setReclamationId(new Reclamation(reclamationId)); // Lier à la réclamation sélectionnée
 

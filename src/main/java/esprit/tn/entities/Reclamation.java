@@ -9,6 +9,7 @@ public class Reclamation {
     private String Titre;
     private String Description;
     private String Status;
+    private String Priorite;
     private LocalDateTime DateCreation;
 
     public Reclamation(){}
@@ -17,26 +18,29 @@ public class Reclamation {
         this.Id = id;
     }
 
-    public Reclamation(int id, String titre, String description, String status, LocalDateTime dateCreation) {
-        id = Id;
-        titre = Titre;
-        description = Description;
-        status = Status;
-        dateCreation = DateCreation;
-    }
-
-    public Reclamation(int id, String titre, String description, String status) {
-        id = Id;
-        titre = Titre;
-        description = Description;
-        status = Status;
-    }
-
-
-    public Reclamation(String titre, String description, String status, LocalDateTime dateCreation) {
+    public Reclamation(int id, String titre, String description, String status, String priorite, LocalDateTime dateCreation) {
+        Id = id;
         Titre = titre;
         Description = description;
         Status = status;
+        Priorite = priorite;
+        DateCreation = dateCreation;
+    }
+
+    public Reclamation(int id, String titre, String description, String status, String priorite) {
+        Id = id;
+        Titre = titre;
+        Description = description;
+        Status = status;
+        Priorite = priorite;
+    }
+
+
+    public Reclamation(String titre, String description, String status, String priorite, LocalDateTime dateCreation) {
+        Titre = titre;
+        Description = description;
+        Status = status;
+        Priorite = priorite;
         DateCreation = dateCreation;
     }
 
@@ -80,16 +84,24 @@ public class Reclamation {
         Id = id;
     }
 
+    public String getPriorite() {
+        return Priorite;
+    }
+
+    public void setPriorite(String priorite) {
+        Priorite = priorite;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Reclamation reclamation)) return false;
-        return Id == reclamation.Id && Objects.equals(Titre, reclamation.Titre) && Objects.equals(Description, reclamation.Description) && Objects.equals(Status, reclamation.Status) && Objects.equals(DateCreation, reclamation.DateCreation);
+        return Id == reclamation.Id && Objects.equals(Titre, reclamation.Titre) && Objects.equals(Description, reclamation.Description) && Objects.equals(Status, reclamation.Status) && Objects.equals(Priorite, reclamation.Priorite) && Objects.equals(DateCreation, reclamation.DateCreation);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id, Titre, Description, Status, DateCreation);
+        return Objects.hash(Id, Titre, Description, Status, Priorite, DateCreation);
     }
 
 
@@ -100,6 +112,7 @@ public class Reclamation {
                 ", Titre = '" + Titre + '\'' +
                 ", Decription = '" + Description + '\'' +
                 ", Status = '" + Status + '\'' +
+                ", Status = '" + Priorite + '\'' +
                 ", DateCreation = '" + DateCreation + '\'' +
                 '}';
     }

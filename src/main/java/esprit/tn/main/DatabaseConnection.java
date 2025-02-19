@@ -11,7 +11,7 @@ public class DatabaseConnection {
     public static DatabaseConnection instance;
     public DatabaseConnection(){
 
-        String Url="jdbc:mysql://localhost/signlearn";
+        String Url="jdbc:mysql://localhost/signlearn1";
         String Username="root";
         String Password="";
 

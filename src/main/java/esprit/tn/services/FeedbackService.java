@@ -21,7 +21,7 @@ public class FeedbackService implements IserviceF<Feedback> {
     public void ajouterF(Feedback feedback) {
 
         // Si la réclamation existe, insérer le feedback
-        String req = "INSERT INTO Feedback (TypeFeedback, Message, Note, DateFeedback, ReclamationId) VALUES (?, ?, ?, ?, ?)";
+        String req = "INSERT INTO Feedback (TypeFeedback, Message, Note, PieceJointeF, DateFeedback, ReclamationId) VALUES (?, ?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement stm = cnx.prepareStatement(req);
@@ -29,8 +29,9 @@ public class FeedbackService implements IserviceF<Feedback> {
             stm.setString(1, feedback.getTypeFeedback());
             stm.setString(2, feedback.getMessage());
             stm.setInt(3, feedback.getNote());
-            stm.setTimestamp(4, java.sql.Timestamp.valueOf(feedback.getDateFeedback()));
-            stm.setInt(5, feedback.getReclamation().getId());
+            stm.setString(4, feedback.getPieceJointeF());
+            stm.setTimestamp(5, java.sql.Timestamp.valueOf(feedback.getDateFeedback()));
+            stm.setInt(6, feedback.getReclamation().getId());
 
             if (!feedback.getTypeFeedback().equalsIgnoreCase("Positif") & !feedback.getTypeFeedback().equalsIgnoreCase("Correctif") && !feedback.getTypeFeedback().equalsIgnoreCase("Négatif")) {
                 throw new IllegalArgumentException("Le Type du feedback doit être 'Positif' ou 'Correctif' ou 'Négatif'.");
@@ -49,7 +50,7 @@ public class FeedbackService implements IserviceF<Feedback> {
 
     @Override
     public void modifierF(Feedback feedback) {
-        String req = "UPDATE Feedback SET TypeFeedback = ?, Message = ?, Note = ?, DateFeedback = ?, ReclamationId = ? WHERE IdFeedback = ?";
+        String req = "UPDATE Feedback SET TypeFeedback = ?, Message = ?, Note = ?, PieceJointeF = ?, DateFeedback = ?, ReclamationId = ? WHERE IdFeedback = ?";
 
         try {
             PreparedStatement stm = cnx.prepareStatement(req);
@@ -58,9 +59,10 @@ public class FeedbackService implements IserviceF<Feedback> {
             stm.setString(1, feedback.getTypeFeedback());
             stm.setString(2, feedback.getMessage());
             stm.setInt(3, feedback.getNote());
-            stm.setTimestamp(4, java.sql.Timestamp.valueOf(feedback.getDateFeedback()));
-            stm.setInt(5, feedback.getReclamation().getId()); // Clé étrangère vers Reclamation
-            stm.setInt(6, feedback.getIdFeedback()); // ID du feedback à modifier
+            stm.setString(4, feedback.getPieceJointeF());
+            stm.setTimestamp(5, java.sql.Timestamp.valueOf(feedback.getDateFeedback()));
+            stm.setInt(6, feedback.getReclamation().getId()); // Clé étrangère vers Reclamation
+            stm.setInt(7, feedback.getIdFeedback()); // ID du feedback à modifier
 
             if (!feedback.getTypeFeedback().equalsIgnoreCase("Positif") & !feedback.getTypeFeedback().equalsIgnoreCase("Correctif") && !feedback.getTypeFeedback().equalsIgnoreCase("Négatif")) {
                 throw new IllegalArgumentException("Le Type du feedback doit être 'Positif' ou 'Correctif' ou 'Négatif'.");
@@ -109,6 +111,7 @@ public class FeedbackService implements IserviceF<Feedback> {
                 feedback.setTypeFeedback(rs.getString("TypeFeedback"));
                 feedback.setMessage(rs.getString("Message"));
                 feedback.setNote(rs.getInt("Note"));
+                feedback.setPieceJointeF(rs.getString("PieceJointeF"));
                 feedback.setDateFeedback(rs.getTimestamp("DateFeedback").toLocalDateTime());
 
                 // Récupérer la réclamation associée
@@ -127,7 +130,7 @@ public class FeedbackService implements IserviceF<Feedback> {
     public static void afficherFeedbacks(List<Feedback> feedbacks) {
         System.out.println("Liste des feedbacks disponibles :");
         for (Feedback feedback : feedbacks) {
-            System.out.println("ID: " + feedback.getIdFeedback() + " | Type de feedback: " + feedback.getTypeFeedback() + " | Message: " + feedback.getMessage() + " | Note: " + feedback.getNote());
+            System.out.println("ID: " + feedback.getIdFeedback() + " | Type de feedback: " + feedback.getTypeFeedback() + " | Message: " + feedback.getMessage() + " | Note: " + feedback.getNote() + " | Piece Jointe: " + feedback.getPieceJointeF());
         }
     }
 
@@ -169,9 +172,12 @@ public class FeedbackService implements IserviceF<Feedback> {
         int note = scanner.nextInt();
         scanner.nextLine(); // Pour consommer la nouvelle ligne après nextInt()
 
+        System.out.print("Entrez la piece jointe du feedback : ");
+        String piecejointeF = scanner.nextLine();
+
         // Créer et retourner un nouveau feedback
         LocalDateTime dateFeedback = LocalDateTime.now(); // Date actuelle
-        return new Feedback(typeFeedback, message, note, dateFeedback, reclamation);
+        return new Feedback(typeFeedback, message, note, piecejointeF, dateFeedback, reclamation);
     }
 
     public static Feedback saisirNouveauxDetailsFeedback() {
@@ -190,12 +196,16 @@ public class FeedbackService implements IserviceF<Feedback> {
         int note = scanner.nextInt();
         scanner.nextLine(); // Pour consommer la nouvelle ligne après nextInt()
 
+        System.out.print("Entrez la nouvelle piece jointe du feedback : ");
+        String piecejointeF = scanner.nextLine();
+
         // Créer et retourner un nouveau feedback avec les nouveaux détails
         LocalDateTime dateFeedback = LocalDateTime.now(); // Date actuelle
         Feedback feedback = new Feedback();
         feedback.setTypeFeedback(typeFeedback);
         feedback.setMessage(message);
         feedback.setNote(note);
+        feedback.setPieceJointeF(piecejointeF);
         feedback.setDateFeedback(dateFeedback);
 
         return feedback;
