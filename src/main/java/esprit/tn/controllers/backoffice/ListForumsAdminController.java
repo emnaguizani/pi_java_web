@@ -1,8 +1,5 @@
 package esprit.tn.controllers.backoffice;
 
-
-import esprit.tn.controllers.ListResponsesController;
-import esprit.tn.controllers.UpdateForumController;
 import esprit.tn.entities.Forum;
 import esprit.tn.services.ForumService;
 import javafx.collections.FXCollections;
@@ -22,16 +19,13 @@ import java.time.format.DateTimeFormatter;
 public class ListForumsAdminController {
 
     @FXML
-    private Button CreateButton;
-
-    @FXML
-    private TableColumn<Forum, LocalDateTime> ForumDateCreation;
+    private TableColumn<Forum, String> ForumTitle;
 
     @FXML
     private TableColumn<Forum, String> ForumDescription;
 
     @FXML
-    private TableColumn<Forum, String> ForumTitle;
+    private TableColumn<Forum, LocalDateTime> ForumDateCreation;
 
     @FXML
     private TableColumn<Forum, Void> ForumActions;
@@ -50,17 +44,12 @@ public class ListForumsAdminController {
         ForumDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
-
         ForumDateCreation.setCellValueFactory(new PropertyValueFactory<>("dateCreation"));
         ForumDateCreation.setCellFactory(column -> new TableCell<>() {
             @Override
             protected void updateItem(LocalDateTime date, boolean empty) {
                 super.updateItem(date, empty);
-                if (empty || date == null) {
-                    setText(null);
-                } else {
-                    setText(date.format(formatter));
-                }
+                setText((empty || date == null) ? null : date.format(formatter));
             }
         });
 
@@ -70,33 +59,43 @@ public class ListForumsAdminController {
     private void addActionButtons() {
         ForumActions.setCellFactory(param -> new TableCell<>() {
             private final Button reponsesButton = new Button("Responses");
-
             private final Button supprimerButton = new Button("Delete");
-            private final HBox buttonsBox = new HBox(5, reponsesButton, supprimerButton);
+            private final Button blockButton = new Button();
+            private final HBox buttonsBox = new HBox(5, reponsesButton, supprimerButton, blockButton);
 
             {
                 reponsesButton.setStyle("-fx-background-color: #007bff; -fx-text-fill: white;");
-
                 supprimerButton.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white;");
+                blockButton.setStyle("-fx-background-color: #ffc107; -fx-text-fill: black;");
 
                 reponsesButton.setOnAction(event -> {
                     Forum forum = getTableView().getItems().get(getIndex());
                     handleReponses(forum);
                 });
 
-
                 supprimerButton.setOnAction(event -> {
                     Forum forum = getTableView().getItems().get(getIndex());
                     handleDelete(forum);
                 });
+
+                blockButton.setOnAction(event -> {
+                    Forum forum = getTableView().getItems().get(getIndex());
+                    handleBlockUnblock(forum, blockButton);
+                });
             }
 
-            @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty) {
                     setGraphic(null);
                 } else {
+                    Forum forum = getTableView().getItems().get(getIndex());
+
+
+                    boolean isBlocked = fs.getForumById(forum.getIdForum()).isBlocked();
+                    forum.setBlocked(isBlocked);
+                    blockButton.setText(isBlocked ? "Unblock" : "Block");
+
                     setGraphic(buttonsBox);
                 }
             }
@@ -117,17 +116,27 @@ public class ListForumsAdminController {
         }
     }
 
-
     private void handleDelete(Forum forum) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm Deletion");
-        alert.setHeaderText("Are you sure you want to delete this forum ?");
+        alert.setHeaderText("Are you sure you want to delete this forum?");
         alert.setContentText("Forum: " + forum.getTitle());
 
         if (alert.showAndWait().get() == ButtonType.OK) {
             fs.deleteForum(forum.getIdForum());
             ForumsTable.getItems().remove(forum);
         }
+    }
+
+    private void handleBlockUnblock(Forum forum, Button blockButton) {
+        boolean isCurrentlyBlocked = forum.isBlocked();
+        if (isCurrentlyBlocked) {
+            fs.unblockForum(forum.getIdForum());
+        } else {
+            fs.blockForum(forum.getIdForum());
+        }
+        forum.setBlocked(!isCurrentlyBlocked);
+        blockButton.setText(isCurrentlyBlocked ? "Block" : "Unblock");
     }
 
     @FXML
@@ -138,11 +147,5 @@ public class ListForumsAdminController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
-
-
-
-
-
 }

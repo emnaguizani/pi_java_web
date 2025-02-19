@@ -187,5 +187,65 @@ public class ForumService {
         return false;
     }
 
+    public void blockForum(int forumId) {
+        String query = "UPDATE forum SET isBlocked = ? WHERE idForum = ?";
+
+        try {
+            PreparedStatement stmt = cnx.prepareStatement(query);
+            stmt.setBoolean(1, true);
+            stmt.setInt(2, forumId);
+
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Forum blocked successfully!");
+            } else {
+                System.out.println("No forum found with the given ID.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error blocking forum: " + e.getMessage());
+        }
+    }
+
+    public void unblockForum(int forumId) {
+        String query = "UPDATE forum SET isBlocked = ? WHERE idForum = ?";
+
+        try {
+            PreparedStatement stmt = cnx.prepareStatement(query);
+            stmt.setBoolean(1, false);
+            stmt.setInt(2, forumId);
+
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Forum blocked successfully!");
+            } else {
+                System.out.println("No forum found with the given ID.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error blocking forum: " + e.getMessage());
+        }
+    }
+
+    public Forum getForumById(int forumId) {
+        String query = "SELECT * FROM forum WHERE idForum = ?";
+        try {
+            PreparedStatement stmt = cnx.prepareStatement(query);
+            stmt.setInt(1, forumId);
+            ResultSet resultSet = stmt.executeQuery();
+
+            if (resultSet.next()) {
+                int id = resultSet.getInt("idForum");
+                String title = resultSet.getString("title");
+                String description = resultSet.getString("description");
+                int idAuthor = resultSet.getInt("idAuthor");
+                LocalDateTime dateCreation = resultSet.getTimestamp("dateCreation").toLocalDateTime();
+                boolean isBlocked = resultSet.getBoolean("isBlocked");
+
+                return new Forum(id, title, description, idAuthor, dateCreation, isBlocked);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error fetching forum by ID: " + e.getMessage());
+        }
+        return null;
+    }
 
 }

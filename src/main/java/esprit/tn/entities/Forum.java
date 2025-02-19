@@ -14,6 +14,7 @@ public class Forum {
     private int idAuthor;
     private LocalDateTime dateCreationForum;
     private List<Response> responses;
+    private boolean isBlocked = false;
 
 
 
@@ -49,6 +50,16 @@ public class Forum {
         this.responses = responses;
         this.dateCreationForum=LocalDateTime.now();
 
+    }
+
+    public Forum(int id, String title, String description, int idAuthor, LocalDateTime dateCreation, boolean isBlocked) {
+        this.idForum = id;
+        this.titleForum = title;
+        this.descriptionForum = description;
+        this.idAuthor = idAuthor;
+        this.dateCreationForum=dateCreation;
+        this.dateCreationForum=LocalDateTime.now();
+        this.isBlocked=isBlocked;
     }
 
     public int getIdForum() {
@@ -124,8 +135,17 @@ public class Forum {
                 ", titre='" + titleForum + '\'' +
                 ", description='" + descriptionForum + '\'' +
                 ", date de creation='" + dateCreationForum + '\'' +
+                ", isBlocked=" + isBlocked +
                 ", responses='" + responses + '\'' +
                 '}';
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
     }
 
 
