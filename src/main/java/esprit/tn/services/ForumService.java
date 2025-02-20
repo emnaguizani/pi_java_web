@@ -21,20 +21,17 @@ public class ForumService {
     }
 
     public void ajouterForum(Forum forum) throws SQLException {
-        String req = "INSERT INTO forum (title, description, idAuthor, dateCreation) VALUES (?, ?, ?, ?)";
+        String req = "INSERT INTO forum (title, description, idAuthor, dateCreation, imagePath) VALUES (?, ?, ?, ?, ?)";
 
+        PreparedStatement stm = cnx.prepareStatement(req);
+        stm.setString(1, forum.getTitle());
+        stm.setString(2, forum.getDescription());
+        stm.setInt(3, forum.getIdAuthor());
+        stm.setTimestamp(4, java.sql.Timestamp.valueOf(forum.getDateCreation()));
+        stm.setString(5, forum.getImagePath());
 
-            PreparedStatement stm = cnx.prepareStatement(req);
-            stm.setString(1, forum.getTitle());
-            stm.setString(2, forum.getDescription());
-            stm.setInt(3, forum.getIdAuthor());
-            stm.setTimestamp(4, java.sql.Timestamp.valueOf(forum.getDateCreation()));
-
-            stm.executeUpdate();
-            System.out.println("Forum added successfully!");
-
-
-
+        stm.executeUpdate();
+        System.out.println("Forum added successfully!");
     }
 
     public List<Forum> getAllForumsWithResponses() {

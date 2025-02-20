@@ -15,7 +15,7 @@ public class Forum {
     private LocalDateTime dateCreationForum;
     private List<Response> responses;
     private boolean isBlocked = false;
-
+    private String imagePath;
 
 
 
@@ -60,6 +60,15 @@ public class Forum {
         this.dateCreationForum=dateCreation;
         this.dateCreationForum=LocalDateTime.now();
         this.isBlocked=isBlocked;
+    }
+
+    public Forum(int id, String title, String description, int idAuthor, String imagePath) {
+        this.idForum = id;
+        this.titleForum = title;
+        this.descriptionForum = description;
+        this.idAuthor = idAuthor;
+        this.dateCreationForum = LocalDateTime.now();
+        this.imagePath = imagePath;
     }
 
     public int getIdForum() {
@@ -113,6 +122,22 @@ public class Forum {
     public void addResponse(Response response) {
         this.responses.add(response);
     }
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -130,23 +155,17 @@ public class Forum {
     @Override
     public String toString() {
         return "Forum{" +
-                "forum Id=" + idForum +
-                ", author id='" + idAuthor + '\'' +
-                ", titre='" + titleForum + '\'' +
-                ", description='" + descriptionForum + '\'' +
-                ", date de creation='" + dateCreationForum + '\'' +
+                "idForum=" + idForum +
+                ", titleForum='" + titleForum + '\'' +
+                ", descriptionForum='" + descriptionForum + '\'' +
+                ", idAuthor=" + idAuthor +
+                ", dateCreationForum=" + dateCreationForum +
                 ", isBlocked=" + isBlocked +
-                ", responses='" + responses + '\'' +
+                ", imagePath='" + imagePath + '\'' +
+                ", responses=" + responses +
                 '}';
     }
 
-    public boolean isBlocked() {
-        return isBlocked;
-    }
-
-    public void setBlocked(boolean blocked) {
-        isBlocked = blocked;
-    }
 
 
 }

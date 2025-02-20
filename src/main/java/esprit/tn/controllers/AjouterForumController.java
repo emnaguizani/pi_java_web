@@ -9,7 +9,9 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -26,18 +28,20 @@ public class AjouterForumController {
     private TextField forumTitle;
 
     @FXML
+    private String imagePath;
+
+    @FXML
     void AjouteForum(ActionEvent event) {
         if (!validateInput()) {
             return;
         }
-
-
 
         Forum f = new Forum();
         f.setIdAuthor(Integer.parseInt(forumAuthorId.getText()));
         f.setTitle(forumTitle.getText().trim());
         f.setDescription(forumDescription.getText().trim());
         f.setDateCreation(LocalDateTime.now());
+        f.setImagePath(imagePath);
 
         ForumService fs = new ForumService();
         try {
@@ -50,12 +54,24 @@ public class AjouterForumController {
         showSuccessAlert("Forum Added", "Forum added successfully!");
 
         try {
-            Parent root= FXMLLoader.load(getClass().getResource("/ListForums.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/ListForums.fxml"));
             forumAuthorId.getScene().setRoot(root);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    @FXML
+    void uploadImage(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose Image");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
+        );
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            imagePath = selectedFile.getAbsolutePath();
+        }
     }
 
     private boolean validateInput() {
