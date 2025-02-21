@@ -6,6 +6,7 @@ import esprit.tn.main.DatabaseConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Types;
 
 public class ResponseService {
      Connection cnx;
@@ -16,7 +17,7 @@ public class ResponseService {
     }
 
     public void ajouter(Response response, int forumId) {
-        String req = "INSERT INTO response (content, authorId, dateCreation, forumId) VALUES (?, ?, ?, ?)";
+        String req = "INSERT INTO response (content, authorId, dateCreation, forumId, parentResponseId) VALUES (?, ?, ?, ?,?)";
 
         try {
             PreparedStatement stm = cnx.prepareStatement(req);
@@ -24,6 +25,12 @@ public class ResponseService {
             stm.setInt(2, response.getAuthor());
             stm.setObject(3, response.getCreatedAt());
             stm.setInt(4, forumId);
+
+            if (response.getParentResponseId() == 0) {
+                stm.setNull(5, Types.INTEGER);
+            } else {
+                stm.setInt(5, response.getParentResponseId());
+            }
 
             stm.executeUpdate();
             System.out.println("Response added successfully!");
@@ -85,6 +92,7 @@ public class ResponseService {
         }
         return false;
     }
+
 
 
 }

@@ -7,6 +7,8 @@ public class Response {
     private String content;
     private int responseAuthorId;
     private LocalDateTime dateCreationResponse;
+    private int parentResponseId;
+    private int forumId;
 
     public Response() {
         this.dateCreationResponse = LocalDateTime.now();
@@ -23,6 +25,14 @@ public class Response {
         this.content = content;
         this.responseAuthorId = authorId;
         this.dateCreationResponse = responseDate != null ? responseDate : LocalDateTime.now();
+    }
+    public Response(int idResponse, int idForum, int idAuthor, String content, LocalDateTime dateCreated, int parentResponseId) {
+        this.idResponse = idResponse;
+        this.forumId = idForum;
+        this.responseAuthorId = idAuthor;
+        this.content = content;
+        this.dateCreationResponse = dateCreated;
+        this.parentResponseId = parentResponseId;
     }
 
     public int getIdResponse() {
@@ -55,6 +65,14 @@ public class Response {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.dateCreationResponse = createdAt;
+    }
+
+    public int getParentResponseId() {
+        return parentResponseId;
+    }
+
+    public void setParentResponseId(int parentResponseId) {
+        this.parentResponseId = parentResponseId;
     }
 
     @Override

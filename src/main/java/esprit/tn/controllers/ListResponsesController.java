@@ -7,6 +7,7 @@ import esprit.tn.services.ResponseService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
@@ -19,8 +20,10 @@ import javafx.util.Callback;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 public class ListResponsesController {
 
@@ -100,26 +103,32 @@ public class ListResponsesController {
                 @Override
                 public ListCell<Response> call(ListView<Response> param) {
                     return new ListCell<>() {
+                        private final Button replyButton = new Button("Reply");
                         private final Button updateButton = new Button("Update");
                         private final Button deleteButton = new Button("Delete");
                         private final Text authorText = new Text();
                         private final Text dateText = new Text();
                         private final Text contentText = new Text();
-                        private final HBox buttonsBox = new HBox(10, updateButton, deleteButton);
+                        private final HBox buttonsBox = new HBox(10, replyButton, updateButton, deleteButton);
                         private final HBox authorDateBox = new HBox(10, authorText, dateText);
                         private final VBox vbox = new VBox(5, authorDateBox, contentText, buttonsBox);
 
                         {
+                            replyButton.setStyle("-fx-background-color: #007bff; -fx-text-fill: white;");
                             updateButton.setStyle("-fx-background-color: #ffc107; -fx-text-fill: black;");
                             deleteButton.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white;");
 
                             HBox.setHgrow(buttonsBox, javafx.scene.layout.Priority.ALWAYS);
                             buttonsBox.setAlignment(Pos.CENTER_RIGHT);
 
-                            HBox.setHgrow(dateText, javafx.scene.layout.Priority.ALWAYS);
-                            dateText.setStyle("-fx-text-alignment: right;");
-
                             authorDateBox.setAlignment(Pos.CENTER_LEFT);
+
+                            replyButton.setOnAction(event -> {
+                                Response response = getItem();
+                                if (response != null) {
+                                    handleReplyToResponse(response);
+                                }
+                            });
 
                             updateButton.setOnAction(event -> {
                                 Response response = getItem();
@@ -144,12 +153,14 @@ public class ListResponsesController {
                                 setGraphic(null);
                             } else {
                                 authorText.setText("Auteur: getAuthorNameById");
-
                                 contentText.setText(response.getContent());
 
                                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy, HH:mm");
-                                String formattedDate = response.getCreatedAt().format(formatter);
-                                dateText.setText(formattedDate);
+                                dateText.setText(response.getCreatedAt().format(formatter));
+
+
+                                double indent = response.getParentResponseId() == 0 ? 0 : 20;
+                                vbox.setPadding(new Insets(5, 5, 5, indent));
 
                                 setGraphic(vbox);
                             }
@@ -158,6 +169,19 @@ public class ListResponsesController {
                 }
             });
         }
+    }
+
+    private void handleReplyToResponse(Response parentResponse) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Reply to Response");
+        dialog.setHeaderText("Enter your reply:");
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(content -> {
+            Response newReply = new Response(0, forum.getIdForum(), 1, content, LocalDateTime.now(), parentResponse.getIdResponse());
+            responseService.ajouter(newReply,forum.getIdForum());
+            populateResponses();
+        });
     }
 
     private void handleUpdateResponse(Response response) {

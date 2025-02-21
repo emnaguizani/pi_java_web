@@ -28,6 +28,8 @@ public class AjouterForumController {
     private TextField forumTitle;
 
     @FXML
+    private TextField ChosenID;
+
     private String imagePath;
 
     @FXML
@@ -71,6 +73,7 @@ public class AjouterForumController {
         File selectedFile = fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
             imagePath = selectedFile.getAbsolutePath();
+            ChosenID.setText(imagePath);
         }
     }
 
@@ -103,7 +106,6 @@ public class AjouterForumController {
             return false;
         }
 
-
         if (!authorIdText.matches("\\d+")) {
             showErrorAlert("Invalid Author ID", "Author ID must be a positive number.");
             return false;
@@ -112,14 +114,12 @@ public class AjouterForumController {
         return true;
     }
 
-
     private void showErrorAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setContentText(message);
         alert.showAndWait();
     }
-
 
     private void showSuccessAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -133,6 +133,7 @@ public class AjouterForumController {
         forumAuthorId.clear();
         forumTitle.clear();
         forumDescription.clear();
+        ChosenID.clear();
     }
 
     @FXML
@@ -144,6 +145,4 @@ public class AjouterForumController {
             e.printStackTrace();
         }
     }
-
-
 }
