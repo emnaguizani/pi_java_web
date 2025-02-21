@@ -17,20 +17,27 @@ public class Main {
         ForumService forumService = new ForumService();
         ResponseService responseService = new ResponseService();
 
-        System.out.println("\n===== Forum Management =====");
-        int forumId = addForum(scanner, forumService);
-        updateForum(scanner, forumService);
-        deleteForum(scanner, forumService);
-        viewAllForums(forumService);
+        Forum forum = forumService.getForumById(52);
+        System.out.println(forum);
+      //  System.out.println("\n===== Forum Management =====");
+        // int forumId = addForum(scanner, forumService);
+        // updateForum(scanner, forumService);
+        // deleteForum(scanner, forumService);
+        //viewAllForums(forumService);
 
-        System.out.println("\n===== Response Management =====");
-        int responseId = addResponse(scanner, responseService, forumService);
-        updateResponse(scanner, responseService);
-        deleteResponse(scanner, responseService);
-        viewAllForums(forumService);
+      //  System.out.println("\n===== Response Management =====");
+      //  int responseId = addResponse(scanner, responseService, forumService);
+        // updateResponse(scanner, responseService);
+        // deleteResponse(scanner, responseService);
+       // viewAllForums(forumService);
+
+        // Test getForumById
+       // testGetForumById(forumService, scanner);
 
         scanner.close();
     }
+
+    // ================== Method Declarations ==================
 
     private static int addForum(Scanner scanner, ForumService forumService) {
         System.out.println("\nCreate forum");
@@ -111,6 +118,7 @@ public class Main {
             System.out.println("Title: " + f.getTitle());
             System.out.println("Description: " + f.getDescription());
             System.out.println("Author ID: " + f.getIdAuthor());
+            System.out.println("Image path: " + f.getImagePath());
             System.out.println("Responses:");
             for (Response res : f.getResponses()) {
                 System.out.println("  - " + res);
@@ -119,12 +127,36 @@ public class Main {
         }
     }
 
+    private static void testGetForumById(ForumService forumService, Scanner scanner) {
+        System.out.println("\nTesting getForumById method...");
+
+        // Prompt the user to enter a forum ID
+        System.out.print("Enter the forum ID: ");
+        int forumId = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character
+
+        // Call the getForumById method
+        Forum forum = forumService.getForumById(forumId);
+
+        if (forum != null) {
+            // Display the forum details
+            System.out.println("\nForum Details:");
+            System.out.println("ID: " + forum.getIdForum());
+            System.out.println("Title: " + forum.getTitle());
+            System.out.println("Description: " + forum.getDescription());
+            System.out.println("Author ID: " + forum.getIdAuthor());
+            System.out.println("Date Created: " + forum.getDateCreation());
+            System.out.println("Image Path: " + forum.getImagePath()); // Display imagePath
+            System.out.println("Is Blocked: " + forum.isBlocked());
+        } else {
+            System.out.println("No forum found with ID: " + forumId);
+        }
+    }
+
     private static boolean forumExists(int forumId, ForumService forumService) {
         List<Forum> forums = forumService.getAllForumsWithResponses();
         return forums.stream().anyMatch(f -> f.getIdForum() == forumId);
     }
-
-
 
     private static int getValidInt(Scanner scanner, String prompt) {
         while (true) {

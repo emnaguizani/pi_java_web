@@ -2,15 +2,16 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="514.0" prefWidth="773.0" xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.ListResponsesController">
+<AnchorPane prefHeight="514.0" prefWidth="773.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.ListResponsesController">
     <children>
         <Pane prefHeight="45.0" prefWidth="779.0" style="-fx-background-color: #2667FF;">
             <children>
@@ -44,8 +45,21 @@
         <Text fx:id="TitreForum" layoutX="12.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 28px;" text="TitreForum" wrappingWidth="755.65234375" />
         <Text fx:id="NomCreateur" layoutX="14.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NomeCreateur" />
         <Text fx:id="DateCreation" layoutX="663.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DateCreation" />
-        <TextArea fx:id="DescriptionForum" layoutX="14.0" layoutY="120.0" prefHeight="67.0" prefWidth="745.0" />
-        <ListView fx:id="ListResponses" layoutX="14.0" layoutY="191.0" prefHeight="317.0" prefWidth="745.0" />
-      <Button fx:id="backButton" layoutX="-20.0" layoutY="24.0" onAction="#goToListForums" prefHeight="62.0" prefWidth="80.0" style="-fx-background-color: transparent; -fx-font-size: 30px;" text="⬅" />
-        <Button fx:id="AjouterReponse" layoutX="613.0" layoutY="65.0" mnemonicParsing="false" onAction="#handleAjouterReponse" text="Respond To This Forum" />    </children>
+
+        <!-- Replace TextArea with ScrollPane and VBox -->
+        <ScrollPane layoutX="14.0" layoutY="120.0" prefHeight="117.0" prefWidth="745.0">
+         <content>
+            <VBox prefHeight="115.0" prefWidth="730.0">
+               <children>
+                  <Text fx:id="DescriptionContainer" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                   <ImageView fx:id="ImageForum" fitHeight="127.0" fitWidth="254.0" pickOnBounds="true" />
+               </children>
+            </VBox>
+         </content>
+        </ScrollPane>
+
+        <ListView fx:id="ListResponses" layoutX="14.0" layoutY="249.0" prefHeight="259.0" prefWidth="745.0" />
+        <Button fx:id="backButton" layoutX="-20.0" layoutY="24.0" onAction="#goToListForums" prefHeight="62.0" prefWidth="80.0" style="-fx-background-color: transparent; -fx-font-size: 30px;" text="⬅" />
+        <Button fx:id="AjouterReponse" layoutX="613.0" layoutY="65.0" mnemonicParsing="false" onAction="#handleAjouterReponse" text="Respond To This Forum" />
+    </children>
 </AnchorPane>

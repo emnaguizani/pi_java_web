@@ -70,6 +70,15 @@ public class Forum {
         this.dateCreationForum = LocalDateTime.now();
         this.imagePath = imagePath;
     }
+    public Forum(int id, String title, String description, int idAuthor, LocalDateTime dateCreation, boolean isBlocked, String imagePath) {
+        this.idForum = id;
+        this.titleForum = title;
+        this.descriptionForum = description;
+        this.idAuthor = idAuthor;
+        this.dateCreationForum = dateCreation;
+        this.isBlocked = isBlocked;
+        this.imagePath = imagePath;
+    }
 
     public int getIdForum() {
         return idForum;

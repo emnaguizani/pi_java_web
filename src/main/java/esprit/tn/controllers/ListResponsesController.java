@@ -10,11 +10,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -42,6 +45,12 @@ public class ListResponsesController {
     @FXML
     private Button AjouterReponse;
 
+    @FXML
+    private Text DescriptionContainer;
+
+    @FXML
+    private ImageView ImageForum;
+
     private Forum forum;
     private final ResponseService responseService = new ResponseService();
     private final ForumService forumService = new ForumService();
@@ -56,13 +65,31 @@ public class ListResponsesController {
         if (forum != null) {
             TitreForum.setText(forum.getTitle());
             NomCreateur.setText("Author: getAuthorNameById");
-            DescriptionForum.setText(forum.getDescription());
-
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
             String formattedDate = forum.getDateCreation().format(formatter);
             DateCreation.setText(formattedDate);
+            DescriptionContainer.setText(forum.getDescription());
+            System.out.println("Image Path: " + forum.getImagePath());
+            if (forum.getImagePath() != null && !forum.getImagePath().isEmpty()) {
+                try {
+                    File imageFile = new File(forum.getImagePath());
+                    if (imageFile.exists()) {
+                        Image image = new Image(imageFile.toURI().toString());
+                        ImageForum.setImage(image);
+                        ImageForum.setFitWidth(700);
+                        ImageForum.setPreserveRatio(true);
+                    } else {
+                        System.err.println("Image file does not exist: " + forum.getImagePath());
+                    }
+                } catch (Exception e) {
+                    System.err.println("Error loading image: " + e.getMessage());
+                }
+            } else {
+                System.err.println("No image path provided for the forum.");
+            }
         }
     }
+
 
     private void populateResponses() {
         if (forum != null) {

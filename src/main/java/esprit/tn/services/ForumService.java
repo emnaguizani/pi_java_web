@@ -36,7 +36,7 @@ public class ForumService {
 
     public List<Forum> getAllForumsWithResponses() {
         List<Forum> forums = new ArrayList<>();
-        String forumQuery = "SELECT * FROM forum";
+        String forumQuery = "SELECT idForum, title, description, idAuthor, dateCreation, imagePath FROM forum";
         String responseQuery = "SELECT * FROM response WHERE forumId = ?";
 
         try {
@@ -49,6 +49,7 @@ public class ForumService {
                 String description = forumResult.getString("description");
                 int idAuthor = forumResult.getInt("idAuthor");
                 LocalDateTime dateCreation = forumResult.getTimestamp("dateCreation").toLocalDateTime();
+                String imagePath = forumResult.getString("imagePath");
 
                 PreparedStatement responseStmt = cnx.prepareStatement(responseQuery);
                 responseStmt.setInt(1, idForum);
@@ -61,10 +62,12 @@ public class ForumService {
                     int authorId = responseResult.getInt("authorId");
                     LocalDateTime responseDate = responseResult.getTimestamp("dateCreation").toLocalDateTime();
 
-                    responses.add(new Response(responseId,content, authorId, responseDate));
+                    responses.add(new Response(responseId, content, authorId, responseDate));
                 }
 
-                Forum forum = new Forum(idForum, title, description, idAuthor, responses);
+
+                Forum forum = new Forum(idForum, title, description, idAuthor, dateCreation, false, imagePath);
+                forum.setResponses(responses);
                 forums.add(forum);
             }
 
@@ -124,7 +127,7 @@ public class ForumService {
 
     public List<Forum> getAllForums() {
         List<Forum> forums = new ArrayList<>();
-        String query = "SELECT * FROM forum";
+        String query = "SELECT idForum, title, description, idAuthor, dateCreation, imagePath FROM forum";
 
         try {
             PreparedStatement stmt = cnx.prepareStatement(query);
@@ -136,8 +139,9 @@ public class ForumService {
                 String description = resultSet.getString("description");
                 int idAuthor = resultSet.getInt("idAuthor");
                 LocalDateTime dateCreation = resultSet.getTimestamp("dateCreation").toLocalDateTime();
+                String imagePath = resultSet.getString("imagePath");
 
-                forums.add(new Forum(idForum, title, description, idAuthor, dateCreation));
+                forums.add(new Forum(idForum, title, description, idAuthor, dateCreation, false, imagePath));
             }
 
         } catch (SQLException e) {
@@ -236,8 +240,9 @@ public class ForumService {
                 int idAuthor = resultSet.getInt("idAuthor");
                 LocalDateTime dateCreation = resultSet.getTimestamp("dateCreation").toLocalDateTime();
                 boolean isBlocked = resultSet.getBoolean("isBlocked");
+                String imagePath = resultSet.getString("imagePath");
 
-                return new Forum(id, title, description, idAuthor, dateCreation, isBlocked);
+                return new Forum(id, title, description, idAuthor, dateCreation, isBlocked, imagePath);
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error fetching forum by ID: " + e.getMessage());
