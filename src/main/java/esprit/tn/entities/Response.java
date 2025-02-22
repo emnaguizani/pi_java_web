@@ -1,5 +1,6 @@
 package esprit.tn.entities;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Response {
@@ -32,6 +33,21 @@ public class Response {
         this.responseAuthorId = idAuthor;
         this.content = content;
         this.dateCreationResponse = dateCreated;
+        this.parentResponseId = parentResponseId;
+    }
+
+    public Response(String content, int authorId, LocalDateTime createdAt, int parentResponseId) {
+        this.content = content;
+        this.responseAuthorId = authorId;
+        this.dateCreationResponse = createdAt;
+        this.parentResponseId = parentResponseId;
+    }
+
+    public Response(int idResponse, String content, int authorId, LocalDateTime dateCreation, int parentResponseId) {
+        this.idResponse = idResponse;
+        this.responseAuthorId = authorId;
+        this.content = content;
+        this.dateCreationResponse = dateCreation;
         this.parentResponseId = parentResponseId;
     }
 

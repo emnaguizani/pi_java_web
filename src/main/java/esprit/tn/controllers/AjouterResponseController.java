@@ -43,6 +43,8 @@ public class AjouterResponseController {
     @FXML
     private Button backButton;
 
+    private Response parentResponse;
+
     private Forum forum;
     private final ResponseService responseService = new ResponseService();
 
@@ -50,6 +52,11 @@ public class AjouterResponseController {
         this.forum = forum;
         populateFields();
     }
+    public void setParentResponse(Response parentResponse) {
+        this.parentResponse = parentResponse;
+    }
+
+
 
     private void populateFields() {
         if (forum != null) {
@@ -67,7 +74,6 @@ public class AjouterResponseController {
     @FXML
     void AjouteResponse(ActionEvent event) {
         try {
-
             int authorId;
             try {
                 authorId = Integer.parseInt(ResponseAuthorId.getText().trim());
@@ -75,7 +81,6 @@ public class AjouterResponseController {
                 showAlert("Invalid Input", "Author ID must be a valid number.");
                 return;
             }
-
 
             String content = ResponseContent.getText().trim();
             if (content.isEmpty()) {
@@ -88,18 +93,14 @@ public class AjouterResponseController {
                 return;
             }
 
+            int parentResponseId = (parentResponse != null) ? parentResponse.getIdResponse() : 0;
 
-            Response response = new Response(content, authorId, LocalDateTime.now());
-
+            Response response = new Response(content, authorId, LocalDateTime.now(), parentResponseId);
 
             responseService.ajouter(response, forum.getIdForum());
 
-
             resetFields(null);
-
-
             showAlert("Success", "Response created successfully!");
-
 
             redirectToListResponses();
         } catch (Exception e) {

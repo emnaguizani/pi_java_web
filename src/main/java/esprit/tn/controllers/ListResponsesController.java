@@ -4,6 +4,8 @@ import esprit.tn.entities.Forum;
 import esprit.tn.entities.Response;
 import esprit.tn.services.ForumService;
 import esprit.tn.services.ResponseService;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,8 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class ListResponsesController {
 
@@ -67,6 +68,7 @@ public class ListResponsesController {
     private void populateFields() {
         if (forum != null) {
             TitreForum.setText(forum.getTitle());
+
             NomCreateur.setText("Author: getAuthorNameById");
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
             String formattedDate = forum.getDateCreation().format(formatter);
@@ -93,95 +95,113 @@ public class ListResponsesController {
         }
     }
 
-
     private void populateResponses() {
         if (forum != null) {
-            List<Response> responses = forumService.getResponsesForForum(forum.getIdForum());
-            ListResponses.getItems().setAll(responses);
 
-            ListResponses.setCellFactory(new Callback<>() {
+            List<Response> responses = responseService.getAllResponses(forum.getIdForum());
+
+
+            Map<Integer, List<Response>> responseMap = new HashMap<>();
+            for (Response response : responses) {
+                int parentId = response.getParentResponseId();
+                responseMap.computeIfAbsent(parentId, k -> new ArrayList<>()).add(response);
+            }
+
+
+            List<Response> orderedResponses = new ArrayList<>();
+            buildResponseHierarchy(responseMap, 0, orderedResponses);
+
+
+            ListResponses.getItems().setAll(orderedResponses);
+
+
+            ListResponses.setCellFactory(param -> new ListCell<>() {
+                private final Button respondButton = new Button("Respond");
+                private final Button updateButton = new Button("Update");
+                private final Button deleteButton = new Button("Delete");
+                private final Text authorText = new Text();
+                private final Text dateText = new Text();
+                private final Text contentText = new Text();
+                private final HBox buttonsBox = new HBox(10, respondButton, updateButton, deleteButton);
+                private final HBox authorDateBox = new HBox(10, authorText, dateText);
+                private final VBox vbox = new VBox(5, authorDateBox, contentText, buttonsBox);
+
+                {
+                    respondButton.setStyle("-fx-background-color: #28a745; -fx-text-fill: white;");
+                    updateButton.setStyle("-fx-background-color: #ffc107; -fx-text-fill: black;");
+                    deleteButton.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white;");
+
+                    respondButton.setOnAction(event -> {
+                        Response response = getItem();
+                        if (response != null) {
+                            goToAjouterReponse(response);
+                        }
+                    });
+
+                    updateButton.setOnAction(event -> {
+                        Response response = getItem();
+                        if (response != null) {
+                            handleUpdateResponse(response);
+                        }
+                    });
+
+                    deleteButton.setOnAction(event -> {
+                        Response response = getItem();
+                        if (response != null) {
+                            handleDeleteResponse(response);
+                        }
+                    });
+                }
+
                 @Override
-                public ListCell<Response> call(ListView<Response> param) {
-                    return new ListCell<>() {
-                        private final Button replyButton = new Button("Reply");
-                        private final Button updateButton = new Button("Update");
-                        private final Button deleteButton = new Button("Delete");
-                        private final Text authorText = new Text();
-                        private final Text dateText = new Text();
-                        private final Text contentText = new Text();
-                        private final HBox buttonsBox = new HBox(10, replyButton, updateButton, deleteButton);
-                        private final HBox authorDateBox = new HBox(10, authorText, dateText);
-                        private final VBox vbox = new VBox(5, authorDateBox, contentText, buttonsBox);
+                protected void updateItem(Response response, boolean empty) {
+                    super.updateItem(response, empty);
+                    if (empty || response == null) {
+                        setText(null);
+                        setGraphic(null);
+                    } else {
+                        authorText.setText("Author: " + response.getAuthor());
+                        contentText.setText(response.getContent());
 
-                        {
-                            replyButton.setStyle("-fx-background-color: #007bff; -fx-text-fill: white;");
-                            updateButton.setStyle("-fx-background-color: #ffc107; -fx-text-fill: black;");
-                            deleteButton.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white;");
-
-                            HBox.setHgrow(buttonsBox, javafx.scene.layout.Priority.ALWAYS);
-                            buttonsBox.setAlignment(Pos.CENTER_RIGHT);
-
-                            authorDateBox.setAlignment(Pos.CENTER_LEFT);
-
-                            replyButton.setOnAction(event -> {
-                                Response response = getItem();
-                                if (response != null) {
-                                    handleReplyToResponse(response);
-                                }
-                            });
-
-                            updateButton.setOnAction(event -> {
-                                Response response = getItem();
-                                if (response != null) {
-                                    handleUpdateResponse(response);
-                                }
-                            });
-
-                            deleteButton.setOnAction(event -> {
-                                Response response = getItem();
-                                if (response != null) {
-                                    handleDeleteResponse(response);
-                                }
-                            });
-                        }
-
-                        @Override
-                        protected void updateItem(Response response, boolean empty) {
-                            super.updateItem(response, empty);
-                            if (empty || response == null) {
-                                setText(null);
-                                setGraphic(null);
-                            } else {
-                                authorText.setText("Auteur: getAuthorNameById");
-                                contentText.setText(response.getContent());
-
-                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy, HH:mm");
-                                dateText.setText(response.getCreatedAt().format(formatter));
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy, HH:mm");
+                        dateText.setText(response.getCreatedAt().format(formatter));
 
 
-                                double indent = response.getParentResponseId() == 0 ? 0 : 20;
-                                vbox.setPadding(new Insets(5, 5, 5, indent));
+                        double indent = response.getParentResponseId() == 0 ? 0 : 20;
+                        vbox.setPadding(new Insets(5, 5, 5, indent));
 
-                                setGraphic(vbox);
-                            }
-                        }
-                    };
+                        setGraphic(vbox);
+                    }
                 }
             });
         }
     }
 
-    private void handleReplyToResponse(Response parentResponse) {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Reply to Response");
-        dialog.setHeaderText("Enter your reply:");
 
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresent(content -> {
-            Response newReply = new Response(0, forum.getIdForum(), 1, content, LocalDateTime.now(), parentResponse.getIdResponse());
-            responseService.ajouter(newReply,forum.getIdForum());
-            populateResponses();
-        });
+    private void buildResponseHierarchy(Map<Integer, List<Response>> responseMap, int parentId, List<Response> orderedResponses) {
+        List<Response> children = responseMap.get(parentId);
+        if (children != null) {
+            for (Response child : children) {
+                orderedResponses.add(child);
+                buildResponseHierarchy(responseMap, child.getIdResponse(), orderedResponses);
+            }
+        }
+    }
+
+    private void goToAjouterReponse(Response parentResponse) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterReponse.fxml"));
+            Parent root = loader.load();
+
+            AjouterResponseController controller = loader.getController();
+            controller.setForum(forum);
+            controller.setParentResponse(parentResponse);
+
+            ListResponses.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to load AjouterReponse page: " + e.getMessage());
+        }
     }
 
     private void handleUpdateResponse(Response response) {
@@ -201,7 +221,6 @@ public class ListResponsesController {
     }
 
     private void handleDeleteResponse(Response response) {
-
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
         alert.setHeaderText("Delete Response");

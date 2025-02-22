@@ -3,10 +3,10 @@ package esprit.tn.services;
 import esprit.tn.entities.Response;
 import esprit.tn.main.DatabaseConnection;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Types;
+import java.sql.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ResponseService {
      Connection cnx;
@@ -91,6 +91,30 @@ public class ResponseService {
             throw new RuntimeException("Error checking response existence: " + e.getMessage());
         }
         return false;
+    }
+
+    public List<Response> getAllResponses(int forumId) {
+        List<Response> responses = new ArrayList<>();
+        String query = "SELECT * FROM response WHERE forumId = ? ORDER BY parentResponseId, dateCreation";
+
+        try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+            stmt.setInt(1, forumId);
+            ResultSet resultSet = stmt.executeQuery();
+
+            while (resultSet.next()) {
+                int responseId = resultSet.getInt("idResponse");
+                String content = resultSet.getString("content");
+                int authorId = resultSet.getInt("authorId");
+                LocalDateTime createdAt = resultSet.getTimestamp("dateCreation").toLocalDateTime();
+                int parentResponseId = resultSet.getInt("parentResponseId");
+
+                responses.add(new Response(responseId, content, authorId, createdAt, parentResponseId));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return responses;
     }
 
 
