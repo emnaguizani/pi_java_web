@@ -179,4 +179,8 @@ public class AfficherCoursController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    public void reloadCourse(ActionEvent actionEvent) {
+        loadCourses();
+    }
 }

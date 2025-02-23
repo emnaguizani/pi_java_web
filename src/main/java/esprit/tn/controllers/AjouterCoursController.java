@@ -5,8 +5,10 @@ import esprit.tn.entities.Niveau;
 import esprit.tn.entities.Status;
 import esprit.tn.service.CourService;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -142,6 +144,10 @@ public class AjouterCoursController implements Initializable {
         alert.setContentText("The course has been successfully added.");
         alert.showAndWait();
 
+    }
+    public void back(ActionEvent actionEvent) {
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.close();
     }
 
 

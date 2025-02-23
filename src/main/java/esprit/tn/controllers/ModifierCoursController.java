@@ -5,13 +5,19 @@ import esprit.tn.entities.Niveau;
 import esprit.tn.entities.Status;
 import esprit.tn.service.CourService;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -135,4 +141,10 @@ public class ModifierCoursController implements Initializable {
         alert.setContentText("The course has been successfully updated.");
         alert.showAndWait();
     }
-}
+
+    public void back(ActionEvent actionEvent) {
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.close();
+    }
+    }
+

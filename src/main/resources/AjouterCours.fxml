@@ -6,12 +6,13 @@
 
 <AnchorPane prefHeight="578.0" prefWidth="509.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AjouterCoursController">
    <children>
-      <Button fx:id="createButton" layoutX="139.0" layoutY="537.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="183.0" text="Confirm" textFill="#2667ff" />
+      <Button fx:id="createButton" layoutX="163.0" layoutY="537.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="183.0" text="Confirm" textFill="#2667ff" />
       <Pane prefHeight="42.0" prefWidth="515.0" style="-fx-background-color: #ADD7F6;">
          <children>
 
 
             <Label layoutX="195.0" layoutY="8.0" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Course Adding" />
+            <Button fx:id="backButton" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" onAction="#back" prefHeight="26.0" prefWidth="60.0" text="Back" textFill="#2667ff" />
          </children>
 
       </Pane>
