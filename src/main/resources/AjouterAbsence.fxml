@@ -1,24 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane xmlns="http://javafx.com/javafx/21.0.2"
+            xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="esprit.tn.controllers.AjouterAbsenceController"
             stylesheets="@css/style.css"
-            prefHeight="300.0" prefWidth="350.0">
+            prefHeight="600" prefWidth="900"
+            style="-fx-background-color: linear-gradient(to right, #87BFFF, #3F8EFC);">
 
     <children>
-        <Label layoutX="20" layoutY="20" text="ID Séance :" />
-        <TextField fx:id="idSeanceField" layoutX="120" layoutY="20" promptText="ID Séance"/>
+        <!-- Titre -->
+        <Label layoutX="300" layoutY="20" text="Gestion des Absences"
+               style="-fx-font-size: 24px; -fx-text-fill: white; -fx-font-weight: bold;"/>
 
-        <Label layoutX="20" layoutY="60" text="ID Élève :" />
-        <TextField fx:id="idEleveField" layoutX="120" layoutY="60" promptText="ID Élève"/>
+        <!-- Sélection de séance -->
+        <ComboBox fx:id="seanceComboBox" layoutX="50" layoutY="70" prefWidth="300"
+                  style="-fx-font-size: 14px; -fx-background-radius: 8px;"/>
 
-        <Label layoutX="20" layoutY="100" text="État :" />
-        <ComboBox fx:id="etatComboBox" layoutX="120" layoutY="100" prefWidth="150"/>
+        <!-- Tableau des absences -->
+        <TableView fx:id="tableViewAbsences" layoutX="50" layoutY="120" prefHeight="350" prefWidth="800"
+                   style="-fx-background-radius: 12px; -fx-border-radius: 12px;">
+            <columns>
+                <TableColumn fx:id="eleveFullNameColumn" text="Nom Élève" prefWidth="200"/>
+                <TableColumn fx:id="presentColumn" text="Présent ?" prefWidth="100"/>
+                <TableColumn fx:id="retardColumn" text="Retard ?" prefWidth="100"/>
+                <TableColumn fx:id="absentColumn" text="Absent ?" prefWidth="100"/>
+                <TableColumn fx:id="commentColumn" text="Commentaire" prefWidth="300"/>
+            </columns>
+        </TableView>
 
-        <Button layoutX="20" layoutY="150" text="Ajouter" onAction="#ajouterAbsence"/>
-        <Button layoutX="120" layoutY="150" text="Voir Absences" onAction="#afficherAbsences"/>
+        <!-- Boutons avec icônes -->
+        <HBox layoutX="250" layoutY="500" spacing="20">
+            <Button fx:id="btnViewAbsences" text="📋 Voir Absences" onAction="#handleViewAbsences"
+                    style="-fx-background-color: #2667FF; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10px 15px; -fx-background-radius: 10px;"/>
+
+            <Button fx:id="btnSaveAbsences" text="💾 Enregistrer Absences" onAction="#enregistrerAbsences"
+                    style="-fx-background-color: #3B28CC; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10px 15px; -fx-background-radius: 10px;"/>
+        </HBox>
     </children>
 </AnchorPane>

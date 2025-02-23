@@ -54,10 +54,10 @@ public class SeanceService implements Iservice<Seance> {
         }
     }
 
-    @Override
     public List<Seance> getAll() {
         List<Seance> seances = new ArrayList<>();
         String req = "SELECT * FROM seance";
+
         try (Statement stm = cnx.createStatement();
              ResultSet rs = stm.executeQuery(req)) {
             while (rs.next()) {
@@ -71,10 +71,12 @@ public class SeanceService implements Iservice<Seance> {
                 seances.add(seance);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.err.println("❌ Erreur lors de la récupération des séances : " + e.getMessage());
         }
+
         return seances;
     }
+
 
     @Override
     public Seance getone(int id) {

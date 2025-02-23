@@ -5,9 +5,10 @@ import java.util.List;
 public interface Iservice<T> {
     void ajouter(T t);
     void modifier(T t);
-    void supprimer(T t); // Vérifiez bien que supprimer attend un paramètre de type T
-    List<T> getAll();
+    void supprimer(T t);
+    List<T> getAll(); // ✅ Modifier ici (au lieu de getAllWithUserDetails)
     T getone(int id);
 }
+
 
 

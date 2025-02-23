@@ -4,14 +4,17 @@ import esprit.tn.entities.Seance;
 import esprit.tn.entities.Absence;
 import esprit.tn.services.SeanceService;
 import esprit.tn.services.AbsenceService;
+
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        // Connexion à la base de données
         DatabaseConnection.getInstance();
 
+        // Initialisation des services
         SeanceService seanceService = new SeanceService();
         AbsenceService absenceService = new AbsenceService();
 
@@ -83,11 +86,12 @@ public class Main {
                     break;
 
                 case 5:
+                    System.out.println("\n🎯 Gestion des Absences:");
                     System.out.println("1️⃣ Ajouter une absence");
                     System.out.println("2️⃣ Modifier une absence");
                     System.out.println("3️⃣ Supprimer une absence");
                     System.out.println("4️⃣ Afficher toutes les absences");
-                    System.out.print("➡️ Choisissez une option pour la gestion des absences: ");
+                    System.out.print("➡️ Choisissez une option: ");
                     int absenceChoice = scanner.nextInt();
                     scanner.nextLine();
 
@@ -98,6 +102,7 @@ public class Main {
                             System.out.print("ID de l'élève: ");
                             int idEleve = scanner.nextInt();
                             scanner.nextLine();
+
                             String etat;
                             do {
                                 System.out.print("État (Présent/Absent): ");
@@ -113,6 +118,7 @@ public class Main {
                             System.out.print("ID de l'absence à modifier: ");
                             int idAbsMod = scanner.nextInt();
                             scanner.nextLine();
+
                             Absence absenceToUpdate = absenceService.getone(idAbsMod);
 
                             if (absenceToUpdate != null) {
@@ -132,6 +138,7 @@ public class Main {
                         case 3:
                             System.out.print("ID de l'absence à supprimer: ");
                             int idAbsSupp = scanner.nextInt();
+                            scanner.nextLine();
                             absenceService.supprimer(new Absence(idAbsSupp, 0, 0, ""));
                             System.out.println("✅ Absence supprimée avec succès.");
                             break;
@@ -146,6 +153,10 @@ public class Main {
                                 }
                             }
                             break;
+
+                        default:
+                            System.out.println("❌ Option invalide.");
+                            break;
                     }
                     break;
 
@@ -158,5 +169,7 @@ public class Main {
             }
 
         } while (choice != 0);
+
+        scanner.close();
     }
 }
