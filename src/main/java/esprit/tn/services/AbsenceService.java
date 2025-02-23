@@ -215,6 +215,41 @@ public class AbsenceService {
         }
         return absences;
     }
+    public List<Absence> getAbsencesForEleve(int idEleve) {
+        List<Absence> absences = new ArrayList<>();
+        String req = """
+        SELECT a.idAbsence, a.idSeance, a.idEleve, a.Etat, a.commentaire, u.fullName, s.titre AS seanceTitre
+        FROM absence a
+        JOIN users u ON a.idEleve = u.id_user
+        JOIN seance s ON a.idSeance = s.idSeance
+        WHERE a.idEleve = ?
+    """;
+
+        try (PreparedStatement stm = cnx.prepareStatement(req)) {
+            stm.setInt(1, idEleve);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Absence absence = new Absence(
+                        rs.getInt("idAbsence"),
+                        rs.getInt("idSeance"),
+                        rs.getInt("idEleve"),
+                        rs.getString("Etat"),
+                        rs.getString("fullName"),     // ✅ Nom de l'élève
+                        rs.getString("seanceTitre"),  // ✅ Titre de la séance
+                        rs.getString("commentaire")   // ✅ Commentaire
+                );
+                absences.add(absence);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return absences;
+    }
+
+
+
+
+
 
 
 

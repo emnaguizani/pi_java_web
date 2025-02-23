@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AbsencesEleveController" >
+    <TableView fx:id="tableViewAbsencesEleve" layoutX="20" layoutY="50" prefHeight="450" prefWidth="860">
+    <columns>
+        <TableColumn fx:id="eleveColumn" text="Nom Élève" prefWidth="200"/> <!-- ✅ Nom de l'élève -->
+        <TableColumn fx:id="seanceColumn" text="Séance" prefWidth="200"/> <!-- ✅ Titre de la séance -->
+        <TableColumn fx:id="etatColumn" text="État" prefWidth="100"/> <!-- ✅ Présent / Absent -->
+        <TableColumn fx:id="commentaireColumn" text="Commentaire" prefWidth="300"/> <!-- ✅ Commentaire -->
+    </columns>
+</TableView>
+
+
+
+</AnchorPane>
