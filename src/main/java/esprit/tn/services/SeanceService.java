@@ -76,6 +76,34 @@ public class SeanceService implements Iservice<Seance> {
 
         return seances;
     }
+    public List<Seance> getAllSeances() {
+        List<Seance> seances = new ArrayList<>();
+        String req = """
+    SELECT idSeance, titre, contenu, Datetime
+    FROM seance
+    ORDER BY Datetime ASC
+""";
+
+
+        try (Statement stm = cnx.createStatement();
+             ResultSet rs = stm.executeQuery(req)) {
+
+            while (rs.next()) {
+                Seance seance = new Seance(
+                        rs.getInt("idSeance"),
+                        rs.getString("titre"),
+                        rs.getString("contenu"),
+                        rs.getTimestamp("Datetime")
+
+
+                );
+                seances.add(seance);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return seances;
+    }
 
 
     @Override

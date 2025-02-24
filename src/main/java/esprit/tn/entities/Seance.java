@@ -1,6 +1,7 @@
 package esprit.tn.entities;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class Seance {
     private int idSeance;
@@ -16,6 +17,15 @@ public class Seance {
         this.datetime = datetime;
         this.idFormateur = idFormateur;
     }
+    public Seance(int idSeance, String titre, String contenu, Timestamp datetime) {
+        this.idSeance = idSeance;
+        this.titre = titre;
+        this.contenu = contenu;
+        this.datetime = datetime;
+    }
+
+
+
 
 
     // Getters et Setters

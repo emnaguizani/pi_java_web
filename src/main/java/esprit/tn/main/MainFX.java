@@ -11,14 +11,20 @@ public class MainFX extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         // Charger l'interface AjouterAbsence.fxml au démarrage
-        Parent root = FXMLLoader.load(getClass().getResource("/AbsenceEleve.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/SeancesDisponibles.fxml"));
 
         primaryStage.setTitle("Gestion des Absences");
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
+
+
     }
 
     public static void main(String[] args) {
         launch(args);
+        System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
+        System.setProperty("jdk.httpclient.HttpClient.log", "errors");
+        System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
+
     }
 }

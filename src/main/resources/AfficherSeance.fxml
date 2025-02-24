@@ -20,18 +20,22 @@
         <TextField fx:id="searchField" layoutX="150" layoutY="50" prefWidth="200" promptText="Titre ou Date (yyyy-MM-dd)" />
         <Button layoutX="360" layoutY="50" text="Rechercher" onAction="#rechercherSeance" />
         <Button layoutX="460" layoutY="50" text="Réinitialiser" onAction="#resetSearch" />
-
-        <TableView fx:id="tableView" layoutX="30" layoutY="100" prefHeight="280" prefWidth="640">
+        <TableView fx:id="tableView" layoutX="20" layoutY="100" prefHeight="450" prefWidth="860">
             <columns>
                 <TableColumn fx:id="idSeance" text="ID" prefWidth="50"/>
-                <TableColumn fx:id="titre" text="Titre" prefWidth="120"/>
-                <TableColumn fx:id="contenu" text="Contenu" prefWidth="150"/>
-                <TableColumn fx:id="datetime" text="Date &amp; Heure" prefWidth="140"/>
-                <TableColumn fx:id="idFormateur" text="ID Formateur" prefWidth="80"/>
-                <TableColumn fx:id="modifierColumn" text="Modifier" prefWidth="80"/>
-                <TableColumn fx:id="supprimerColumn" text="Supprimer" prefWidth="80"/>
+                <TableColumn fx:id="titre" text="Titre de la Séance" prefWidth="200"/>
+                <TableColumn fx:id="contenu" text="Description" prefWidth="220"/>
+                <TableColumn fx:id="datetime" text="Date &amp; Heure" prefWidth="200"/>
+                <TableColumn fx:id="idFormateur" text="ID du Formateur" prefWidth="150"/>
+                <TableColumn fx:id="modifierColumn" text="Modifier" prefWidth="120"/>
+                <TableColumn fx:id="supprimerColumn" text="Supprimer" prefWidth="120"/>
             </columns>
         </TableView>
+
+
+
+
+
 
         <Button layoutX="30" layoutY="400" text="⬅ Retour" onAction="#retour"/>
     </children>

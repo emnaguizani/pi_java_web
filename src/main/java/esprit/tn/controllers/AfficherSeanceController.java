@@ -59,6 +59,8 @@ public class AfficherSeanceController {
         contenu.setCellValueFactory(new PropertyValueFactory<>("contenu"));
         datetime.setCellValueFactory(new PropertyValueFactory<>("datetime"));
         idFormateur.setCellValueFactory(new PropertyValueFactory<>("idFormateur"));
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
 
         ajouterBoutonModifier();
         ajouterBoutonSupprimer();

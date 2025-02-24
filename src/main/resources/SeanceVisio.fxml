@@ -1,0 +1,6 @@
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.web.WebView?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.SeanceVisioController">
+    <WebView fx:id="webView" layoutX="10" layoutY="10" prefHeight="600" prefWidth="800"/>
+</AnchorPane>
