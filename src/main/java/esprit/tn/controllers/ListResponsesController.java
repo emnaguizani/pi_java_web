@@ -97,24 +97,24 @@ public class ListResponsesController {
 
     private void populateResponses() {
         if (forum != null) {
-
+            // Fetch responses from the service
             List<Response> responses = responseService.getAllResponses(forum.getIdForum());
 
-
+            // Group responses by parentResponseId
             Map<Integer, List<Response>> responseMap = new HashMap<>();
             for (Response response : responses) {
                 int parentId = response.getParentResponseId();
                 responseMap.computeIfAbsent(parentId, k -> new ArrayList<>()).add(response);
             }
 
-
+            // Create a flat list for display, ordered hierarchically
             List<Response> orderedResponses = new ArrayList<>();
             buildResponseHierarchy(responseMap, 0, orderedResponses);
 
-
+            // Set the ordered responses in the ListView
             ListResponses.getItems().setAll(orderedResponses);
 
-
+            // Set a custom cell factory to handle indentation
             ListResponses.setCellFactory(param -> new ListCell<>() {
                 private final Button respondButton = new Button("Respond");
                 private final Button updateButton = new Button("Update");
@@ -166,8 +166,9 @@ public class ListResponsesController {
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy, HH:mm");
                         dateText.setText(response.getCreatedAt().format(formatter));
 
-
-                        double indent = response.getParentResponseId() == 0 ? 0 : 20;
+                        // Dynamic indentation based on depth
+                        double baseIndent = 20; // Static indent for each level
+                        double indent = response.getDepth() * baseIndent;
                         vbox.setPadding(new Insets(5, 5, 5, indent));
 
                         setGraphic(vbox);
@@ -177,7 +178,7 @@ public class ListResponsesController {
         }
     }
 
-
+    // Helper method to build the response hierarchy
     private void buildResponseHierarchy(Map<Integer, List<Response>> responseMap, int parentId, List<Response> orderedResponses) {
         List<Response> children = responseMap.get(parentId);
         if (children != null) {

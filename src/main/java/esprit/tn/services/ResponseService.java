@@ -6,7 +6,9 @@ import esprit.tn.main.DatabaseConnection;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ResponseService {
      Connection cnx;
@@ -101,6 +103,9 @@ public class ResponseService {
             stmt.setInt(1, forumId);
             ResultSet resultSet = stmt.executeQuery();
 
+
+            Map<Integer, Response> responseMap = new HashMap<>();
+
             while (resultSet.next()) {
                 int responseId = resultSet.getInt("idResponse");
                 String content = resultSet.getString("content");
@@ -108,7 +113,22 @@ public class ResponseService {
                 LocalDateTime createdAt = resultSet.getTimestamp("dateCreation").toLocalDateTime();
                 int parentResponseId = resultSet.getInt("parentResponseId");
 
-                responses.add(new Response(responseId, content, authorId, createdAt, parentResponseId));
+                Response response = new Response(responseId, content, authorId, createdAt, parentResponseId);
+                responseMap.put(responseId, response);
+                responses.add(response);
+            }
+
+            // Calculate depth for each response
+            for (Response response : responses) {
+                int depth = 0;
+                int currentParentId = response.getParentResponseId();
+                while (currentParentId != 0) {
+                    depth++;
+                    Response parentResponse = responseMap.get(currentParentId);
+                    if (parentResponse == null) break;
+                    currentParentId = parentResponse.getParentResponseId();
+                }
+                response.setDepth(depth);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -116,7 +136,6 @@ public class ResponseService {
 
         return responses;
     }
-
 
 
 }

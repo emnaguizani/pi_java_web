@@ -10,6 +10,7 @@ public class Response {
     private LocalDateTime dateCreationResponse;
     private int parentResponseId;
     private int forumId;
+    private int depth;
 
     public Response() {
         this.dateCreationResponse = LocalDateTime.now();
@@ -89,6 +90,14 @@ public class Response {
 
     public void setParentResponseId(int parentResponseId) {
         this.parentResponseId = parentResponseId;
+    }
+
+    public int getDepth() {
+        return depth;
+    }
+
+    public void setDepth(int depth) {
+        this.depth = depth;
     }
 
     @Override
