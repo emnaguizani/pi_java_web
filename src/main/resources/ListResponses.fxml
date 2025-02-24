@@ -46,7 +46,6 @@
         <Text fx:id="NomCreateur" layoutX="14.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NomeCreateur" />
         <Text fx:id="DateCreation" layoutX="663.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DateCreation" />
 
-        <!-- Replace TextArea with ScrollPane and VBox -->
         <ScrollPane layoutX="14.0" layoutY="120.0" prefHeight="117.0" prefWidth="745.0">
          <content>
             <VBox prefHeight="115.0" prefWidth="730.0">

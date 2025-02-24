@@ -21,6 +21,7 @@ import java.time.format.DateTimeFormatter;
 
 public class ListForumsController {
 
+    public Button goToListcommunautes;
     @FXML
     private Button CreateButton;
 
@@ -162,7 +163,16 @@ public class ListForumsController {
         }
 
     }
+    @FXML
+    public void RedirectToListCommunautes(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/ListCommunautes.fxml"));
+            ForumsTable.getScene().setRoot(root);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
+    }
 
 
 

@@ -118,7 +118,7 @@ public class ResponseService {
                 responses.add(response);
             }
 
-            // Calculate depth for each response
+
             for (Response response : responses) {
                 int depth = 0;
                 int currentParentId = response.getParentResponseId();

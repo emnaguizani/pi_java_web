@@ -15,7 +15,7 @@ public class MessageService {
         cnx = DatabaseConnection.getInstance().getCnx();
     }
 
-    // Send a message
+
     public void sendMessage(Message message) {
         String query = "INSERT INTO message (content, sender_id, community_id, sent_at) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = cnx.prepareStatement(query)) {
@@ -29,7 +29,7 @@ public class MessageService {
         }
     }
 
-    // Get all messages in a community
+
     public List<Message> getMessagesInCommunity(int communityId) {
         List<Message> messages = new ArrayList<>();
         String query = "SELECT * FROM message WHERE community_id = ? ORDER BY sent_at";

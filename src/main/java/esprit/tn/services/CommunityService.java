@@ -15,7 +15,7 @@ public class CommunityService {
         cnx = DatabaseConnection.getInstance().getCnx();
     }
 
-    // Add a new community
+
     public void addCommunity(Community community) {
         String query = "INSERT INTO community (name, description, creator_id, created_at, members) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = cnx.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -26,7 +26,7 @@ public class CommunityService {
             stmt.setString(5, community.getMembersAsString());
             stmt.executeUpdate();
 
-            // Retrieve the generated ID
+
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next()) {
                 community.setId(rs.getInt(1));
@@ -36,7 +36,7 @@ public class CommunityService {
         }
     }
 
-    // Get all communities
+
     public List<Community> getAllCommunities() {
         List<Community> communities = new ArrayList<>();
         String query = "SELECT * FROM community";
@@ -58,7 +58,7 @@ public class CommunityService {
         return communities;
     }
 
-    // Update a community (e.g., add/remove members)
+
     public void updateCommunity(Community community) {
         String query = "UPDATE community SET name = ?, description = ?, members = ? WHERE id = ?";
         try (PreparedStatement stmt = cnx.prepareStatement(query)) {
@@ -69,6 +69,21 @@ public class CommunityService {
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Error updating community: " + e.getMessage());
+        }
+    }
+
+    public void deleteCommunity(int communityId) {
+        String query = "DELETE FROM community WHERE id = ?";
+        try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+            stmt.setInt(1, communityId);
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Community deleted successfully!");
+            } else {
+                System.out.println("No community found with the given ID.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error deleting community: " + e.getMessage());
         }
     }
 }

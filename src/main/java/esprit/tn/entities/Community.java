@@ -23,7 +23,7 @@ public class Community {
         this.members = new ArrayList<>();
     }
 
-    // Getters and Setters
+
     public int getId() {
         return id;
     }
@@ -64,7 +64,7 @@ public class Community {
         this.createdAt = createdAt;
     }
 
-    // Members handling
+
     public List<Integer> getMembers() {
         return members;
     }
@@ -83,12 +83,12 @@ public class Community {
         members.remove((Integer) userId);
     }
 
-    // Convert members list to a comma-separated string
+
     public String getMembersAsString() {
         return String.join(",", members.stream().map(String::valueOf).toArray(String[]::new));
     }
 
-    // Parse a comma-separated string into a list of member IDs
+
     public void setMembersFromString(String membersString) {
         if (membersString == null || membersString.isEmpty()) {
             this.members = new ArrayList<>();

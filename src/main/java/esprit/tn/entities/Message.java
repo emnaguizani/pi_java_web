@@ -18,7 +18,7 @@ public class Message {
         this.sentAt = LocalDateTime.now();
     }
 
-    // Getters and Setters
+
     public int getId() {
         return id;
     }
