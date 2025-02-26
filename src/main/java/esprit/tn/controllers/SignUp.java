@@ -3,6 +3,7 @@ package esprit.tn.controllers;
 import esprit.tn.entities.Users;
 import esprit.tn.services.UserService;
 import esprit.tn.utils.SessionManager;
+import esprit.tn.utils.SmsService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,80 +32,100 @@ public class SignUp {
 
     @FXML
     private PasswordField passwordid;
-
+    @FXML
+    private Button homePage;
     @FXML
     private TextField roleid;
-
+    @FXML
+    private TextField phoneNumberid;
+    @FXML
+    private Label infoLabel;
+    @FXML
+    private RadioButton eleveRadioButton, formateurRadioButton;
     @FXML
     private Button signupid;
     @FXML
     private Button signUp;
+    @FXML
+    private Button loginid;
+    private ToggleGroup roleToggleGroup;
+    public void initialize(){
+        roleToggleGroup = new ToggleGroup();
+        eleveRadioButton.setToggleGroup(roleToggleGroup);
+        formateurRadioButton.setToggleGroup(roleToggleGroup);
+    }
     public void signUp(ActionEvent actionEvent) throws SQLException {
-            Users u = new Users();
-
-            u.setFullNAme(fullnameid.getText());
-            u.setEmail(emailid.getText());
-            u.setDateOfBirth(java.sql.Date.valueOf(dateofbirthid.getValue()));
-            u.setPassword(passwordid.getText());
-            u.setRole("eleve");
-            if (fullnameid.getText().isEmpty() || emailid.getText().isEmpty() || passwordid.getText().isEmpty() || dateofbirthid.getValue() == null) {
-                showAlert(Alert.AlertType.ERROR, "Validation Error", "All fields must be filled.");
-                return;
-            }
-            if (!isValidEmail(emailid.getText())) {
-            showAlert(Alert.AlertType.ERROR, "Invalid Email", "Please enter a valid email address (e.g., example@mail.com).");
-            return;
-            }
-        if (!isValidPassword(passwordid.getText())) {
-            showAlert(Alert.AlertType.ERROR, "Weak Password", "Password must be at least 5 characters long, contain at least 2 numbers, and include at least 1 special character (* / + - $ ^ é \" ' ( - è _ ç à).");
+        String role = eleveRadioButton.isSelected() ? "eleve" : "formateur";
+        if (roleToggleGroup.getSelectedToggle() == null) {
+            showAlert(Alert.AlertType.ERROR, "Role Selection Error", "Please select either 'Élève' or 'Formateur'.");
             return;
         }
-            LocalDate birthDate = dateofbirthid.getValue();
-            LocalDate today = LocalDate.now();
-            int age = Period.between(birthDate, today).getYears();
+        // Validate fields
+        if (fullnameid.getText().isEmpty() || emailid.getText().isEmpty() || passwordid.getText().isEmpty() || dateofbirthid.getValue() == null) {
+            showAlert(Alert.AlertType.ERROR, "Validation Error", "All fields must be filled.");
+            return;
+        }
 
-            if (age < 6) {
-                showAlert(Alert.AlertType.ERROR, "Age Restriction", "You must be at least 6 years old to sign up.");
-                return;
-            }
+        if (!isValidEmail(emailid.getText())) {
+            showAlert(Alert.AlertType.ERROR, "Invalid Email", "Please enter a valid email.");
+            return;
+        }
 
-            if (passwordid.getText().length() < 5) {
-                showAlert(Alert.AlertType.ERROR, "Validation Error", "Password must be at least 5 characters long.");
-                return;
-            }
+        if (!isValidPassword(passwordid.getText())) {
+            showAlert(Alert.AlertType.ERROR, "Weak Password", "Password must contain at least 5 characters, 2 numbers, and 1 special character.");
+            return;
+        }
 
+        // Validate age
+        LocalDate birthDate = dateofbirthid.getValue();
+        int age = Period.between(birthDate, LocalDate.now()).getYears();
+        if (age < 6) {
+            showAlert(Alert.AlertType.ERROR, "Age Restriction", "You must be at least 6 years old.");
+            return;
+        }
 
-            UserService us = new UserService();
-            if (us.isEmailExists(emailid.getText())) {
-                showAlert(Alert.AlertType.ERROR, "Email Already in Use", "The email you entered is already registered.");
-                return; // Stop execution if email exists
-            }
-            SessionManager.getInstance().setLoggedInUser(u);
-            try {
-                // Try to add the user to the database
-                us.ajouter(u);
+        // Check email duplication
+        UserService us = new UserService();
+        if (us.isEmailExists(emailid.getText())) {
+            showAlert(Alert.AlertType.ERROR, "Email Already in Use", "This email is already registered.");
+            return;
+        }
 
-                // If no exception is thrown, the user was added successfully
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Person ADDED");
-                alert.setContentText("Person is added successfully!");
-                alert.showAndWait();
+        // Validate phone number (assuming there's a phone number field)
+        String phoneNumber = phoneNumberid.getText();
+        if (phoneNumber.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Missing Phone Number", "Please enter a valid phone number.");
+            return;
+        }
 
-                // Load the new page after successful addition
-                try {
-                    Parent root = FXMLLoader.load(getClass().getResource("/AfficherCours.fxml"));
-                    signupid.getScene().setRoot(root);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    showAlert(Alert.AlertType.ERROR, "Navigation Error", "Failed to load the new page.");
-                }
+        // Create user object (but DO NOT insert into DB yet)
+        Users tempUser = new Users();
+        tempUser.setFullNAme(fullnameid.getText());
+        tempUser.setEmail(emailid.getText());
+        tempUser.setDateOfBirth(java.sql.Date.valueOf(dateofbirthid.getValue()));
+        tempUser.setPassword(passwordid.getText());
+        tempUser.setRole(role);
+        tempUser.setPhoneNumber(phoneNumber);
 
-            } catch (RuntimeException e) {
-                // Handle SQL exceptions that may have occurred during insertion
-                e.printStackTrace();
-                showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to add the person.");
-            }
+        // Generate and send OTP
+        String otpCode = generateOtp();
+        SmsService.sendSms(phoneNumber, "Your verification code is: " + otpCode);
 
+        // Store user & OTP temporarily (Session or Singleton)
+        SessionManager.getInstance().setTempUser(tempUser);
+        SessionManager.getInstance().setOtpCode(otpCode);
+
+        // Open OTP verification window
+        openOtpVerificationWindow();
+    }
+
+    private void openOtpVerificationWindow() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/otpVerification.fxml"));
+            fullnameid.getScene().setRoot(root); // Change root without creating a new scene
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private boolean isValidPassword(String text) {
@@ -127,6 +148,32 @@ public class SignUp {
         alert.setContentText(content);
         alert.showAndWait();
     }
+    public void sendOtpToUser(String phoneNumber) {
+        String verificationCode = generateOtp(); // Generate a random OTP
+        SmsService.sendSms(phoneNumber, verificationCode);
+    }
 
+    private String generateOtp() {
+        int otp = (int) (Math.random() * 9000) + 1000; // Generate 4-digit OTP
+        return String.valueOf(otp);
+    }
+
+    public void goToLogIn(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/LogIn.fxml"));
+            loginid.getScene().setRoot(root); // Change root without creating a new scene
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void homePage(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/HomePage.fxml"));
+            homePage.getScene().setRoot(root); // Change root without creating a new scene
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
  

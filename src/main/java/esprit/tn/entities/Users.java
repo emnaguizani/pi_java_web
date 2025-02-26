@@ -10,22 +10,45 @@ public class Users {
     private Date dateOfBirth;
     private String password;
     private String role;
+    private Boolean access=false;
+    private String phoneNumber;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Boolean getAccess() {
+        return access;
+    }
+
+    public void setAccess(Boolean access) {
+        this.access = access;
+    }
+
     public Users() {}
-    public Users(int id_user, String fullNAme, String email, Date dateOfBirth, String password, String role) {
+    public Users(int id_user, String fullNAme, String email, Date dateOfBirth, String password, String role, Boolean access, String phoneNumber) {
         this.id_user = id_user;
         this.fullName = fullNAme;
         this.email = email;
         this.dateOfBirth = dateOfBirth;
         this.password = password;
         this.role = role;
+        this.access =access;
+        this.phoneNumber = phoneNumber;
     }
 
-    public Users(String fullNAme, String email, Date dateOfBirth, String password, String role) {
+    public Users(String fullNAme, String email, Date dateOfBirth, String password, String role, Boolean access, String phoneNumber) {
         this.fullName = fullNAme;
         this.email = email;
         this.dateOfBirth = dateOfBirth;
         this.password = password;
         this.role = role;
+        this.access =access;
+        this.phoneNumber = phoneNumber;
     }
 
     public int getId_user() {
@@ -85,6 +108,8 @@ public class Users {
                 ", dateOfBirth=" + dateOfBirth +
                 ", password='" + password + '\'' +
                 ", role='" + role + '\'' +
+                ", access='" + access + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
     }
 
@@ -93,11 +118,11 @@ public class Users {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Users users = (Users) o;
-        return id_user == users.id_user && Objects.equals(fullName, users.fullName) && Objects.equals(email, users.email) && Objects.equals(dateOfBirth, users.dateOfBirth) && Objects.equals(password, users.password) && Objects.equals(role, users.role);
+        return id_user == users.id_user && Objects.equals(fullName, users.fullName) && Objects.equals(email, users.email) && Objects.equals(dateOfBirth, users.dateOfBirth) && Objects.equals(password, users.password) && Objects.equals(role, users.role) && Objects.equals(access, users.access) && Objects.equals(phoneNumber, users.phoneNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id_user, fullName, email, dateOfBirth, password, role);
+        return Objects.hash(id_user, fullName, email, dateOfBirth, password, role,access,phoneNumber);
     }
 }

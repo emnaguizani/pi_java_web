@@ -2,6 +2,7 @@ package esprit.tn.controllers;
 
 import esprit.tn.entities.Users;
 import esprit.tn.services.UserService;
+import esprit.tn.utils.SessionManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +17,11 @@ import java.io.IOException;
 public class LogIn {
     @FXML
     private TextField emailid;
+    @FXML
+    private Button homeid;
 
+    @FXML
+    private Button signupid;
     @FXML
     private Button loginid;
 
@@ -31,6 +36,16 @@ public class LogIn {
         Users user = userService.authenticateUser(email, password);
 
         if (user != null) {
+            // Check if user is a formateur and not approved
+            if ("formateur".equalsIgnoreCase(user.getRole()) && !user.getAccess()) {
+                showAlert(Alert.AlertType.WARNING, "Access Denied", "Your account is pending approval. Please wait for admin approval.");
+                return; // Stop login process
+            }
+            if (user.getAccess() != null && !user.getAccess()) {
+                showAlert(Alert.AlertType.WARNING, "Access Denied", "Your account is blocked. Please contact the administrator.");
+                return; // Stop login process
+            }
+            SessionManager.getInstance().setLoggedInUser(user);
             // Redirect user based on role
             String fxmlPath = "";
             switch (user.getRole().toLowerCase()) {
@@ -65,5 +80,24 @@ public class LogIn {
         alert.setTitle(title);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    public void gotoHome(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/HomePage.fxml"));
+            homeid.getScene().setRoot(root); // Change root without creating a new scene
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void gotosignup(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/SignUp.fxml"));
+            signupid.getScene().setRoot(root); // Change root without creating a new scene
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

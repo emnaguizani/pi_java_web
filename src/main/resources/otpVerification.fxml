@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.OtpVerification">
+    <GridPane alignment="center" hgap="10" vgap="10">
+      <columnConstraints>
+         <ColumnConstraints />
+      </columnConstraints>
+      <rowConstraints>
+         <RowConstraints />
+      </rowConstraints>
+    </GridPane>
+     <TextField fx:id="otpField" layoutX="335.0" layoutY="148.0" />
+     <Button layoutX="312.0" layoutY="205.0" onAction="#resendOtp" style="-fx-background-color: #87bfff;" text="Resend OTP" />
+     <Button layoutX="438.0" layoutY="205.0" onAction="#verifyOtp" style="-fx-background-color: #87bfff;" text="Verify" />
+   <Label layoutX="292.0" layoutY="103.0" text="Enter Verification Code:" textFill="#3b28cc">
+      <font>
+         <Font name="System Bold" size="20.0" />
+      </font>
+   </Label>
+   <Pane prefHeight="523.0" prefWidth="266.0" style="-fx-background-color: ADD7F6; -fx-border-radius: 70;">
+      <children>
+         <Label layoutX="63.0" layoutY="180.0" text="Welcome to " textFill="WHITE">
+            <font>
+               <Font size="28.0" />
+            </font>
+         </Label>
+         <Label layoutX="81.0" layoutY="216.0" text="SignLearn" textFill="#1a6bc7">
+            <font>
+               <Font size="28.0" />
+            </font>
+         </Label>
+         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="56.0" layoutY="271.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@logo.png" />
+            </image>
+         </ImageView>
+      </children>
+   </Pane>
+</AnchorPane>

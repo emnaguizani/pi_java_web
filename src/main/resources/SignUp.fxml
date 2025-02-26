@@ -4,6 +4,7 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -13,19 +14,31 @@
 
 <AnchorPane prefHeight="506.0" prefWidth="711.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.SignUp">
    <children>
-      <Pane layoutX="263.0" layoutY="-1.0" prefHeight="506.0" prefWidth="448.0" style="-fx-border-radius: 70;">
-         <children>
-            <TextField fx:id="emailid" layoutX="152.0" layoutY="231.0" prefHeight="25.0" prefWidth="175.0" promptText="email" />
-            <PasswordField fx:id="passwordid" layoutX="154.0" layoutY="312.0" prefHeight="25.0" prefWidth="175.0" promptText="password" />
-            <Button fx:id="signupid" layoutX="206.0" layoutY="353.0" mnemonicParsing="false" onAction="#signUp" style="-fx-background-color: #87bfff;" text="Sign Up" />
-            <TextField fx:id="fullnameid" layoutX="151.0" layoutY="184.0" prefHeight="26.0" prefWidth="175.0" promptText="Full Name" />
-            <DatePicker fx:id="dateofbirthid" layoutX="153.0" layoutY="272.0" promptText="Date Of birth" />
-            <Label layoutX="68.0" layoutY="117.0" text="Create Account">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </Label>
-         </children>
+      <Pane layoutX="266.0" layoutY="1.0" prefHeight="506.0" prefWidth="448.0" style="-fx-border-radius: 70;">
+            <children>
+               <TextField fx:id="emailid" layoutX="152.0" layoutY="154.0" prefHeight="25.0" prefWidth="175.0" promptText="email" />
+               <TextField fx:id="phoneNumberid" layoutX="152.0" layoutY="294.0" prefHeight="25.0" prefWidth="175.0" promptText="phone number" />
+               <PasswordField fx:id="passwordid" layoutX="154.0" layoutY="250.0" prefHeight="25.0" prefWidth="175.0" promptText="password" />
+               <Button fx:id="signupid" layoutX="309.0" layoutY="354.0" mnemonicParsing="false" onAction="#signUp" style="-fx-background-color: #87bfff;" text="Sign Up" />
+               <TextField fx:id="fullnameid" layoutX="151.0" layoutY="113.0" prefHeight="26.0" prefWidth="175.0" promptText="Full Name" />
+
+               <DatePicker fx:id="dateofbirthid" layoutX="153.0" layoutY="200.0" promptText="Date Of birth" />
+               <RadioButton fx:id="eleveRadioButton" layoutX="209.0" layoutY="344.0" selected="true" text="Eleve" />
+               <RadioButton fx:id="formateurRadioButton" layoutX="208.0" layoutY="370.0" text="Formateur" />
+
+
+
+               <Label fx:id="infoLabel" text="Formateurs will be pending approval until granted access by admin." visible="false" />
+
+               <Label layoutX="68.0" layoutY="57.0" text="Create Account" textFill="#3b28cc">
+                  <font>
+                     <Font name="System Bold" size="20.0" />
+                  </font>
+               </Label>
+            <Button fx:id="loginid" layoutX="198.0" layoutY="441.0" mnemonicParsing="false" onAction="#goToLogIn" style="-fx-background-color: #87bfff;" text="Log In" />
+            <Label layoutX="88.0" layoutY="419.0" text="If you already have an account please Log In" />
+            <Button fx:id="homePage" layoutX="11.0" layoutY="32.0" mnemonicParsing="false" onAction="#homePage" style="-fx-background-color: #87bfff; -fx-background-image: homeicon.png;" text="Home " />
+            </children>
       </Pane>
       <Pane layoutY="-5.0" prefHeight="520.0" prefWidth="266.0" style="-fx-background-color: ADD7F6; -fx-border-radius: 70;">
          <children>

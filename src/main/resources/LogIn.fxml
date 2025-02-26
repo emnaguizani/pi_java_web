@@ -12,7 +12,7 @@
 
 <AnchorPane prefHeight="506.0" prefWidth="711.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.LogIn">
    <children>
-      <Pane layoutX="263.0" layoutY="-1.0" prefHeight="506.0" prefWidth="448.0" style="-fx-border-radius: 70;">
+      <Pane layoutX="263.0" layoutY="-1.0" prefHeight="506.0" prefWidth="448.0" style="-fx-border-radius: FCFBF4;">
          <children>
             <TextField fx:id="emailid" layoutX="152.0" layoutY="212.0" prefHeight="25.0" prefWidth="175.0" promptText="email" />
             <PasswordField fx:id="passwordid" layoutX="154.0" layoutY="250.0" prefHeight="25.0" prefWidth="175.0" promptText="password" />
@@ -22,6 +22,9 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
+            <Button fx:id="homeid" layoutX="340.0" layoutY="54.0" mnemonicParsing="false" onAction="#gotoHome" style="-fx-background-color: #87bfff;" text="Home" />
+            <Button fx:id="signupid" layoutX="300.0" layoutY="404.0" mnemonicParsing="false" onAction="#gotosignup" style="-fx-background-color: #87bfff;" text="Sign UP" />
+            <Label layoutX="97.0" layoutY="408.0" text="if you don't have an account please " underline="true" />
          </children>
       </Pane>
       <Pane layoutY="-5.0" prefHeight="520.0" prefWidth="266.0" style="-fx-background-color: ADD7F6; -fx-border-radius: 70;">

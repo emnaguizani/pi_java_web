@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="524.0" prefWidth="762.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.PendingRequests">
+    <VBox alignment="CENTER" layoutX="274.0" layoutY="42.0" spacing="10">
+        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Pending Formateurs" textFill="#3b28cc" />
+    </VBox>
+     <TableView fx:id="tableView" layoutX="193.0" layoutY="80.0" style="-fx-background-color: FCFBF4;">
+         <columns>
+             <TableColumn fx:id="colId" text="ID" />
+             <TableColumn fx:id="colFullName" text="Full Name" />
+             <TableColumn fx:id="colEmail" text="Email" />
+             <TableColumn fx:id="colAction" text="Action" />
+         </columns>
+     </TableView>
+   <Button fx:id="backid" layoutX="77.0" layoutY="46.0" mnemonicParsing="false" onAction="#gotoAfficherUsers" style="-fx-background-color: #87bfff;" text="Back" />
+</AnchorPane>

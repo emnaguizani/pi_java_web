@@ -2,19 +2,43 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.EditProfile">
-    <Pane layoutX="19.0" layoutY="29.0" prefHeight="341.0" prefWidth="562.0">
+<AnchorPane prefHeight="449.0" prefWidth="663.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.EditProfile">
+    <Pane layoutX="198.0" prefHeight="466.0" prefWidth="474.0">
         <children>
-            <TextField fx:id="emailid" layoutX="169.0" layoutY="107.0" promptText="email" />
-            <TextField fx:id="fullnameid" layoutX="169.0" layoutY="65.0" promptText="fullName" />
-            <TextField fx:id="passwordid" layoutX="180.0" layoutY="179.0" promptText="password" />
-            <DatePicker fx:id="dateofbirthid" layoutX="167.0" layoutY="146.0" promptText="Date Of birth" />
-            <Button fx:id="updateid" layoutX="237.0" layoutY="265.0" mnemonicParsing="false" onAction="#Update" text="Update" />
-            <Button fx:id="backid" layoutX="32.0" layoutY="31.0" mnemonicParsing="false" onAction="#goback" text="Go back" />
+            <TextField fx:id="emailid" layoutX="175.0" layoutY="132.0" promptText="email" />
+            <TextField fx:id="fullnameid" layoutX="172.0" layoutY="86.0" promptText="fullName" />
+            <TextField fx:id="passwordid" layoutX="177.0" layoutY="226.0" promptText="password" />
+            <DatePicker fx:id="dateofbirthid" layoutX="170.0" layoutY="177.0" promptText="Date Of birth" />
+            <Button fx:id="updateid" layoutX="335.0" layoutY="332.0" mnemonicParsing="false" onAction="#Update" style="-fx-background-color: #87bfff;" text="Update" />
+            <Button fx:id="backid" layoutX="14.0" layoutY="15.0" mnemonicParsing="false" onAction="#goback" style="-fx-background-color: #87bfff;" text="Go back" />
+         <Label layoutX="156.0" layoutY="19.0" prefWidth="99.0" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Edit Profile" textFill="#3b28cc" />
         </children>
     </Pane>
+   <Pane layoutX="-1.0" layoutY="-7.0" prefHeight="478.0" prefWidth="202.0" style="-fx-background-color: ADD7F6;">
+      <children>
+         <Label layoutX="14.0" layoutY="144.0" textFill="WHITE">
+            <font>
+               <Font size="28.0" />
+            </font>
+         </Label>
+         <Label layoutX="34.0" layoutY="129.0" text="SignLearn" textFill="#1a6bc7">
+            <font>
+               <Font size="28.0" />
+            </font>
+         </Label>
+         <ImageView fitHeight="113.0" fitWidth="122.0" layoutX="38.0" layoutY="181.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@logo.png" />
+            </image>
+         </ImageView>
+      </children>
+   </Pane>
 </AnchorPane>

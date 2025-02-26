@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
@@ -34,7 +35,17 @@ public class Profile {
 
     @FXML
     public void initialize() {
-        loadUserProfile();
+       // loadUserProfile();
+        Users loggedInUser = SessionManager.getInstance().getLoggedInUser();
+        if (loggedInUser != null) {
+            fullnameLabel.setText(loggedInUser.getFullName());
+            emailLabel.setText(loggedInUser.getEmail());
+            roleLabel.setText(loggedInUser.getRole());
+        } else {
+            fullnameLabel.setText("Unknown");
+            emailLabel.setText("Unknown");
+            roleLabel.setText("Unknown");
+        }
     }
 
     private void loadUserProfile() {
@@ -49,14 +60,45 @@ public class Profile {
         }
     }
     public void goBack(ActionEvent actionEvent) {
+        Users loggedInUser = SessionManager.getInstance().getLoggedInUser();
+
+        if (loggedInUser == null) {
+            showAlert(Alert.AlertType.ERROR, "Error", "No user is logged in.");
+            return;
+        }
+
+        // Determine the correct FXML based on role
+        String fxmlPath = "";
+        switch (loggedInUser.getRole().toLowerCase()) {
+            case "eleve":
+                fxmlPath = "/AfficherCoursEleve.fxml";
+                break;
+            case "admin":
+                fxmlPath = "/AfficherUser.fxml";
+                break;
+            case "formateur":
+                fxmlPath = "/AfficherCours.fxml";
+                break;
+            default:
+                showAlert(Alert.AlertType.ERROR, "Navigation Error", "Unknown role.");
+                return;
+        }
+
+        // Navigate back
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/AfficherCours.fxml"));
-            getBackid.getScene().setRoot(root); // Change root without creating a new scene
+            Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
+            getBackid.getScene().setRoot(root);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Navigation Error", "Failed to load the previous page.");
         }
     }
-
+    private void showAlert(Alert.AlertType type, String title, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
     public void editProfile(ActionEvent actionEvent) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/editProfile.fxml"));
