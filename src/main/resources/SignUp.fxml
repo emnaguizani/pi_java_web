@@ -14,12 +14,12 @@
 
 <AnchorPane prefHeight="506.0" prefWidth="711.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.SignUp">
    <children>
-      <Pane layoutX="266.0" layoutY="1.0" prefHeight="506.0" prefWidth="448.0" style="-fx-border-radius: 70;">
+      <Pane layoutX="263.0" prefHeight="650.0" prefWidth="560.0" style="-fx-border-radius: 70;">
             <children>
                <TextField fx:id="emailid" layoutX="152.0" layoutY="154.0" prefHeight="25.0" prefWidth="175.0" promptText="email" />
                <TextField fx:id="phoneNumberid" layoutX="152.0" layoutY="294.0" prefHeight="25.0" prefWidth="175.0" promptText="phone number" />
                <PasswordField fx:id="passwordid" layoutX="154.0" layoutY="250.0" prefHeight="25.0" prefWidth="175.0" promptText="password" />
-               <Button fx:id="signupid" layoutX="309.0" layoutY="354.0" mnemonicParsing="false" onAction="#signUp" style="-fx-background-color: #87bfff;" text="Sign Up" />
+               <Button fx:id="signupid" layoutX="229.0" layoutY="519.0" mnemonicParsing="false" onAction="#signUp" style="-fx-background-color: #87bfff;" text="Sign Up" />
                <TextField fx:id="fullnameid" layoutX="151.0" layoutY="113.0" prefHeight="26.0" prefWidth="175.0" promptText="Full Name" />
 
                <DatePicker fx:id="dateofbirthid" layoutX="153.0" layoutY="200.0" promptText="Date Of birth" />
@@ -30,29 +30,35 @@
 
                <Label fx:id="infoLabel" text="Formateurs will be pending approval until granted access by admin." visible="false" />
 
-               <Label layoutX="68.0" layoutY="57.0" text="Create Account" textFill="#3b28cc">
+               <Label layoutX="142.0" layoutY="57.0" text="Create Account" textFill="#3b28cc">
                   <font>
                      <Font name="System Bold" size="20.0" />
                   </font>
                </Label>
-            <Button fx:id="loginid" layoutX="198.0" layoutY="441.0" mnemonicParsing="false" onAction="#goToLogIn" style="-fx-background-color: #87bfff;" text="Log In" />
-            <Label layoutX="88.0" layoutY="419.0" text="If you already have an account please Log In" />
+               <ImageView fx:id="captchaImage" fitHeight="50" fitWidth="150" layoutX="165.0" layoutY="403.0" />
+               <Button fx:id="refreshCaptchaButton" layoutX="327.0" layoutY="403.0" onAction="#refersh" style="-fx-background-color: #87bfff;" text="🔄 Refresh" />
+               <TextField fx:id="captchaField" layoutX="180.0" layoutY="471.0" promptText="Enter CAPTCHA" />
+              <!-- <Button fx:id="signupButton" layoutX="50" layoutY="150" text="Sign Up"/>-->
+               <Label fx:id="captchaStatus" layoutX="50" layoutY="180" />
+
+            <Button fx:id="loginid" layoutX="313.0" layoutY="581.0" mnemonicParsing="false" onAction="#goToLogIn" style="-fx-background-color: #87bfff;" text="Log In" />
+            <Label layoutX="60.0" layoutY="585.0" text="If you already have an account please Log In" />
             <Button fx:id="homePage" layoutX="11.0" layoutY="32.0" mnemonicParsing="false" onAction="#homePage" style="-fx-background-color: #87bfff; -fx-background-image: homeicon.png;" text="Home " />
             </children>
       </Pane>
-      <Pane layoutY="-5.0" prefHeight="520.0" prefWidth="266.0" style="-fx-background-color: ADD7F6; -fx-border-radius: 70;">
+      <Pane prefHeight="656.0" prefWidth="266.0" style="-fx-background-color: ADD7F6; -fx-border-radius: 70;">
          <children>
-            <Label layoutX="63.0" layoutY="180.0" text="Welcome to " textFill="WHITE">
+            <Label layoutX="63.0" layoutY="196.0" text="Welcome to " textFill="WHITE">
                <font>
                   <Font size="28.0" />
                </font>
             </Label>
-            <Label layoutX="81.0" layoutY="216.0" text="SignLearn" textFill="#1a6bc7">
+            <Label layoutX="81.0" layoutY="242.0" text="SignLearn" textFill="#1a6bc7">
                <font>
                   <Font size="28.0" />
                </font>
             </Label>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="56.0" layoutY="271.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="56.0" layoutY="316.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@logo.png" />
                </image>

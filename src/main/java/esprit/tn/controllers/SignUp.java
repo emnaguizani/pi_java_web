@@ -2,6 +2,7 @@ package esprit.tn.controllers;
 
 import esprit.tn.entities.Users;
 import esprit.tn.services.UserService;
+import esprit.tn.utils.CaptchaGenerator;
 import esprit.tn.utils.SessionManager;
 import esprit.tn.utils.SmsService;
 import javafx.event.ActionEvent;
@@ -11,6 +12,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -48,18 +51,38 @@ public class SignUp {
     private Button signUp;
     @FXML
     private Button loginid;
+    @FXML private ImageView captchaImage;
+    @FXML private Button refreshCaptchaButton;
+    @FXML private TextField captchaField;
+
+    @FXML private Label captchaStatus;
+
+    private String generatedCaptcha;
     private ToggleGroup roleToggleGroup;
     public void initialize(){
         roleToggleGroup = new ToggleGroup();
         eleveRadioButton.setToggleGroup(roleToggleGroup);
         formateurRadioButton.setToggleGroup(roleToggleGroup);
+        refreshCaptcha();
+    }
+
+    @FXML
+    private void refreshCaptcha() {
+        generatedCaptcha = CaptchaGenerator.generateCaptchaText(5); // 5-character CAPTCHA
+        Image image = CaptchaGenerator.generateCaptchaImage(generatedCaptcha);
+        captchaImage.setImage(image);
     }
     public void signUp(ActionEvent actionEvent) throws SQLException {
+        if (!captchaField.getText().equals(generatedCaptcha)) {
+            showAlert(Alert.AlertType.ERROR, "CAPTCHA Error", "Incorrect CAPTCHA. Please try again.");
+            return;
+        }
         String role = eleveRadioButton.isSelected() ? "eleve" : "formateur";
         if (roleToggleGroup.getSelectedToggle() == null) {
             showAlert(Alert.AlertType.ERROR, "Role Selection Error", "Please select either 'Élève' or 'Formateur'.");
             return;
         }
+
         // Validate fields
         if (fullnameid.getText().isEmpty() || emailid.getText().isEmpty() || passwordid.getText().isEmpty() || dateofbirthid.getValue() == null) {
             showAlert(Alert.AlertType.ERROR, "Validation Error", "All fields must be filled.");
@@ -174,6 +197,13 @@ public class SignUp {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    public void generateCaptcha() {
+        generatedCaptcha = CaptchaGenerator.generateCaptchaText(6);  // Generate new CAPTCHA text
+        captchaImage.setImage(CaptchaGenerator.generateCaptchaImage(generatedCaptcha));  // Show image
+    }
+    public void refersh(ActionEvent actionEvent) {
+        refreshCaptcha();
     }
 }
  
