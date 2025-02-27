@@ -171,6 +171,19 @@ public class UserService implements Iservice <Users>{
         }
         return null;
     }
+    public boolean doesEmailOrPhoneExist(String emailOrPhone) {
+        String query = "SELECT * FROM users WHERE email = ? OR phoneNumber = ?";
+        try (PreparedStatement preparedStatement = cnx.prepareStatement(query)) {
+            preparedStatement.setString(1, emailOrPhone);
+            preparedStatement.setString(2, emailOrPhone);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet.next();  // If a result exists, the email or phone number exists
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
  /*   public void approveFormateur(int formateurId) {
 
         String query = "UPDATE users SET access = true WHERE id_user = ? AND role = 'formateur'";
@@ -224,5 +237,21 @@ public class UserService implements Iservice <Users>{
         }
     }
 
+
+    public boolean resetPassword(String emailOrPhone, String newPassword) {
+        String query = "UPDATE users SET password = ? WHERE email = ? OR phoneNumber = ?";
+
+        try (PreparedStatement preparedStatement = cnx.prepareStatement(query)) {
+            preparedStatement.setString(1, newPassword); // No hashing
+            preparedStatement.setString(2, emailOrPhone);
+            preparedStatement.setString(3, emailOrPhone);
+
+            int rowsUpdated = preparedStatement.executeUpdate();
+            return rowsUpdated > 0; // Return true if password was successfully updated
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 }

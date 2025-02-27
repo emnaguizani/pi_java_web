@@ -33,7 +33,8 @@ public class EditProfile {
 
     @FXML
     private TextField passwordid;
-
+    @FXML
+    private TextField phoneNumberid;
     @FXML
     private Button updateid;
     @FXML
@@ -45,7 +46,7 @@ public class EditProfile {
             // Pre-fill fields with user data
             fullnameid.setText(loggedInUser.getFullName());
             emailid.setText(loggedInUser.getEmail());
-            passwordid.setText(loggedInUser.getPassword()); // Consider hiding or hashing passwords
+            phoneNumberid.setText(loggedInUser.getPhoneNumber()); // Consider hiding or hashing passwords
           //  dateofbirthid.setValue(loggedInUser.getDateOfBirth().toLocalDate());
         } else {
             showAlert(Alert.AlertType.ERROR, "Error", "No user is logged in.");

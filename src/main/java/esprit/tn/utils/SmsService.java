@@ -8,7 +8,7 @@ public class SmsService {
     private static final String API_URL = "https://m3v189.api.infobip.com/sms/1/text/single";  // Infobip API endpoint
     private static final String API_KEY = "a572a2d1969741047c5120d05775820f-d4b9d800-917e-4697-91ee-bd8774762864";  // Replace with your API key
 
-    public static void sendSms(String recipientPhoneNumber, String verificationCode) {
+    public static boolean sendSms(String recipientPhoneNumber, String verificationCode) {
         try {
             // Prepare the JSON payload
             String payload = "{"
@@ -41,13 +41,16 @@ public class SmsService {
                         response.append(inputLine);
                     }
                     System.out.println("✅ SMS sent successfully: " + response.toString());
+                    return true;
                 }
             } else {
                 System.err.println("❌ Error sending SMS. HTTP Response Code: " + responseCode);
+                return false;
             }
 
         } catch (Exception e) {
             System.err.println("⚠️ Exception occurred while sending SMS: " + e.getMessage());
+            return false;
         }
     }
 

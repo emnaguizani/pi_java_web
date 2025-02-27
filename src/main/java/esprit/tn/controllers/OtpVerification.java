@@ -10,7 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
-
+import esprit.tn.utils.EmailSender;
 public class OtpVerification {
     @FXML
     private TextField otpField;
@@ -30,6 +30,15 @@ public class OtpVerification {
             } else {
                 SessionManager.getInstance().setLoggedInUser(tempUser);
                 showAlert(Alert.AlertType.INFORMATION, "Success", "Registration successful!");
+                String userEmail = tempUser.getEmail();
+                String userFullName = tempUser.getFullName();
+                String subject = "Welcome to Our Service!";
+                String body = "Dear " + userFullName + ",\n\n"
+                        + "Your account has been successfully registered. Welcome to our plateform!\n\n"
+                        + "Best regards,\n Sign Learn family";
+
+                // Send the welcome email
+                EmailSender.sendEmail(userEmail, userFullName,body);
             }
 
             // Redirect user

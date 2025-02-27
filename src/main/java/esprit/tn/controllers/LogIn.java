@@ -28,6 +28,8 @@ public class LogIn {
     @FXML
     private PasswordField passwordid;
 
+    @FXML
+    private Button forgotid;
     public void login(ActionEvent actionEvent)throws IOException {
         String email = emailid.getText();
         String password = passwordid.getText();
@@ -96,6 +98,15 @@ public class LogIn {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/SignUp.fxml"));
             signupid.getScene().setRoot(root); // Change root without creating a new scene
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void gotoforgotPassword(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/VerifyPassword.fxml"));
+            forgotid.getScene().setRoot(root); // Change root without creating a new scene
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

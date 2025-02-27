@@ -24,13 +24,16 @@ public class Profile {
 
     @FXML
     private Label fullnameLabel;
-
+  /*  @FXML
+    private Label phoneNumber;*/
     @FXML
     private Label roleLabel;
     @FXML
     private Button getBackid;
     @FXML
     private Button editid;
+    @FXML
+    private Button logout;
     private final UserService userService = new UserService(); // Initialize here
 
     @FXML
@@ -41,10 +44,12 @@ public class Profile {
             fullnameLabel.setText(loggedInUser.getFullName());
             emailLabel.setText(loggedInUser.getEmail());
             roleLabel.setText(loggedInUser.getRole());
+           // phoneNumber.setText(loggedInUser.getPhoneNumber());
         } else {
             fullnameLabel.setText("Unknown");
             emailLabel.setText("Unknown");
             roleLabel.setText("Unknown");
+
         }
     }
 
@@ -55,6 +60,7 @@ public class Profile {
             emailLabel.setText(user.getEmail());
             dateOfBirthLabel.setText(user.getDateOfBirth().toString());
             roleLabel.setText(user.getRole());
+
         } else {
             System.out.println("No user is logged in.");
         }
@@ -103,6 +109,16 @@ public class Profile {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/editProfile.fxml"));
             editid.getScene().setRoot(root); // Change root without creating a new scene
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void logout(ActionEvent actionEvent) {
+        SessionManager.getInstance().clearSession();
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/LogIn.fxml"));
+            logout.getScene().setRoot(root); // Change root without creating a new scene
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

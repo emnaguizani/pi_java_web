@@ -15,7 +15,7 @@
         <children>
             <TextField fx:id="emailid" layoutX="175.0" layoutY="132.0" promptText="email" />
             <TextField fx:id="fullnameid" layoutX="172.0" layoutY="86.0" promptText="fullName" />
-            <TextField fx:id="passwordid" layoutX="177.0" layoutY="226.0" promptText="password" />
+            <TextField fx:id="phoneNumberid" layoutX="177.0" layoutY="226.0" promptText="phone Number" />
             <DatePicker fx:id="dateofbirthid" layoutX="170.0" layoutY="177.0" promptText="Date Of birth" />
             <Button fx:id="updateid" layoutX="335.0" layoutY="332.0" mnemonicParsing="false" onAction="#Update" style="-fx-background-color: #87bfff;" text="Update" />
             <Button fx:id="backid" layoutX="14.0" layoutY="15.0" mnemonicParsing="false" onAction="#goback" style="-fx-background-color: #87bfff;" text="Go back" />

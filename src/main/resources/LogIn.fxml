@@ -16,7 +16,7 @@
          <children>
             <TextField fx:id="emailid" layoutX="152.0" layoutY="212.0" prefHeight="25.0" prefWidth="175.0" promptText="email" />
             <PasswordField fx:id="passwordid" layoutX="154.0" layoutY="250.0" prefHeight="25.0" prefWidth="175.0" promptText="password" />
-            <Button fx:id="loginid" layoutX="206.0" layoutY="309.0" mnemonicParsing="false" onAction="#login" style="-fx-background-color: #87bfff;" text="Confirm" />
+            <Button fx:id="loginid" layoutX="206.0" layoutY="308.0" mnemonicParsing="false" onAction="#login" style="-fx-background-color: #87bfff;" text="Confirm" />
             <Label layoutX="68.0" layoutY="117.0" text="Log In">
                <font>
                   <Font name="System Bold" size="20.0" />
@@ -25,6 +25,7 @@
             <Button fx:id="homeid" layoutX="340.0" layoutY="54.0" mnemonicParsing="false" onAction="#gotoHome" style="-fx-background-color: #87bfff;" text="Home" />
             <Button fx:id="signupid" layoutX="300.0" layoutY="404.0" mnemonicParsing="false" onAction="#gotosignup" style="-fx-background-color: #87bfff;" text="Sign UP" />
             <Label layoutX="97.0" layoutY="408.0" text="if you don't have an account please " underline="true" />
+            <Button fx:id="forgotid" layoutX="264.0" layoutY="283.0" mnemonicParsing="false" onAction="#gotoforgotPassword" style="-fx-background-color: FCFBF4;" text="Forgot Password?" textFill="#2667bb" underline="true" />
          </children>
       </Pane>
       <Pane layoutY="-5.0" prefHeight="520.0" prefWidth="266.0" style="-fx-background-color: ADD7F6; -fx-border-radius: 70;">
