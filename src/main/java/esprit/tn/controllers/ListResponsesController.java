@@ -4,13 +4,10 @@ import esprit.tn.entities.Forum;
 import esprit.tn.entities.Response;
 import esprit.tn.services.ForumService;
 import esprit.tn.services.ResponseService;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -18,11 +15,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.util.Callback;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -54,6 +49,9 @@ public class ListResponsesController {
 
     @FXML
     private ImageView ImageForum;
+
+    @FXML
+    private Button SummaryButton;
 
     private Forum forum;
     private final ResponseService responseService = new ResponseService();
@@ -90,16 +88,14 @@ public class ListResponsesController {
                     System.err.println("Error loading image: " + e.getMessage());
                 }
             } else {
-                System.err.println("No image path provided for the forum.");
+                System.out.println("No image path provided for the forum.");
             }
         }
     }
 
     private void populateResponses() {
         if (forum != null) {
-
             List<Response> responses = responseService.getAllResponses(forum.getIdForum());
-
 
             Map<Integer, List<Response>> responseMap = new HashMap<>();
             for (Response response : responses) {
@@ -107,13 +103,10 @@ public class ListResponsesController {
                 responseMap.computeIfAbsent(parentId, k -> new ArrayList<>()).add(response);
             }
 
-
             List<Response> orderedResponses = new ArrayList<>();
             buildResponseHierarchy(responseMap, 0, orderedResponses);
 
-
             ListResponses.getItems().setAll(orderedResponses);
-
 
             ListResponses.setCellFactory(param -> new ListCell<>() {
                 private final Button respondButton = new Button("Respond");
@@ -166,7 +159,6 @@ public class ListResponsesController {
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy, HH:mm");
                         dateText.setText(response.getCreatedAt().format(formatter));
 
-
                         double baseIndent = 20;
                         double indent = response.getDepth() * baseIndent;
                         vbox.setPadding(new Insets(5, 5, 5, indent));
@@ -177,7 +169,6 @@ public class ListResponsesController {
             });
         }
     }
-
 
     private void buildResponseHierarchy(Map<Integer, List<Response>> responseMap, int parentId, List<Response> orderedResponses) {
         List<Response> children = responseMap.get(parentId);
@@ -269,5 +260,31 @@ public class ListResponsesController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    @FXML
+    private void goToSummaryPage(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/APISummary.fxml"));
+            Parent root = loader.load();
+
+            APISummaryController controller = loader.getController();
+
+
+            String forumContent = forum.getTitle() + "\n" + forum.getDescription() + "\n";
+
+
+            StringBuilder responsesContent = new StringBuilder();
+            for (Response response : ListResponses.getItems()) {
+                responsesContent.append(response.getContent()).append("\n");
+            }
+
+
+            controller.setForumContent(forumContent, responsesContent.toString());
+
+            ListResponses.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

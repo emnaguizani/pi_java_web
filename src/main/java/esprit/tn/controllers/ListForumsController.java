@@ -1,6 +1,5 @@
 package esprit.tn.controllers;
 
-
 import esprit.tn.entities.Forum;
 import esprit.tn.services.ForumService;
 import javafx.collections.FXCollections;
@@ -12,8 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -21,7 +19,6 @@ import java.time.format.DateTimeFormatter;
 
 public class ListForumsController {
 
-    public Button goToListcommunautes;
     @FXML
     private Button CreateButton;
 
@@ -35,6 +32,9 @@ public class ListForumsController {
     private TableColumn<Forum, String> ForumTitle;
 
     @FXML
+    private TableColumn<Forum, String> ForumLikesDislikes;
+
+    @FXML
     private TableColumn<Forum, Void> ForumActions;
 
     @FXML
@@ -44,14 +44,16 @@ public class ListForumsController {
 
     @FXML
     void initialize() {
+
         ObservableList<Forum> observableForumList = FXCollections.observableList(fs.getAllForums());
         ForumsTable.setItems(observableForumList);
+
 
         ForumTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         ForumDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
         ForumDateCreation.setCellValueFactory(new PropertyValueFactory<>("dateCreation"));
         ForumDateCreation.setCellFactory(column -> new TableCell<>() {
             @Override
@@ -65,6 +67,40 @@ public class ListForumsController {
             }
         });
 
+
+        ForumLikesDislikes.setCellFactory(column -> new TableCell<>() {
+            private final Text likesText = new Text("👍 0");
+            private final Text dislikesText = new Text("👎 0");
+            private final HBox hbox = new HBox(10, likesText, dislikesText);
+
+            {
+
+                likesText.setOnMouseClicked(event -> {
+                    Forum forum = getTableView().getItems().get(getIndex());
+                    handleLike(forum);
+                });
+
+                dislikesText.setOnMouseClicked(event -> {
+                    Forum forum = getTableView().getItems().get(getIndex());
+                    handleDislike(forum);
+                });
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || getTableView().getItems().isEmpty()) {
+                    setGraphic(null);
+                } else {
+                    Forum forum = getTableView().getItems().get(getIndex());
+                    likesText.setText("👍 " + forum.getLikes());
+                    dislikesText.setText("👎 " + forum.getDislikes());
+                    setGraphic(hbox);
+                }
+            }
+        });
+
+
         addActionButtons();
     }
 
@@ -76,19 +112,23 @@ public class ListForumsController {
             private final HBox buttonsBox = new HBox(5, reponsesButton, editerButton, supprimerButton);
 
             {
+
                 reponsesButton.setStyle("-fx-background-color: #007bff; -fx-text-fill: white;");
                 editerButton.setStyle("-fx-background-color: #ffc107; -fx-text-fill: black;");
                 supprimerButton.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white;");
+
 
                 reponsesButton.setOnAction(event -> {
                     Forum forum = getTableView().getItems().get(getIndex());
                     handleReponses(forum);
                 });
 
+
                 editerButton.setOnAction(event -> {
                     Forum forum = getTableView().getItems().get(getIndex());
                     handleEdit(forum);
                 });
+
 
                 supprimerButton.setOnAction(event -> {
                     Forum forum = getTableView().getItems().get(getIndex());
@@ -106,6 +146,24 @@ public class ListForumsController {
                 }
             }
         });
+    }
+
+    private void handleLike(Forum forum) {
+
+        fs.incrementLikes(forum.getIdForum());
+
+
+        forum.setLikes(forum.getLikes() + 1);
+        ForumsTable.refresh();
+    }
+
+    private void handleDislike(Forum forum) {
+
+        fs.incrementDislikes(forum.getIdForum());
+
+
+        forum.setDislikes(forum.getDislikes() + 1);
+        ForumsTable.refresh();
     }
 
     private void handleReponses(Forum forum) {
@@ -127,6 +185,7 @@ public class ListForumsController {
 
     private void handleEdit(Forum forum) {
         try {
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/UpdateForum.fxml"));
             Parent root = loader.load();
 
@@ -142,10 +201,12 @@ public class ListForumsController {
     }
 
     private void handleDelete(Forum forum) {
+
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm Deletion");
-        alert.setHeaderText("Are you sure you want to delete this forum ?");
+        alert.setHeaderText("Are you sure you want to delete this forum?");
         alert.setContentText("Forum: " + forum.getTitle());
+
 
         if (alert.showAndWait().get() == ButtonType.OK) {
             fs.deleteForum(forum.getIdForum());
@@ -156,25 +217,22 @@ public class ListForumsController {
     @FXML
     public void RedirectToCreateForum(ActionEvent actionEvent) {
         try {
+
             Parent root = FXMLLoader.load(getClass().getResource("/AjouterForum.fxml"));
             ForumsTable.getScene().setRoot(root);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
+
     @FXML
     public void RedirectToListCommunautes(ActionEvent actionEvent) {
         try {
+
             Parent root = FXMLLoader.load(getClass().getResource("/ListCommunautes.fxml"));
             ForumsTable.getScene().setRoot(root);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
-
-
-
-
 }

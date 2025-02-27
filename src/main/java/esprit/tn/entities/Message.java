@@ -17,6 +17,20 @@ public class Message {
         this.communityId = communityId;
         this.sentAt = LocalDateTime.now();
     }
+    public Message(String content, int senderId, int communityId, LocalDateTime sentAt) {
+        this.content = content;
+        this.senderId = senderId;
+        this.communityId = communityId;
+        this.sentAt = sentAt;
+    }
+
+    public Message(int id, String content, int senderId, int communityId, LocalDateTime sentAt) {
+        this.id=id;
+        this.content = content;
+        this.senderId = senderId;
+        this.communityId = communityId;
+        this.sentAt = sentAt;
+    }
 
 
     public int getId() {

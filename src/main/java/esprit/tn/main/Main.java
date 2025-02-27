@@ -3,8 +3,10 @@ package esprit.tn.main;
 import esprit.tn.entities.Forum;
 import esprit.tn.entities.Response;
 import esprit.tn.services.ForumService;
+import esprit.tn.services.GeminiService;
 import esprit.tn.services.ResponseService;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,6 +15,9 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
+
+
         Scanner scanner = new Scanner(System.in);
         ForumService forumService = new ForumService();
         ResponseService responseService = new ResponseService();

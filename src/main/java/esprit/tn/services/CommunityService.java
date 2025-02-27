@@ -60,13 +60,19 @@ public class CommunityService {
 
 
     public void updateCommunity(Community community) {
-        String query = "UPDATE community SET name = ?, description = ?, members = ? WHERE id = ?";
+        String query = "UPDATE community SET name = ?, description = ?, creator_id = ?, members = ? WHERE id = ?";
         try (PreparedStatement stmt = cnx.prepareStatement(query)) {
             stmt.setString(1, community.getName());
             stmt.setString(2, community.getDescription());
-            stmt.setString(3, community.getMembersAsString());
-            stmt.setInt(4, community.getId());
-            stmt.executeUpdate();
+            stmt.setInt(3, community.getCreatorId());
+            stmt.setString(4, community.getMembersAsString());
+            stmt.setInt(5, community.getId());
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Community updated successfully!");
+            } else {
+                System.out.println("No community found with the given ID.");
+            }
         } catch (SQLException e) {
             throw new RuntimeException("Error updating community: " + e.getMessage());
         }

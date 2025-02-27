@@ -250,4 +250,25 @@ public class ForumService {
         return null;
     }
 
+    public void incrementLikes(int forumId) {
+        String query = "UPDATE forum SET likes = likes + 1 WHERE idForum = ?";
+        try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+            stmt.setInt(1, forumId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error incrementing likes: " + e.getMessage());
+        }
+    }
+
+
+    public void incrementDislikes(int forumId) {
+        String query = "UPDATE forum SET dislikes = dislikes + 1 WHERE idForum = ?";
+        try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+            stmt.setInt(1, forumId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error incrementing dislikes: " + e.getMessage());
+        }
+    }
+
 }

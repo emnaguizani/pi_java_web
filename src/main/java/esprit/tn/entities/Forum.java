@@ -16,7 +16,8 @@ public class Forum {
     private List<Response> responses;
     private boolean isBlocked = false;
     private String imagePath;
-
+    private int likes;
+    private int dislikes;
 
 
     public Forum(){};
@@ -145,6 +146,22 @@ public class Forum {
 
     public void setBlocked(boolean blocked) {
         isBlocked = blocked;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public int getDislikes() {
+        return dislikes;
+    }
+
+    public void setDislikes(int dislikes) {
+        this.dislikes = dislikes;
     }
 
 

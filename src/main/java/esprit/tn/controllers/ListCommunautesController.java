@@ -8,13 +8,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class ListCommunautesController {
 
@@ -91,13 +91,35 @@ public class ListCommunautesController {
     }
 
     private void handleParticipate(Community community) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherAjouterMessage.fxml"));
+            Parent root = loader.load();
 
-        System.out.println("Participate in community: " + community.getName());
+            AfficherAjouterMessageController controller = loader.getController();
+            controller.setCommunityId(community.getId());
+
+            Stage stage = (Stage) CommunitiesTable.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to load messages page: " + e.getMessage());
+        }
     }
 
     private void handleUpdate(Community community) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/UpdateCommunaute.fxml"));
+            Parent root = loader.load();
 
-        System.out.println("Update community: " + community.getName());
+            UpdateCommunauteController controller = loader.getController();
+            controller.setCommunity(community);
+
+            CommunitiesTable.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to load Update Community page: " + e.getMessage());
+        }
     }
 
     private void handleDelete(Community community) {
@@ -132,4 +154,11 @@ public class ListCommunautesController {
         }
     }
 
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }
