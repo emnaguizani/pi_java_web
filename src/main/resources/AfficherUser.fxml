@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -19,6 +21,7 @@
                        <Image url="@logo.png" />
                    </image>
                </ImageView>
+
                <Button fx:id="myProfile" layoutX="383.0" layoutY="9.0" mnemonicParsing="false" onAction="#goToMyProfile" style="-fx-background-color: #3F8EFC;" text="My Profile" textFill="WHITE" />
                <Text fill="#fffbfb" layoutX="884.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reclamation">
                    <font>
@@ -52,7 +55,7 @@
             </Button>
            </children>
        </Pane>
-      <Pane layoutX="-1.0" layoutY="46.0" prefHeight="627.0" prefWidth="1066.0" style="-fx-background-color: White;">
+      <Pane fx:id="searchfield" layoutX="-2.0" layoutY="46.0" prefHeight="627.0" prefWidth="1066.0" style="-fx-background-color: White;">
          <children>
             <TableView fx:id="idtable" layoutX="44.0" layoutY="62.0" prefHeight="339.0" prefWidth="734.0" style="-fx-background-color: FCFBF4;">
               <columns>
@@ -66,12 +69,17 @@
                   <TableColumn fx:id="phoneNumber" prefWidth="135.199951171875" text="phoneNumber" />
               </columns>
             </TableView>
+             <TextField fx:id="searchField" layoutX="835.0" layoutY="109.0" onKeyReleased="#searchUsers" promptText="Search" />
+             <Button fx:id="btnShowChart" layoutX="850.0" layoutY="163.0" onAction="#handleShowChart" style="-fx-background-color: #87bfff;" text="Show Age Statistics" />
+             <PieChart fx:id="ageChart" layoutX="807.0" layoutY="205.0" prefHeight="151.0" prefWidth="169.0" visible="false" />
          </children>
       </Pane>
-      <Button fx:id="pendingid" layoutX="531.0" layoutY="525.0" mnemonicParsing="false" onAction="#goTopending" style="-fx-background-color: #87bfff;" text="Go to pending requests" />
+
+       <Button fx:id="pendingid" layoutX="531.0" layoutY="525.0" mnemonicParsing="false" onAction="#goTopending" style="-fx-background-color: #87bfff;" text="Go to pending requests" />
       <Button fx:id="deleteid" layoutX="309.0" layoutY="524.0" mnemonicParsing="false" onAction="#deleteUser" prefWidth="65.0" style="-fx-background-color: #87bfff;" text="Delete" />
       <Button fx:id="updateid" layoutX="227.0" layoutY="524.0" mnemonicParsing="false" onAction="#UpdateUser" style="-fx-background-color: #87bfff;" text="Update" />
       <Button fx:id="addNew" layoutX="141.0" layoutY="524.0" mnemonicParsing="false" onAction="#goToAjouterUser" style="-fx-background-color: #87bfff;" text="Add New" />
        <Button fx:id="blockButton" layoutX="398.0" layoutY="524.0" onAction="#blockUser" style="-fx-background-color: #87bfff;" text="Block/Unblock" />
+
    </children>
 </AnchorPane>

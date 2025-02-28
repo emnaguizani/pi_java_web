@@ -10,8 +10,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -19,6 +21,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class AfficherUser {
     @FXML
@@ -59,9 +64,15 @@ public class AfficherUser {
     private Button deleteid;
     @FXML
     private Button updateid;
-
+    @FXML
+    private TextField searchField;
     @FXML
     private TableColumn<Users, Void> colBlock;
+    @FXML
+    private PieChart ageChart;
+    @FXML
+    private Button btnShowChart;
+    private ObservableList<Users> userList = FXCollections.observableArrayList();
 
     @FXML
     void initialize() {
@@ -281,4 +292,38 @@ public class AfficherUser {
             throw new RuntimeException(e);
         }
     }
+
+    public void searchUsers(KeyEvent keyEvent) {
+        String keyword = searchField.getText().trim();
+
+        if (keyword.isEmpty()) {
+            loadUsers(); // Reload original list if search is cleared
+            return;
+        }
+
+        UserService userService = new UserService();
+        List<Users> filteredUsers = userService.searchUsers(keyword);
+
+        idtable.getItems().setAll(filteredUsers);
+    }
+
+    public void handleShowChart(ActionEvent actionEvent) {
+        loadUserAgeStatistics();
+        ageChart.setVisible(true);
+    }
+
+    private void loadUserAgeStatistics() {
+        UserService userService = new UserService();
+        Map<String, Integer> ageStats = userService.getUserAgeStatistics();
+
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+
+        for (Map.Entry<String, Integer> entry : ageStats.entrySet()) {
+            pieChartData.add(new PieChart.Data(entry.getKey(), entry.getValue()));
+        }
+
+        ageChart.setData(pieChartData);
+
+    }
 }
+

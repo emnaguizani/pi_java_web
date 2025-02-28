@@ -2,17 +2,16 @@ package esprit.tn.controllers;
 
 import esprit.tn.entities.Users;
 import esprit.tn.services.UserService;
+import esprit.tn.utils.RememberMe;
 import esprit.tn.utils.SessionManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.io.IOException;
+import java.util.prefs.Preferences;
 
 public class LogIn {
     @FXML
@@ -29,7 +28,23 @@ public class LogIn {
     private PasswordField passwordid;
 
     @FXML
+    private CheckBox rememberMeCheckBox;
+
+    @FXML
     private Button forgotid;
+    public void initialize() {
+        // On initialization, check if credentials exist
+        Preferences prefs = Preferences.userNodeForPackage(LogIn.class);
+        String savedEmail = prefs.get("email", null);
+        String savedPassword = prefs.get("password", null);
+
+        if (savedEmail != null && savedPassword != null) {
+            // Auto-fill login fields
+            emailid.setText(savedEmail);
+            passwordid.setText(savedPassword);
+            rememberMeCheckBox.setSelected(true);
+        }
+    }
     public void login(ActionEvent actionEvent)throws IOException {
         String email = emailid.getText();
         String password = passwordid.getText();
@@ -48,6 +63,14 @@ public class LogIn {
                 return; // Stop login process
             }
             SessionManager.getInstance().setLoggedInUser(user);
+            Preferences prefs = Preferences.userNodeForPackage(LogIn.class);
+            if (rememberMeCheckBox.isSelected()) {
+                prefs.put("email", email);
+                prefs.put("password", password);
+            } else {
+                prefs.remove("email");
+                prefs.remove("password");
+            }
             // Redirect user based on role
             String fxmlPath = "";
             switch (user.getRole().toLowerCase()) {

@@ -6,7 +6,9 @@ import javafx.scene.control.Alert;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserService implements Iservice <Users>{
 
@@ -253,5 +255,64 @@ public class UserService implements Iservice <Users>{
             return false;
         }
     }
+
+    public List<Users> searchUsers(String keyword) {
+        List<Users> usersList = new ArrayList<>();
+        String query = "SELECT * FROM users WHERE fullName LIKE ? OR phoneNumber LIKE ? OR email LIKE ?";
+
+        try (PreparedStatement pstmt = cnx.prepareStatement(query)) {
+
+            String searchKeyword = "%" + keyword + "%";
+            pstmt.setString(1, searchKeyword);
+            pstmt.setString(2, searchKeyword);
+            pstmt.setString(3, searchKeyword);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Users user = new Users();
+                user.setId_user(rs.getInt("id_user"));
+                user.setFullNAme(rs.getString("fullName"));
+                user.setPhoneNumber(rs.getString("phoneNumber"));
+                user.setEmail(rs.getString("email"));
+                user.setRole(rs.getString("role"));
+                user.setAccess(rs.getBoolean("access"));
+                usersList.add(user);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return usersList;
+    }
+    public Map<String, Integer> getUserAgeStatistics() {
+        Map<String, Integer> ageStats = new HashMap<>();
+        String query = "SELECT " +
+                "SUM(CASE WHEN TIMESTAMPDIFF(YEAR, dateOfBirth, CURDATE()) < 18 THEN 1 ELSE 0 END) AS under_18, " +
+                "SUM(CASE WHEN TIMESTAMPDIFF(YEAR, dateOfBirth, CURDATE()) BETWEEN 18 AND 25 THEN 1 ELSE 0 END) AS age_18_25, " +
+                "SUM(CASE WHEN TIMESTAMPDIFF(YEAR, dateOfBirth, CURDATE()) BETWEEN 26 AND 35 THEN 1 ELSE 0 END) AS age_26_35, " +
+                "SUM(CASE WHEN TIMESTAMPDIFF(YEAR, dateOfBirth, CURDATE()) BETWEEN 36 AND 50 THEN 1 ELSE 0 END) AS age_36_50, " +
+                "SUM(CASE WHEN TIMESTAMPDIFF(YEAR, dateOfBirth, CURDATE()) > 50 THEN 1 ELSE 0 END) AS over_50 " +
+                "FROM users";
+
+        try (
+             PreparedStatement pstmt = cnx.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            if (rs.next()) {
+                ageStats.put("< 18", rs.getInt("under_18"));
+                ageStats.put("18 - 25", rs.getInt("age_18_25"));
+                ageStats.put("26 - 35", rs.getInt("age_26_35"));
+                ageStats.put("36 - 50", rs.getInt("age_36_50"));
+                ageStats.put("> 50", rs.getInt("over_50"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return ageStats;
+    }
+
 
 }
