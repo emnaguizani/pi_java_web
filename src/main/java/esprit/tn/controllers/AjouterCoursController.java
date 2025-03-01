@@ -75,17 +75,14 @@ public class AjouterCoursController implements Initializable {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select Video Files");
 
-        // video types illi ynajjem y7otthom
 
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("Video Files", "*.mp4", "*.avi", "*.mov", "*.mkv")
         );
 
-        // List bech ynajjem y7ott akther min video
         List<File> selectedFiles = fileChooser.showOpenMultipleDialog(new Stage());
 
         if (selectedFiles != null && !selectedFiles.isEmpty()) {
-            // Convertion mta3 les file paths to a comma-separated string
             String videoPaths = selectedFiles.stream()
                     .map(File::getAbsolutePath)
                     .collect(Collectors.joining(","));

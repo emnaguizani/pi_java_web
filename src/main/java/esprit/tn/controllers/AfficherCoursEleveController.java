@@ -7,6 +7,7 @@ import esprit.tn.service.ProgressService;
 import esprit.tn.entities.StProgress;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -120,6 +121,21 @@ public class AfficherCoursEleveController implements Initializable {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void practiceButton(ActionEvent actionEvent) {
+        try {
+            // Open the default web browser with the specified URL
+            java.awt.Desktop.getDesktop().browse(new java.net.URI("http://localhost:8000/test-cam"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Optionally, show an alert if there's an error
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Failed to open browser");
+            alert.setContentText("An error occurred while trying to open the browser.");
+            alert.showAndWait();
         }
     }
 }

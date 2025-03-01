@@ -183,4 +183,20 @@ public class AfficherCoursController implements Initializable {
     public void reloadCourse(ActionEvent actionEvent) {
         loadCourses();
     }
+
+    public void newSignButton(ActionEvent actionEvent) {
+            try {
+                // Open the default web browser with the specified URL
+                java.awt.Desktop.getDesktop().browse(new java.net.URI("http://localhost:8000/train-cam"));
+            } catch (Exception e) {
+                e.printStackTrace();
+                // Optionally, show an alert if there's an error
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Failed to open browser");
+                alert.setContentText("An error occurred while trying to open the browser.");
+                alert.showAndWait();
+            }
+        }
+
 }
