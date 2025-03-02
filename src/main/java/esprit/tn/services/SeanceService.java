@@ -16,17 +16,21 @@ public class SeanceService implements Iservice<Seance> {
 
     @Override
     public void ajouter(Seance seance) {
-        String req = "INSERT INTO seance (titre, contenu, datetime, idFormateur) VALUES (?, ?, ?, ?)";
+        String req = "INSERT INTO seance (titre, contenu, datetime, idFormateur, nomFormateur, modeSeance) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stm = cnx.prepareStatement(req)) {
             stm.setString(1, seance.getTitre());
             stm.setString(2, seance.getContenu());
             stm.setTimestamp(3, seance.getDatetime());
             stm.setInt(4, seance.getIdFormateur());
+            stm.setString(5, seance.getNomFormateur());
+            stm.setString(6, seance.getModeSeance()); // ✅ Ajout du mode
+
             stm.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
 
     @Override
     public void modifier(Seance seance) {
@@ -56,34 +60,39 @@ public class SeanceService implements Iservice<Seance> {
 
     public List<Seance> getAll() {
         List<Seance> seances = new ArrayList<>();
-        String req = "SELECT * FROM seance";
+        String query = "SELECT s.idSeance, s.titre, s.contenu, s.datetime, s.idFormateur, s.nomFormateur, s.modeSeance FROM seance s";
 
         try (Statement stm = cnx.createStatement();
-             ResultSet rs = stm.executeQuery(req)) {
+             ResultSet rs = stm.executeQuery(query)) {
+
             while (rs.next()) {
                 Seance seance = new Seance(
                         rs.getInt("idSeance"),
                         rs.getString("titre"),
                         rs.getString("contenu"),
                         rs.getTimestamp("datetime"),
-                        rs.getInt("idFormateur")
+                        rs.getInt("idFormateur"),
+                        rs.getString("nomFormateur"),
+                        rs.getString("modeSeance") // ✅ Récupération du mode de la séance
                 );
                 seances.add(seance);
             }
         } catch (SQLException e) {
-            System.err.println("❌ Erreur lors de la récupération des séances : " + e.getMessage());
+            System.err.println("❌ Erreur lors de la récupération des séances !");
+            e.printStackTrace();
         }
-
         return seances;
     }
+
+
     public List<Seance> getAllSeances() {
         List<Seance> seances = new ArrayList<>();
         String req = """
-    SELECT idSeance, titre, contenu, Datetime
-    FROM seance
-    ORDER BY Datetime ASC
-""";
-
+        SELECT s.idSeance, s.titre, s.contenu, s.datetime, u.fullName AS nomFormateur
+        FROM seance s
+        JOIN users u ON s.idFormateur = u.id_user
+        ORDER BY s.datetime ASC
+    """;
 
         try (Statement stm = cnx.createStatement();
              ResultSet rs = stm.executeQuery(req)) {
@@ -93,10 +102,11 @@ public class SeanceService implements Iservice<Seance> {
                         rs.getInt("idSeance"),
                         rs.getString("titre"),
                         rs.getString("contenu"),
-                        rs.getTimestamp("Datetime")
-
-
+                        rs.getTimestamp("datetime"),
+                        rs.getInt("idFormateur"),
+                        rs.getString("nomFormateur") // ✅ Correction ici
                 );
+
                 seances.add(seance);
             }
         } catch (SQLException e) {
@@ -104,6 +114,7 @@ public class SeanceService implements Iservice<Seance> {
         }
         return seances;
     }
+
 
 
     @Override

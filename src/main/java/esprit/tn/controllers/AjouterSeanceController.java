@@ -8,7 +8,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
 import java.io.IOException;
@@ -31,26 +33,40 @@ public class AjouterSeanceController {
     private DatePicker datePicker;
 
     @FXML
+    private ComboBox<String> modeSeance; // ✅ Mode de la séance (Présentiel ou En ligne)
+
+    @FXML
     private ComboBox<String> hourComboBox;
 
     @FXML
     private TextField idFormateurId;
 
+    @FXML
+    private TextField formateurField; // ✅ Champ pour saisir le nom du formateur
+
     private final SeanceService seanceService = new SeanceService();
 
     @FXML
     public void initialize() {
-        // Initialisation du ComboBox avec des heures de 00:00 à 23:59
+        int idFormateur = getFormateurConnecte();  // Récupération de l'ID du formateur connecté
+        idFormateurId.setText(String.valueOf(idFormateur));
+
+        // ✅ Initialisation du ComboBox du mode de la séance
+        modeSeance.setItems(FXCollections.observableArrayList("Présentiel", "En ligne"));
+        modeSeance.setValue("Présentiel"); // ✅ Mode par défaut
+
+        // ✅ Initialisation du ComboBox avec des heures de 00:00 à 23:59
         ObservableList<String> hours = FXCollections.observableArrayList();
         for (int h = 0; h < 24; h++) {
             for (int m = 0; m < 60; m += 15) { // Ajout d'intervalles de 15 minutes
                 hours.add(String.format("%02d:%02d:00", h, m));
             }
         }
-        hourComboBox.setItems(hours);
-        hourComboBox.setValue("12:00:00"); // Heure par défaut
 
-        // Personnalisation du format du DatePicker
+        hourComboBox.setItems(hours);
+        hourComboBox.setValue("12:00:00"); // ✅ Heure par défaut
+
+        // ✅ Personnalisation du format du DatePicker
         datePicker.setConverter(new StringConverter<>() {
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -65,21 +81,28 @@ public class AjouterSeanceController {
             }
         });
 
-        // Sélection de la date actuelle par défaut
+        // ✅ Sélection de la date actuelle par défaut
         datePicker.setValue(LocalDate.now());
+    }
+
+    private int getFormateurConnecte() {
+        return 1;  // ⚠️ Remplacez ceci par la vraie méthode pour récupérer l'ID du formateur connecté
     }
 
     @FXML
     void ajouterSeance(ActionEvent event) {
         try {
-            // Validation des champs
+            // ✅ Validation des champs
             String titre = titreId.getText().trim();
             String contenu = contenuId.getText().trim();
             LocalDate selectedDate = datePicker.getValue();
             String selectedTime = hourComboBox.getValue();
             String idFormateurText = idFormateurId.getText().trim();
+            String nomFormateur = formateurField.getText().trim();
+            String mode = modeSeance.getValue(); // ✅ Récupérer le mode de séance
 
-            if (titre.isEmpty() || contenu.isEmpty() || selectedDate == null || selectedTime.isEmpty() || idFormateurText.isEmpty()) {
+            if (titre.isEmpty() || contenu.isEmpty() || selectedDate == null || selectedTime.isEmpty()
+                    || idFormateurText.isEmpty() || nomFormateur.isEmpty() || mode.isEmpty()) {
                 showError("Erreur de Saisie", "Tous les champs doivent être remplis.");
                 return;
             }
@@ -111,12 +134,12 @@ public class AjouterSeanceController {
                 return;
             }
 
-            // Création de l'objet Timestamp
+            // ✅ Création de l'objet Timestamp
             LocalDateTime localDateTime = LocalDateTime.of(selectedDate, LocalTime.parse(selectedTime));
             Timestamp datetime = Timestamp.valueOf(localDateTime);
 
-            // Création de l'objet Séance et insertion
-            Seance seance = new Seance(0, titre, contenu, datetime, idFormateur);
+            // ✅ Création de l'objet Séance et insertion
+            Seance seance = new Seance(0, titre, contenu, datetime, idFormateur, nomFormateur, mode);
             seanceService.ajouter(seance);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -132,16 +155,21 @@ public class AjouterSeanceController {
     @FXML
     void afficherSeances(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/AfficherSeance.fxml"));
-            titreId.getScene().setRoot(root);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherSeance.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Liste des Séances");
+            stage.setScene(new Scene(root));
+            stage.show();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            showError("Erreur", "Impossible d'afficher les séances.");
         }
     }
 
     private void showError(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
+        alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }

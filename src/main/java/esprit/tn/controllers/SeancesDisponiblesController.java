@@ -83,7 +83,7 @@ public class SeancesDisponiblesController {
             Parent root = loader.load();
 
             SeanceVisioController controller = loader.getController();
-            controller.setSeance(seance); // ✅ Passe la séance à la WebView
+            controller.setSeance(seance);
 
             Stage stage = new Stage();
             stage.setTitle("Session en Direct - " + seance.getTitre());
@@ -93,5 +93,4 @@ public class SeancesDisponiblesController {
             e.printStackTrace();
         }
     }
-
 }

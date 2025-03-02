@@ -6,30 +6,54 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.Pos?>
+<?import javafx.geometry.Insets?>
 
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <AnchorPane xmlns="http://javafx.com/javafx/21.0.2"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="esprit.tn.controllers.AjouterSeanceController"
             stylesheets="@css/style.css"
-            prefHeight="300.0" prefWidth="350.0">
+            prefHeight="350.0" prefWidth="400.0">
 
     <children>
-        <Label layoutX="20" layoutY="20" text="Titre :" />
-        <TextField fx:id="titreId" layoutX="120" layoutY="20" prefWidth="200" promptText="Titre de la séance"/>
+        <VBox layoutX="30" layoutY="20" spacing="10" alignment="CENTER_LEFT">
+            <Label text="Titre :" />
+            <TextField fx:id="titreId" prefWidth="250" promptText="Titre de la séance"/>
 
-        <Label layoutX="20" layoutY="60" text="Contenu :" />
-        <TextField fx:id="contenuId" layoutX="120" layoutY="60" prefWidth="200" promptText="Description"/>
+            <Label text="Contenu :" />
+            <TextField fx:id="contenuId" prefWidth="250" promptText="Description"/>
+            <Label layoutX="30" layoutY="200" text="Mode de la Séance :" />
+            <ComboBox fx:id="modeSeance" layoutX="180" layoutY="200" prefWidth="200">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Présentiel"/>
+                        <String fx:value="En ligne"/>
+                    </FXCollections>
+                </items>
+            </ComboBox>
 
-        <Label layoutX="20" layoutY="100" text="Date :" />
-        <DatePicker fx:id="datePicker" layoutX="120" layoutY="100" prefWidth="200"/>
 
-        <Label layoutX="20" layoutY="140" text="Heure :" />
-        <ComboBox fx:id="hourComboBox" layoutX="120" layoutY="140" prefWidth="200"/>
+            <Label text="Date :" />
+            <DatePicker fx:id="datePicker" prefWidth="250"/>
 
-        <Label layoutX="20" layoutY="180" text="ID Formateur :" />
-        <TextField fx:id="idFormateurId" layoutX="120" layoutY="180" prefWidth="200" promptText="Ex: 1"/>
+            <Label text="Formateur :" />
+            <TextField fx:id="formateurField" prefWidth="250" promptText="Nom du formateur"/>
 
-        <Button layoutX="20" layoutY="230" onAction="#ajouterSeance" text="Ajouter" prefWidth="100"/>
-        <Button layoutX="140" layoutY="230" onAction="#afficherSeances" text="Voir Séances" prefWidth="120"/>
+            <Label text="Heure :" />
+            <ComboBox fx:id="hourComboBox" prefWidth="250"/>
+
+            <!-- ID Formateur caché -->
+            <TextField fx:id="idFormateurId" visible="false" managed="false"/>
+
+            <!-- Boutons -->
+            <HBox spacing="20" alignment="CENTER">
+                <Button text="Ajouter" onAction="#ajouterSeance" prefWidth="120"/>
+                <Button text="Voir Séances" onAction="#afficherSeances" prefWidth="120"/>
+            </HBox>
+        </VBox>
     </children>
 </AnchorPane>

@@ -33,3 +33,14 @@
     -fx-border-radius: 5px;
     -fx-border-color: #2667FF;
 }
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: white;
+}
+
+.scroll-bar {
+    -fx-background-color: lightgray;
+}

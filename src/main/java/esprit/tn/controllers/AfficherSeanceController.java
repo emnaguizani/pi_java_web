@@ -2,6 +2,7 @@ package esprit.tn.controllers;
 
 import esprit.tn.entities.Seance;
 import esprit.tn.services.SeanceService;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -23,13 +24,17 @@ public class AfficherSeanceController {
     private TableView<Seance> tableView;
 
     @FXML
-    private TableColumn<Seance, Integer> idSeance;
-
-    @FXML
     private TableColumn<Seance, String> titre;
 
     @FXML
     private TableColumn<Seance, String> contenu;
+    @FXML
+    private TableColumn<Seance, String> nomFormateur;
+    @FXML
+    private ScrollPane scrollPane; // ✅ S'assurer que le ScrollPane est bien récupéré
+    @FXML
+    private TableColumn<Seance, String> modeColumn;
+
 
     @FXML
     private TableColumn<Seance, String> datetime;
@@ -46,25 +51,46 @@ public class AfficherSeanceController {
     @FXML
     private TextField searchField;
 
+
     private final SeanceService seanceService = new SeanceService();
     private ObservableList<Seance> allSeances;
+
+
 
     @FXML
     void initialize() {
         allSeances = FXCollections.observableList(seanceService.getAll());
 
+        // ✅ Vérifier que le ScrollPane n'est pas null
+        if (scrollPane != null) {
+            scrollPane.setFitToHeight(true);
+            scrollPane.setFitToWidth(true);
+        } else {
+            System.out.println("⚠ Warning: ScrollPane est NULL ! Vérifiez l'ID dans le fichier FXML.");
+        }
+
         tableView.setItems(allSeances);
-        idSeance.setCellValueFactory(new PropertyValueFactory<>("idSeance"));
+
+        // ✅ Configuration correcte des colonnes
         titre.setCellValueFactory(new PropertyValueFactory<>("titre"));
         contenu.setCellValueFactory(new PropertyValueFactory<>("contenu"));
+        nomFormateur.setCellValueFactory(cellData -> new SimpleStringProperty(
+                cellData.getValue().getNomFormateur() != null ? cellData.getValue().getNomFormateur() : "Inconnu"
+        ));
+        modeColumn.setCellValueFactory(new PropertyValueFactory<>("modeSeance"));
+
         datetime.setCellValueFactory(new PropertyValueFactory<>("datetime"));
-        idFormateur.setCellValueFactory(new PropertyValueFactory<>("idFormateur"));
+
+        // ✅ Activation automatique du scroll
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-
+        // ✅ Assurer que les boutons "Modifier" et "Supprimer" sont bien ajoutés
         ajouterBoutonModifier();
         ajouterBoutonSupprimer();
     }
+
+
+
 
     private void ajouterBoutonModifier() {
         Callback<TableColumn<Seance, Void>, TableCell<Seance, Void>> cellFactory = param -> new TableCell<>() {

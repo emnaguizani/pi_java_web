@@ -11,7 +11,7 @@ public class MainFX extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         // Charger l'interface AjouterAbsence.fxml au démarrage
-        Parent root = FXMLLoader.load(getClass().getResource("/SeancesDisponibles.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/AjouterSeance.fxml"));
 
         primaryStage.setTitle("Gestion des Absences");
         primaryStage.setScene(new Scene(root, 600, 400));

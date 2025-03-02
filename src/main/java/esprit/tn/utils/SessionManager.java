@@ -6,7 +6,10 @@ public class SessionManager {
     private static SessionManager instance;
     private Users loggedInUser;
 
-    private SessionManager() { }
+    private SessionManager() {
+        // ✅ Simuler une connexion avec un utilisateur existant (Hamdi)
+        this.loggedInUser = new Users(1, "ghassen", "hamdi@gmail.com", "hamdi123");
+    }
 
     public static SessionManager getInstance() {
         if (instance == null) {
@@ -26,7 +29,8 @@ public class SessionManager {
     public void clearSession() {
         loggedInUser = null;
     }
+
     public int getUserId() {
-        return loggedInUser != null ? loggedInUser.getId_user() : -1; // Return -1 if no user is logged in
+        return loggedInUser != null ? loggedInUser.getId_user() : -1; // Retourne -1 si aucun utilisateur n'est connecté
     }
 }
