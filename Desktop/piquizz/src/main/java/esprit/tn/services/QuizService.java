@@ -12,6 +12,7 @@ public class QuizService {
     private Connection cnx;
 
     public QuizService(Connection cnx) {
+
         this.cnx = cnx;
     }
 
@@ -40,7 +41,6 @@ public class QuizService {
             throw new SQLException("Creating quiz failed, no ID obtained.");
         }
     }
-
 
 
     public Quiz getQuizById(int id) throws SQLException {
@@ -120,8 +120,6 @@ public class QuizService {
         stmt.setInt(1, id);
         stmt.executeUpdate();
     }
-
-
 
 
 }

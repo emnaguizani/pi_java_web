@@ -5,11 +5,16 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AjouterExerciceController">
+<AnchorPane prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.Quiz.AjouterExerciceController">
     <children>
 
         <VBox alignment="CENTER" layoutX="175.0" layoutY="53.0" prefHeight="690.0" prefWidth="422.0" spacing="15" style="-fx-padding: 20; -fx-background-color: #ffffff; -fx-border-radius: 10px; -fx-border-color: #e0e0e0; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 0);">
            <Label alignment="TOP_LEFT" style="-fx-font-size: 24px; -fx-text-fill: #24a7cf; -fx-font-weight: bold;" text="ADD EXERCICE" />
+            <Hyperlink onAction="#handlesearchAction" prefHeight="14.0" prefWidth="190.0" text="You need help with pictures ?" wrapText="true">
+                <font>
+                    <Font name="72 Light" size="14.0" />
+                </font>
+            </Hyperlink>
             <Label style="-fx-font-size: 16px; -fx-text-fill: #333; -fx-font-weight: bold;" text="Question" />
             <TextField fx:id="questionId" promptText="Enter question" style="-fx-padding: 8; -fx-font-size: 14px; -fx-background-color: #f9f9f9; -fx-border-radius: 5px; -fx-border-color: #ccc; -fx-border-width: 1px;" />
 
@@ -23,7 +28,8 @@
             <TextField fx:id="scoreId" promptText="Score" style="-fx-padding: 8; -fx-font-size: 14px; -fx-background-color: #f9f9f9; -fx-border-radius: 5px; -fx-border-color: #ccc; -fx-border-width: 1px;" />
 
             <Label style="-fx-font-size: 16px; -fx-text-fill: #333; -fx-font-weight: bold;" text="Image Path" />
-            <TextField fx:id="imagePathId" promptText="Path to Image" style="-fx-padding: 8; -fx-font-size: 14px; -fx-background-color: #f9f9f9; -fx-border-radius: 5px; -fx-border-color: #ccc; -fx-border-width: 1px;" />
+            <TextField fx:id="imagePathId" prefHeight="38.0" prefWidth="277.0" promptText="Path to Image" style="-fx-padding: 8; -fx-font-size: 14px; -fx-background-color: #f9f9f9; -fx-border-radius: 5px; -fx-border-color: #ccc; -fx-border-width: 1px;" />
+            <Button fx:id="uploadImageButton" onAction="#handleUploadImage" prefHeight="36.0" prefWidth="94.0" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-padding: 8 15; -fx-font-size: 14px; -fx-border-radius: 5px; -fx-cursor: hand;" text="Upload " />
 
             <Label style="-fx-font-size: 16px; -fx-text-fill: #333; -fx-font-weight: bold;" text="Mandatory" />
             <CheckBox fx:id="mandatoryCheckBox" />
@@ -33,7 +39,7 @@
             <HBox alignment="CENTER" spacing="15">
 
                 <Button fx:id="ajouterButton" onAction="#handleAjouterExercice" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-padding: 12 20; -fx-font-size: 14px; -fx-border-radius: 5px; -fx-min-width: 100px; -fx-cursor: hand;" text="ADD" />
-                <Button fx:id="retourbutton" onAction="#handleretourAction" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-padding: 12 20; -fx-font-size: 14px; -fx-border-radius: 5px; -fx-min-width: 100px; -fx-cursor: hand;" text="BACK" />
+                <Button fx:id="nextButton" onAction="#handleNextAction" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-padding: 12 20; -fx-font-size: 14px; -fx-border-radius: 5px; -fx-min-width: 100px; -fx-cursor: hand;" text="Next" />
 
             </HBox>
         </VBox>

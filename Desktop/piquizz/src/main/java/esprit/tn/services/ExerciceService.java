@@ -94,6 +94,28 @@ public class ExerciceService {
             stmt.executeUpdate();
         }
     }
+    public Exercice getExerciceById(int idE) throws SQLException {
+        String query = "SELECT * FROM exercice WHERE idE = ?";
+        try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+            stmt.setInt(1, idE);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                Exercice exercice = new Exercice(
+                        rs.getString("question"),
+                        List.of(rs.getString("options").split(",")),
+                        rs.getString("correctAnswer"),
+                        rs.getInt("score"),
+                        rs.getString("imagePath"),
+                        rs.getBoolean("isMandatory")
+                );
+                exercice.setIdE(rs.getInt("idE"));
+                exercice.setquiz_id(rs.getInt("quiz_id")); // Set the quiz_id if needed
+                return exercice;
+            }
+        }
+        return null; // Return null if no exercice is found
+    }
 
 
     }

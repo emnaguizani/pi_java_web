@@ -1,11 +1,10 @@
-package esprit.tn.controllers;
+package esprit.tn.controllers.Quiz;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import esprit.tn.entities.Quiz;
@@ -18,8 +17,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +34,10 @@ public class AjouterQuizController {
     private TextField authorid;
 
     @FXML
-    private TextField Dateid;
+    private DatePicker datePicker; // DatePicker for selecting the date
+
+    @FXML
+    private TextField timeField; // TextField for entering the time
 
     @FXML
     private TextField descriptionid;
@@ -49,9 +54,6 @@ public class AjouterQuizController {
     @FXML
     private Label error;
 
-    @FXML
-    private Button nextButton;
-
     private Connection cnx = DatabaseConnection.getInstance().getCnx();
 
     @FXML
@@ -59,7 +61,7 @@ public class AjouterQuizController {
         try {
             if (titleId.getText().isEmpty() || descriptionid.getText().isEmpty() ||
                     durationid.getText().isEmpty() || totalScoreid.getText().isEmpty() ||
-                    Dateid.getText().isEmpty() || authorid.getText().isEmpty()) {
+                    datePicker.getValue() == null || timeField.getText().isEmpty() || authorid.getText().isEmpty()) {
                 error.setText("All fields must be completed!");
                 return;
             }
@@ -92,16 +94,20 @@ public class AjouterQuizController {
                     return;
                 }
             } catch (NumberFormatException e) {
-                error.setText("Please enter valid numerical values ​​for duration and total score.");
+                error.setText("Please enter valid numerical values for duration and total score.");
                 return;
             }
 
+            // Combine date and time into a LocalDateTime object
+            LocalDate date = datePicker.getValue();
+            String time = timeField.getText().trim();
             LocalDateTime creationDate;
             try {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                creationDate = LocalDateTime.parse(Dateid.getText().trim(), formatter);
-            } catch (Exception e) {
-                error.setText("Invalid date format! Use 'YYYY-MM-DD HH:mm:ss'.");
+                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+                LocalTime localTime = LocalTime.parse(time, timeFormatter);
+                creationDate = LocalDateTime.of(date, localTime);
+            } catch (DateTimeParseException e) {
+                error.setText("Invalid time format! Use 'HH:mm:ss'.");
                 return;
             }
 
@@ -113,7 +119,7 @@ public class AjouterQuizController {
 
             int quizId = quiz.getQuiz_id();
             error.setText("Quiz added successfully!");
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterExercice.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Quiz/AjouterExercice.fxml"));
             Pane root = loader.load();
             AjouterExerciceController ajouterExerciceController = loader.getController();
             ajouterExerciceController.setQuizId(quizId);
@@ -132,26 +138,4 @@ public class AjouterQuizController {
             e.printStackTrace();
         }
     }
-
-    @FXML
-    private void handleNextAction(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherQuiz.fxml"));
-
-            Parent root = loader.load();
-
-            Stage stage = (Stage) nextButton.getScene().getWindow();
-            Scene scene = new Scene(root);
-
-            stage.setScene(scene);
-            stage.setTitle("Show Quiz");
-            stage.show();
-
-        } catch (IOException e) {
-            error.setText("Error loading the ShowQuiz page.");
-            e.printStackTrace();
-        }
-    }
-
-
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.Quiz.AfficherExerciceEleveController">
+    <VBox alignment="CENTER" layoutX="40.0" layoutY="54.0" prefHeight="616.0" prefWidth="852.0" spacing="10">
+        <Text style="-fx-font-size: 24px;" text="Exercices du Quiz" />
+
+        <ListView fx:id="exerciceListView" layoutX="20.0" layoutY="96.0" prefHeight="460.0" prefWidth="880.0" style="-fx-background-color: #f5f6fa; -fx-border-color: #dcdde1; -fx-border-radius: 10px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 0);" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="67.0" AnchorPane.topAnchor="96.0">
+        </ListView>
+
+        <Button fx:id="submitButton" onAction="#handleSubmitAll" style="-fx-font-size: 16px; -fx-padding: 10px 20px;" text="Submit" />        <Button onAction="#handleExit" style="-fx-font-size: 16px; -fx-padding: 10px 20px;" text="Exit" />
+    </VBox>
+    <Pane layoutX="-6.0" prefHeight="46.0" prefWidth="929.0" style="-fx-background-color: #2667FF;">
+        <children>
+            <ImageView fitHeight="44.0" fitWidth="45.0" layoutX="14.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@/logo.png" />
+                </image>
+            </ImageView>
+
+
+        </children>
+    </Pane>
+
+</AnchorPane>

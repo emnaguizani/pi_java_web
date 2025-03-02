@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" prefHeight="500.0" prefWidth="700.0" spacing="10" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.Quiz.SearchController">
+    <padding>
+        <Insets bottom="10" left="10" right="10" top="10" />
+    </padding>
+
+    <Label text="Enter a query for sign language images:" />
+    <TextField fx:id="queryField" prefHeight="30.0" prefWidth="500.0" promptText="e.g., sign language, ASL, hand signs" />
+    <Button text="Search" onAction="#handleSearchButtonAction" />
+
+    <ScrollPane fitToWidth="true" prefHeight="300.0">
+        <VBox fx:id="imageContainer" spacing="15" alignment="CENTER" />
+    </ScrollPane>
+
+    <Button text="Back" onAction="#handleBackButtonAction" />
+</VBox>

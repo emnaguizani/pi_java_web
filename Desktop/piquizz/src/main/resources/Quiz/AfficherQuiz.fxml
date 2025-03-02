@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AfficherQuizController">
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.Quiz.AfficherQuizController">
     <children>
         <Label alignment="TOP_LEFT" layoutX="374.0" layoutY="46.0" style="-fx-font-size: 24px; -fx-text-fill: #24a7cf; -fx-font-weight: bold;" text="Quiz Lists" AnchorPane.leftAnchor="374.0" AnchorPane.topAnchor="46.0" />
         <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" layoutX="766.0" layoutY="60.0" onAction="#onCreateQuizClick" prefHeight="35.0" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-pref-width: 150;" text="Create Quiz" />

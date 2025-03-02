@@ -1,4 +1,4 @@
-package esprit.tn.controllers;
+package esprit.tn.controllers.Quiz;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,12 +10,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.CheckBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import esprit.tn.entities.Exercice;
 import esprit.tn.services.ExerciceService;
 import esprit.tn.main.DatabaseConnection;
-import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -47,11 +52,46 @@ public class AjouterExerciceController {
     @FXML
     private Label error;
 
+    @FXML
+    private Button uploadImageButton;
+
     private Connection cnx = DatabaseConnection.getInstance().getCnx();
     private int quizId;
 
     public void setQuizId(int quizId) {
         this.quizId = quizId;
+    }
+
+    @FXML
+    private void handleUploadImage(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Image File");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif")
+        );
+
+        // Show the file chooser dialog
+        File selectedFile = fileChooser.showOpenDialog(((Node) event.getSource()).getScene().getWindow());
+
+        if (selectedFile != null) {
+            try {
+                String uploadDir = "C:/Users/Saidi/Desktop/Pi Pictures/";
+                File dir = new File(uploadDir);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+
+                String fileName = selectedFile.getName();
+                Path destinationPath = Path.of(uploadDir + fileName);
+                Files.copy(selectedFile.toPath(), destinationPath, StandardCopyOption.REPLACE_EXISTING);
+
+                // Set the absolute path in the imagePathId TextField
+                imagePathId.setText(destinationPath.toString()); // Absolute path
+            } catch (IOException e) {
+                error.setText("Error uploading image: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
     }
 
     @FXML
@@ -130,10 +170,11 @@ public class AjouterExerciceController {
         imagePathId.clear();
         mandatoryCheckBox.setSelected(false);
     }
+
     @FXML
-    private void handleretourAction(ActionEvent event) {
+    private void handleNextAction(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/path/to/ajouterquiz.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Quiz/AfficherQuiz.fxml"));
             Parent root = loader.load();
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -143,5 +184,17 @@ public class AjouterExerciceController {
             e.printStackTrace();
         }
     }
+    @FXML
+    private void handlesearchAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Quiz/search.fxml"));
+            Parent root = loader.load();
 
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

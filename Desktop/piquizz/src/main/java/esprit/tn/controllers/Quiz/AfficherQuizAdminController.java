@@ -1,17 +1,15 @@
-package esprit.tn.controllers;
+package esprit.tn.controllers.Quiz;
 
+import esprit.tn.controllers.Quiz.AfficherExerciceAdminController;
 import esprit.tn.entities.Quiz;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import esprit.tn.entities.Quiz;
 import esprit.tn.services.QuizService;
 import esprit.tn.main.DatabaseConnection;
 
@@ -109,11 +107,11 @@ public class AfficherQuizAdminController {
 
         private void navigateToExercisesPage(Quiz quiz) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/esprit/tn/views/exercises.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("AfficherExerciceAdmin.fxml"));
                 Parent root = loader.load();
 
 
-                AfficherExerciceController exercisesController = loader.getController();
+                AfficherExerciceAdminController exercisesController = loader.getController();
 
 
 

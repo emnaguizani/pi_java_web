@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.Quiz.AfficherExerciceController">
+
+    <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="63.0" prefHeight="630.0" prefWidth="707.0" spacing="25" style="-fx-background-color: #f4f6f9; -fx-border-radius: 15; -fx-padding: 30 40; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 15, 0.0, 0, 5);">
+
+        <Label alignment="TOP_LEFT" layoutX="255.0" layoutY="21.0" style="-fx-font-size: 24px; -fx-text-fill: #24a7cf; -fx-font-weight: bold;" text="Exercise Lists" AnchorPane.leftAnchor="255.0" AnchorPane.topAnchor="21.0" />
+       <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" onAction="#onCreateExerciceClick" prefHeight="35.0" prefWidth="399.0" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-pref-width: 150;" text="Add Exercice" />
+
+        <TableView fx:id="exercicesTable" prefHeight="200.0" prefWidth="644.0" style="-fx-border-color: #ddd; -fx-border-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 15, 0.0, 0, 5);">
+            <columns>
+                <TableColumn fx:id="exerciceIdColumn" prefWidth="50" text="ID" />
+                <TableColumn fx:id="questionColumn" prefWidth="200" text="Question" />
+                <TableColumn fx:id="optionsColumn" prefWidth="150" text="Options" />
+                <TableColumn fx:id="correctAnswerColumn" prefWidth="120" text="Correct Answer" />
+                <TableColumn fx:id="scoreColumn" prefWidth="70" text="Score" />
+                <TableColumn fx:id="imageColumn" prefWidth="100" text="Image Path" />
+                <TableColumn fx:id="actions" prefWidth="200" text="Actions" />
+            </columns>
+        </TableView>
+
+        <HBox alignment="CENTER" style="-fx-padding: 20 0;">
+            <Button onAction="#goBackToQuiz" style="-fx-font-size: 16; -fx-background-color: #3498db; -fx-text-fill: white; -fx-padding: 12 25; -fx-border-radius: 10; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0.0, 0, 3);" text="Back to Quiz" />
+        </HBox>
+    </VBox>
+    <Pane layoutX="-6.0" prefHeight="45.0" prefWidth="779.0" style="-fx-background-color: #2667FF;">
+        <children>
+            <ImageView fitHeight="44.0" fitWidth="45.0" layoutX="14.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@/logo.png" />
+                </image>
+            </ImageView>
+
+            <Text fill="#fffbfb" layoutX="734.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Forum">
+                <font>
+                    <Font name="Times New Roman Bold" size="12.0" />
+                </font>
+            </Text>
+            <Text fill="#fffbfb" layoutX="657.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reclamation">
+                <font>
+                    <Font name="Times New Roman Bold" size="12.0" />
+                </font>
+            </Text>
+            <Text fill="#fffbfb" layoutX="603.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seance">
+                <font>
+                    <Font name="Times New Roman Bold" size="12.0" />
+                </font>
+            </Text>
+            <Text fill="#fffbfb" layoutX="505.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cours">
+                <font>
+                    <Font name="Times New Roman Bold" size="12.0" />
+                </font>
+            </Text>
+            <Text fill="#fffbfb" layoutX="560.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz">
+                <font>
+                    <Font name="Times New Roman Bold" size="12.0" />
+                </font>
+            </Text>
+        </children>
+    </Pane>
+
+</AnchorPane>

@@ -1,5 +1,6 @@
-package esprit.tn.controllers;
+package esprit.tn.controllers.Quiz;
 
+import esprit.tn.controllers.Quiz.AfficherExerciceController;
 import esprit.tn.entities.Exercice;
 import esprit.tn.main.DatabaseConnection;
 import esprit.tn.services.ExerciceService;
@@ -10,7 +11,6 @@ import javafx.stage.Stage;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class ModifierExerciceController {
 

@@ -1,4 +1,4 @@
-package esprit.tn.controllers;
+package esprit.tn.controllers.Quiz;
 
 import esprit.tn.entities.Quiz;
 import esprit.tn.main.DatabaseConnection;
@@ -65,7 +65,6 @@ public class ModifierQuizController {
                 return;
             }
 
-            // Set quiz data
             quizToModify.setTitle(titleField.getText());
             quizToModify.setDescription(descriptionField.getText());
             quizToModify.setDuration(duration);
@@ -91,7 +90,7 @@ public class ModifierQuizController {
 
     private void navigateToQuizList() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherQuiz.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Quiz/AfficherQuiz.fxml"));
             Parent root = loader.load();
 
             AfficherQuizController afficherQuizController = loader.getController();

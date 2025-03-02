@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="esprit.tn.controllers.ModifierQuizController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="esprit.tn.controllers.Quiz.ModifierQuizController">
     <VBox alignment="CENTER" spacing="15" style="-fx-padding: 20;">
         <Label style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: #3b28cc;" text="UPDATE QUIZ" />
 

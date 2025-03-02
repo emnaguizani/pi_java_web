@@ -1,9 +1,8 @@
-package esprit.tn.controllers;
+package esprit.tn.controllers.Quiz;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -109,6 +108,7 @@ public class AfficherQuizController {
                             Button modifyButton = new Button("Modify");
                             modifyButton.setOnAction(event -> handleModify(getTableRow().getItem()));
 
+
                             HBox buttonBox = new HBox(10, deleteButton, modifyButton);
                             setGraphic(buttonBox);
                         }
@@ -132,7 +132,7 @@ public class AfficherQuizController {
 
     private void navigateToExercisesPage(Quiz quiz) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherExercice.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Quiz/AfficherExercice.fxml"));
             Parent root = loader.load();
 
             AfficherExerciceController exercisesController = loader.getController();
@@ -186,7 +186,7 @@ public class AfficherQuizController {
 
     private void handleModify(Quiz quiz) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierQuiz.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Quiz/ModifierQuiz.fxml"));
             Parent root = loader.load();
 
             ModifierQuizController modifierQuizController = loader.getController();
@@ -205,7 +205,7 @@ public class AfficherQuizController {
     @FXML
     private void onCreateQuizClick(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterQuiz.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Quiz/AjouterQuiz.fxml"));
             Parent root = loader.load();
 
             Stage stage = new Stage();

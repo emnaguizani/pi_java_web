@@ -1,11 +1,11 @@
-package esprit.tn.controllers;
+package esprit.tn.controllers.Quiz;
 
 import esprit.tn.entities.Exercice;
 import esprit.tn.services.ExerciceService;
 import esprit.tn.main.DatabaseConnection;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -83,6 +83,7 @@ public class AfficherExerciceController {
                             Button modifyButton = new Button("Modify");
                             modifyButton.setOnAction(event -> handleModify(getTableRow().getItem()));
 
+
                             HBox buttonBox = new HBox(10, deleteButton, modifyButton);
                             setGraphic(buttonBox);
                         }
@@ -119,7 +120,7 @@ public class AfficherExerciceController {
     }
     private void handleModify(Exercice exercice) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierExercice.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Quiz/ModifierExercice.fxml"));
             Parent root = loader.load();
 
             ModifierExerciceController exerciceController = loader.getController();
@@ -147,7 +148,7 @@ public class AfficherExerciceController {
 
     public void goBackToQuiz() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherQuiz.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Quiz/AfficherQuiz.fxml"));
             Parent root = loader.load();
 
             Stage stage = (Stage) exercicesTable.getScene().getWindow();
@@ -157,6 +158,26 @@ public class AfficherExerciceController {
         } catch (IOException e) {
             e.printStackTrace();
             showMessage("Error loading the quiz view.");
+        }
+    }
+    @FXML
+    private void onCreateExerciceClick(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Quiz/AjouterExercice.fxml"));
+            Parent root = loader.load();
+            AjouterExerciceController ajouterExerciceController = loader.getController();
+            ajouterExerciceController.setQuizId(quizId);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Create New Quiz");
+
+            stage.show();
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
