@@ -1,7 +1,10 @@
 package esprit.tn.controllers;
 
 import esprit.tn.entities.Message;
+import esprit.tn.entities.Users;
 import esprit.tn.services.MessageService;
+import esprit.tn.services.UserService;
+import esprit.tn.utils.SessionManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,6 +12,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -26,9 +34,6 @@ public class AfficherAjouterMessageController {
     private ListView<Message> messagesListView;
 
     @FXML
-    private TextField senderIdField;
-
-    @FXML
     private TextArea messageContentField;
 
     @FXML
@@ -36,6 +41,7 @@ public class AfficherAjouterMessageController {
 
     private int communityId;
     private final MessageService messageService = new MessageService();
+    private final UserService userService = new UserService();
 
     public void setCommunityId(int communityId) {
         this.communityId = communityId;
@@ -54,8 +60,24 @@ public class AfficherAjouterMessageController {
                 super.updateItem(message, empty);
                 if (empty || message == null) {
                     setText(null);
+                    setGraphic(null);
                 } else {
-                    setText("Sender: name" + " | " + message.getContent() + " | " + message.getSentAt().format(formatter));
+
+                    TextFlow textFlow = new TextFlow();
+
+
+                    Text senderText = new Text(message.getSenderName(userService) + ": ");
+                    senderText.setStyle("-fx-font-weight: bold;");
+
+                    Text contentText = new Text(message.getContent() + " . ");
+
+                    Text dateText = new Text(message.getSentAt().format(formatter));
+                    dateText.setOpacity(0.5);
+
+
+                    textFlow.getChildren().addAll(senderText, contentText, dateText);
+
+                    setGraphic(textFlow);
                 }
             }
         });
@@ -63,13 +85,12 @@ public class AfficherAjouterMessageController {
 
     @FXML
     private void handleSendMessage() {
-        int senderId;
-        try {
-            senderId = Integer.parseInt(senderIdField.getText().trim());
-        } catch (NumberFormatException e) {
-            showAlert("Invalid Input", "Sender ID must be a valid number.");
+        Users loggedInUser = SessionManager.getInstance().getLoggedInUser();
+        if (loggedInUser == null) {
+            showAlert("Error", "You must be logged in to send a message.");
             return;
         }
+        int senderId = loggedInUser.getId_user();
 
         String content = messageContentField.getText().trim();
         if (content.isEmpty()) {
@@ -89,7 +110,6 @@ public class AfficherAjouterMessageController {
         Message message = new Message(content, senderId, communityId, LocalDateTime.now());
         messageService.sendMessage(message);
 
-        senderIdField.clear();
         messageContentField.clear();
         loadMessages();
     }
@@ -148,4 +168,35 @@ public class AfficherAjouterMessageController {
             return false;
         }
     }
+
+    public void goToMyProfile(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/Profile.fxml"));
+            messagesListView.getScene().setRoot(root);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void gotocours(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/AfficherCours.fxml"));
+            messagesListView.getScene().setRoot(root);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void goToQuiz(ActionEvent actionEvent) {
+    }
+
+    public void goToForum(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/ListForums.fxml"));
+            messagesListView.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

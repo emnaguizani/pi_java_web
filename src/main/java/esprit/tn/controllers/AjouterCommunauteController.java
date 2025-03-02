@@ -1,7 +1,10 @@
 package esprit.tn.controllers;
 
 import esprit.tn.entities.Community;
+import esprit.tn.entities.Users;
 import esprit.tn.services.CommunityService;
+import esprit.tn.services.UserService;
+import esprit.tn.utils.SessionManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,11 +16,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.TextFieldListCell;
+import javafx.util.StringConverter;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class AjouterCommunauteController {
 
@@ -28,22 +32,47 @@ public class AjouterCommunauteController {
     private TextArea communityDescriptionField;
 
     @FXML
-    private TextField creatorIdField;
-
-    @FXML
-    private ListView<Integer> membersListView;
+    private ListView<Users> membersListView;
 
     @FXML
     private Button createButton;
 
     private CommunityService communityService = new CommunityService();
+    private UserService userService = new UserService();
 
     @FXML
     public void initialize() {
-        ObservableList<Integer> memberIds = FXCollections.observableArrayList(
-                IntStream.rangeClosed(1, 20).boxed().collect(Collectors.toList())
-        );
-        membersListView.setItems(memberIds);
+
+        Users loggedInUser = SessionManager.getInstance().getLoggedInUser();
+        if (loggedInUser == null) {
+            showErrorAlert("Error", "You must be logged in to create a community.");
+            return;
+        }
+
+
+        List<Users> allUsers = userService.getall();
+        List<Users> otherUsers = allUsers.stream()
+                .filter(user -> user.getId_user() != loggedInUser.getId_user())
+                .collect(Collectors.toList());
+
+
+        ObservableList<Users> userList = FXCollections.observableArrayList(otherUsers);
+        membersListView.setItems(userList);
+
+
+        membersListView.setCellFactory(TextFieldListCell.forListView(new StringConverter<Users>() {
+            @Override
+            public String toString(Users user) {
+                return user.getFullName();
+            }
+
+            @Override
+            public Users fromString(String string) {
+                return null;
+            }
+        }));
+
+
         membersListView.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.MULTIPLE);
     }
 
@@ -51,36 +80,49 @@ public class AjouterCommunauteController {
     private void handleCreateCommunity() {
         String name = communityNameField.getText().trim();
         String description = communityDescriptionField.getText().trim();
-        int creatorId;
-        try {
-            creatorId = Integer.parseInt(creatorIdField.getText().trim());
-        } catch (NumberFormatException e) {
-            showErrorAlert("Invalid Creator ID", "Creator ID must be a valid number.");
+
+
+        Users loggedInUser = SessionManager.getInstance().getLoggedInUser();
+        if (loggedInUser == null) {
+            showErrorAlert("Error", "You must be logged in to create a community.");
             return;
         }
+        int creatorId = loggedInUser.getId_user();
+
 
         if (name.isEmpty() || description.isEmpty()) {
             showErrorAlert("Invalid Input", "Community name and description cannot be empty.");
             return;
         }
 
-        List<Integer> selectedMembers = membersListView.getSelectionModel().getSelectedItems();
-        if (selectedMembers.isEmpty()) {
+
+        List<Users> selectedUsers = membersListView.getSelectionModel().getSelectedItems();
+        if (selectedUsers.isEmpty()) {
             showErrorAlert("Invalid Input", "You must select at least one member.");
             return;
         }
 
+
         Community community = new Community(name, description, creatorId);
-        selectedMembers.forEach(community::addMember);
+        selectedUsers.forEach(user -> community.addMember(user.getId_user()));
+
 
         communityService.addCommunity(community);
 
+
         showSuccessAlert("Community Created", "The community has been created successfully!");
+
 
         communityNameField.clear();
         communityDescriptionField.clear();
-        creatorIdField.clear();
         membersListView.getSelectionModel().clearSelection();
+
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/ListCommunautes.fxml"));
+            membersListView.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void showErrorAlert(String title, String message) {
@@ -103,6 +145,35 @@ public class AjouterCommunauteController {
     private void goToListCommunautes(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/ListCommunautes.fxml"));
+            membersListView.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void goToMyProfile(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/Profile.fxml"));
+            membersListView.getScene().setRoot(root);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void gotocours(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/AfficherCours.fxml"));
+            membersListView.getScene().setRoot(root);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void goToQuiz(ActionEvent actionEvent) {
+    }
+
+    public void goToForum(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/ListForums.fxml"));
             membersListView.getScene().setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();

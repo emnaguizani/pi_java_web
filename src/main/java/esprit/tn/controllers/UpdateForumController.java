@@ -98,4 +98,34 @@ public class UpdateForumController {
             e.printStackTrace();
         }
     }
+
+    public void goToMyProfile(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/Profile.fxml"));
+            forumTitle.getScene().setRoot(root);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void gotocours(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/AfficherCours.fxml"));
+            forumTitle.getScene().setRoot(root);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void goToQuiz(ActionEvent actionEvent) {
+    }
+
+    public void goToForum(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/ListForums.fxml"));
+            forumTitle.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

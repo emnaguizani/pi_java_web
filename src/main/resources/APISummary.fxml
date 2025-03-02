@@ -9,41 +9,52 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="514.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.APISummaryController">
+<AnchorPane prefHeight="595.0" prefWidth="897.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.APISummaryController">
    <children>
-      <Pane prefHeight="45.0" prefWidth="779.0" style="-fx-background-color: #2667FF;">
+      <Pane layoutX="-6.0" prefHeight="45.0" prefWidth="904.0" style="-fx-background-color: #3F8EFC;">
          <children>
             <ImageView fitHeight="44.0" fitWidth="45.0" layoutX="14.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@/logoPi.png" />
+                  <Image url="@logo.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="34.0" fitWidth="31.0" layoutX="734.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@/user.png" />
-               </image>
-            </ImageView>
-            <Text fill="#fffbfb" layoutX="657.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reclamation">
+            <Button fx:id="myProfile" layoutX="414.0" layoutY="13.0" mnemonicParsing="false" onAction="#goToMyProfile" style="-fx-background-color: #3F8EFC;" text="My Profile" textFill="WHITE" />
+            <Text fill="#fffbfb" layoutX="726.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reclamation">
                <font>
                   <Font name="Times New Roman Bold" size="12.0" />
                </font>
             </Text>
-            <Text fill="#fffbfb" layoutX="603.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seance">
+            <Button fx:id="coursbutton" layoutX="620.0" layoutY="11.0" mnemonicParsing="false" onAction="#gotocours" style="-fx-background-color: #3F8EFC;" text="Cours" textFill="WHITE">
                <font>
                   <Font name="Times New Roman Bold" size="12.0" />
                </font>
-            </Text>
-            <Text fill="#fffbfb" layoutX="545.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cours">
+            </Button>
+            <Button fx:id="seancebutton" layoutX="667.0" layoutY="12.0" mnemonicParsing="false" style="-fx-background-color: #3F8EFC;" text="Seance" textFill="WHITE">
                <font>
                   <Font name="Times New Roman Bold" size="12.0" />
                </font>
-            </Text>
+            </Button>
+            <Button fx:id="reclamationbutton" layoutX="718.0" layoutY="12.0" mnemonicParsing="false" style="-fx-background-color: #3F8EFC;" text="Reclamation" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="quizbutton" layoutX="799.0" layoutY="12.0" mnemonicParsing="false" onAction="#goToQuiz" style="-fx-background-color: #3F8EFC;" text="Quiz" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="forumbutton" layoutX="840.0" layoutY="14.0" mnemonicParsing="false" onAction="#goToForum" style="-fx-background-color: #3F8EFC;" text="Forum" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
-      <Button fx:id="backButton" layoutX="-10.0" layoutY="34.0" onAction="#goToListForums" prefHeight="62.0" prefWidth="80.0" style="-fx-background-color: transparent; -fx-font-size: 30px;" text="⬅" />
-      <TextArea fx:id="SummaryField" layoutX="59.0" layoutY="99.0" prefHeight="160.0" prefWidth="533.0" />
-      <Text fill="#002fff" layoutX="59.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20px;" text="AI Answer To Your Forum" />
-      <Text fill="#002fff" layoutX="59.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20px;" text="AI Summary Of The Responses" />
-      <TextArea fx:id="ResponseSummaryField" layoutX="59.0" layoutY="321.0" prefHeight="160.0" prefWidth="533.0" />
+      <Button fx:id="backButton" layoutX="148.0" layoutY="45.0" onAction="#goToListForums" prefHeight="62.0" prefWidth="80.0" style="-fx-background-color: transparent; -fx-font-size: 30px;" text="⬅" />
+      <TextArea fx:id="SummaryField" layoutX="176.0" layoutY="115.0" prefHeight="183.0" prefWidth="533.0" />
+      <Text fill="#002fff" layoutX="176.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20px;" text="AI Answer To Your Forum" />
+      <Text fill="#002fff" layoutX="176.0" layoutY="340.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20px;" text="AI Summary Of The Responses" />
+      <TextArea fx:id="ResponseSummaryField" layoutX="176.0" layoutY="346.0" prefHeight="190.0" prefWidth="533.0" />
    </children>
 </AnchorPane>

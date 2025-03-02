@@ -1,7 +1,10 @@
 package esprit.tn.controllers;
 
 import esprit.tn.entities.Community;
+import esprit.tn.entities.Users;
 import esprit.tn.services.CommunityService;
+import esprit.tn.services.UserService;
+import esprit.tn.utils.SessionManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,6 +15,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -31,21 +36,41 @@ public class ListCommunautesController {
     private TableColumn<Community, Integer> CommunityCreatorId;
 
     @FXML
+    private TableColumn<Community, String> CommunityMembers;
+
+    @FXML
     private TableColumn<Community, Void> CommunityActions;
 
     @FXML
     private TableView<Community> CommunitiesTable;
 
     private final CommunityService communityService = new CommunityService();
+    private final UserService userService = new UserService();
 
     @FXML
     void initialize() {
-        ObservableList<Community> observableCommunityList = FXCollections.observableList(communityService.getAllCommunities());
+
+        Users loggedInUser = SessionManager.getInstance().getLoggedInUser();
+        if (loggedInUser == null) {
+            showAlert("Error", "You must be logged in to view communities.");
+            return;
+        }
+
+        ObservableList<Community> observableCommunityList = FXCollections.observableList(
+                communityService.getCommunitiesForUser(loggedInUser.getId_user())
+        );
         CommunitiesTable.setItems(observableCommunityList);
 
         CommunityName.setCellValueFactory(new PropertyValueFactory<>("name"));
         CommunityDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
-        CommunityCreatorId.setCellValueFactory(new PropertyValueFactory<>("creatorId"));
+
+
+        CommunityMembers.setCellValueFactory(cellData -> {
+            Community community = cellData.getValue();
+            return javafx.beans.binding.Bindings.createStringBinding(() ->
+                    community.getMembersNamesAsString(userService)
+            );
+        });
 
         addActionButtons();
     }
@@ -84,6 +109,21 @@ public class ListCommunautesController {
                 if (empty) {
                     setGraphic(null);
                 } else {
+                    Community community = getTableView().getItems().get(getIndex());
+
+                    Users loggedInUser = SessionManager.getInstance().getLoggedInUser();
+                    int loggedInUserId = loggedInUser != null ? loggedInUser.getId_user() : -1;
+
+                    if (loggedInUserId == community.getCreatorId()) {
+                        updateButton.setVisible(true);
+                        deleteButton.setVisible(true);
+                        buttonsBox.getChildren().setAll(participateButton, updateButton, deleteButton);
+                    } else {
+                        updateButton.setVisible(false);
+                        deleteButton.setVisible(false);
+                        buttonsBox.getChildren().setAll(participateButton);
+                    }
+
                     setGraphic(buttonsBox);
                 }
             }
@@ -160,5 +200,35 @@ public class ListCommunautesController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public void goToMyProfile(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/Profile.fxml"));
+            CommunitiesTable.getScene().setRoot(root);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void gotocours(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/AfficherCours.fxml"));
+            CommunitiesTable.getScene().setRoot(root);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void goToQuiz(ActionEvent actionEvent) {
+    }
+
+    public void goToForum(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/ListForums.fxml"));
+            CommunitiesTable.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

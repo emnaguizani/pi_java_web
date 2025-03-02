@@ -149,4 +149,35 @@ public class UpdateResponseController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    public void goToMyProfile(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/Profile.fxml"));
+            ResponseContent.getScene().setRoot(root);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void gotocours(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/AfficherCours.fxml"));
+            ResponseContent.getScene().setRoot(root);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void goToQuiz(ActionEvent actionEvent) {
+    }
+
+    public void goToForum(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/ListForums.fxml"));
+            ResponseContent.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

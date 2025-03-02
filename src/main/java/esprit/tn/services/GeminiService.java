@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class GeminiService {
     private static final String API_KEY = "AIzaSyCONIr7_lJ_KX4v_tgoyThSgR_KB7kv7oM";
-    private static final String API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite-001:generateContent?key=" + API_KEY;
+    private static final String API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + API_KEY;
 
     private final OkHttpClient httpClient = new OkHttpClient();
 

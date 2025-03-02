@@ -2,7 +2,10 @@ package esprit.tn.controllers;
 
 import esprit.tn.entities.Forum;
 import esprit.tn.entities.Response;
+import esprit.tn.entities.Users;
 import esprit.tn.services.ResponseService;
+import esprit.tn.services.UserService;
+import esprit.tn.utils.SessionManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,9 +41,6 @@ public class AjouterResponseController {
     private Button ResetForum;
 
     @FXML
-    private TextField ResponseAuthorId;
-
-    @FXML
     private TextArea ResponseContent;
 
     @FXML
@@ -50,7 +50,6 @@ public class AjouterResponseController {
     private Button backButton;
 
     private Response parentResponse;
-
     private Forum forum;
     private final ResponseService responseService = new ResponseService();
 
@@ -66,8 +65,18 @@ public class AjouterResponseController {
     private void populateFields() {
         if (forum != null) {
             TitreForum.setText(forum.getTitle());
-            NomCreateur.setText("Author: getAuthorNameById");
             DescriptionForum.setText(forum.getDescription());
+
+
+            UserService userService = new UserService();
+            Users author = userService.getUserById2(forum.getIdAuthor());
+            if (author != null) {
+                NomCreateur.setText("Author: " + author.getFullName());
+            } else {
+                NomCreateur.setText("Author: Unknown");
+            }
+
+
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
             String formattedDate = forum.getDateCreation().format(formatter);
             DateCreation.setText(formattedDate);
@@ -77,13 +86,14 @@ public class AjouterResponseController {
     @FXML
     void AjouteResponse(ActionEvent event) {
         try {
-            int authorId;
-            try {
-                authorId = Integer.parseInt(ResponseAuthorId.getText().trim());
-            } catch (NumberFormatException e) {
-                showAlert("Invalid Input", "Author ID must be a valid number.");
+
+            Users loggedInUser = SessionManager.getInstance().getLoggedInUser();
+            if (loggedInUser == null) {
+                showAlert("Not Logged In", "You must be logged in to create a response.");
                 return;
             }
+
+            int authorId = loggedInUser.getId_user();
 
             String content = ResponseContent.getText().trim();
             if (content.isEmpty()) {
@@ -148,7 +158,6 @@ public class AjouterResponseController {
 
     @FXML
     void resetFields(ActionEvent event) {
-        ResponseAuthorId.clear();
         ResponseContent.clear();
     }
 
@@ -197,4 +206,35 @@ public class AjouterResponseController {
             return false;
         }
     }
+
+    public void goToMyProfile(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/Profile.fxml"));
+            TitreForum.getScene().setRoot(root);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void gotocours(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/AfficherCours.fxml"));
+            TitreForum.getScene().setRoot(root);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void goToQuiz(ActionEvent actionEvent) {
+    }
+
+    public void goToForum(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/ListForums.fxml"));
+            TitreForum.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

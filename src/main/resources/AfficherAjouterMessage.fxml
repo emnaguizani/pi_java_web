@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -12,55 +11,61 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="514.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AfficherAjouterMessageController">
+<AnchorPane prefHeight="595.0" prefWidth="889.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AfficherAjouterMessageController">
     <children>
-        <Pane prefHeight="45.0" prefWidth="800.0" style="-fx-background-color: #2667FF;">
+        <Pane layoutX="-6.0" prefHeight="45.0" prefWidth="895.0" style="-fx-background-color: #3F8EFC;">
             <children>
                 <ImageView fitHeight="44.0" fitWidth="45.0" layoutX="14.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@/logoPi.png" />
+                        <Image url="@logo.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="34.0" fitWidth="31.0" layoutX="734.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@/user.png" />
-                    </image>
-                </ImageView>
-                <Text fill="#fffbfb" layoutX="657.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reclamation">
+                <Button fx:id="myProfile" layoutX="448.0" layoutY="10.0" mnemonicParsing="false" onAction="#goToMyProfile" style="-fx-background-color: #3F8EFC;" text="My Profile" textFill="WHITE" />
+                <Text fill="#fffbfb" layoutX="715.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reclamation">
                     <font>
                         <Font name="Times New Roman Bold" size="12.0" />
                     </font>
                 </Text>
-                <Text fill="#fffbfb" layoutX="603.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seance">
+                <Button fx:id="coursbutton" layoutX="607.0" layoutY="14.0" mnemonicParsing="false" onAction="#gotocours" style="-fx-background-color: #3F8EFC;" text="Cours" textFill="WHITE">
                     <font>
                         <Font name="Times New Roman Bold" size="12.0" />
                     </font>
-                </Text>
-                <Text fill="#fffbfb" layoutX="545.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cours">
+                </Button>
+                <Button fx:id="seancebutton" layoutX="654.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #3F8EFC;" text="Seance" textFill="WHITE">
                     <font>
                         <Font name="Times New Roman Bold" size="12.0" />
                     </font>
-                </Text>
+                </Button>
+                <Button fx:id="reclamationbutton" layoutX="705.0" layoutY="13.0" mnemonicParsing="false" style="-fx-background-color: #3F8EFC;" text="Reclamation" textFill="WHITE">
+                    <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                    </font>
+                </Button>
+                <Button fx:id="quizbutton" layoutX="789.0" layoutY="14.0" mnemonicParsing="false" onAction="#goToQuiz" style="-fx-background-color: #3F8EFC;" text="Quiz" textFill="WHITE">
+                    <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                    </font>
+                </Button>
+                <Button fx:id="forumbutton" layoutX="830.0" layoutY="14.0" mnemonicParsing="false" onAction="#goToForum" style="-fx-background-color: #3F8EFC;" text="Forum" textFill="WHITE">
+                    <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                    </font>
+                </Button>
             </children>
         </Pane>
-        <Text fill="#002fff" layoutX="287.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20px;" text="Community Messages" wrappingWidth="303.15234375">
+        <Text fill="#002fff" layoutX="344.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20px;" text="Community Messages" wrappingWidth="303.15234375">
             <font>
                 <Font name="Yu Gothic UI Regular" size="15.0" />
             </font>
         </Text>
 
-        <!-- ListView to display messages -->
-        <ListView fx:id="messagesListView" layoutX="50.0" layoutY="120.0" prefHeight="300.0" prefWidth="700.0" />
 
-        <!-- Input fields for sending a message -->
-        <Label layoutX="50.0" layoutY="440.0" text="Sender ID:" />
-        <TextField fx:id="senderIdField" layoutX="120.0" layoutY="440.0" prefWidth="100.0" />
+        <ListView fx:id="messagesListView" layoutX="84.0" layoutY="124.0" prefHeight="318.0" prefWidth="700.0" />
 
-        <Label layoutX="250.0" layoutY="440.0" text="Message:" />
-        <TextArea fx:id="messageContentField" layoutX="320.0" layoutY="440.0" prefHeight="60.0" prefWidth="300.0" />
+        <Label layoutX="239.0" layoutY="456.0" text="Message:" />
+        <TextArea fx:id="messageContentField" layoutX="295.0" layoutY="456.0" prefHeight="60.0" prefWidth="300.0" />
 
-        <!-- Button to send the message -->
-        <Button fx:id="sendMessageButton" layoutX="650.0" layoutY="440.0" onAction="#handleSendMessage" text="Send" />
-      <Button fx:id="backButton" layoutX="39.0" layoutY="60.0" onAction="#goToListCommunautes" prefHeight="62.0" prefWidth="80.0" style="-fx-background-color: transparent; -fx-font-size: 30px;" text="⬅" />
+        <Button fx:id="sendMessageButton" layoutX="604.0" layoutY="461.0" onAction="#handleSendMessage" text="Send" />
+      <Button fx:id="backButton" layoutX="58.0" layoutY="85.0" onAction="#goToListCommunautes" prefHeight="62.0" prefWidth="80.0" style="-fx-background-color: transparent; -fx-font-size: 30px;" text="⬅" />
     </children>
 </AnchorPane>

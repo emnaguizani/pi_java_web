@@ -2,8 +2,11 @@ package esprit.tn.controllers;
 
 import esprit.tn.entities.Forum;
 import esprit.tn.entities.Response;
+import esprit.tn.entities.Users;
 import esprit.tn.services.ForumService;
 import esprit.tn.services.ResponseService;
+import esprit.tn.services.UserService;
+import esprit.tn.utils.SessionManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,9 +28,6 @@ public class ListResponsesController {
 
     @FXML
     private Text DateCreation;
-
-    @FXML
-    private TextArea DescriptionForum;
 
     @FXML
     private ListView<Response> ListResponses;
@@ -53,6 +53,7 @@ public class ListResponsesController {
     @FXML
     private Button SummaryButton;
 
+    private final UserService userService = new UserService();
     private Forum forum;
     private final ResponseService responseService = new ResponseService();
     private final ForumService forumService = new ForumService();
@@ -67,11 +68,19 @@ public class ListResponsesController {
         if (forum != null) {
             TitreForum.setText(forum.getTitle());
 
-            NomCreateur.setText("Author: getAuthorNameById");
+            UserService userService = new UserService();
+            Users author = userService.getUserById2(forum.getIdAuthor());
+            if (author != null) {
+                NomCreateur.setText("Author: " + author.getFullName());
+            } else {
+                NomCreateur.setText("Author: Unknown");
+            }
+
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
             String formattedDate = forum.getDateCreation().format(formatter);
             DateCreation.setText(formattedDate);
             DescriptionContainer.setText(forum.getDescription());
+
             System.out.println("Image Path: " + forum.getImagePath());
             if (forum.getImagePath() != null && !forum.getImagePath().isEmpty()) {
                 try {
@@ -148,16 +157,30 @@ public class ListResponsesController {
 
                 @Override
                 protected void updateItem(Response response, boolean empty) {
+
                     super.updateItem(response, empty);
                     if (empty || response == null) {
                         setText(null);
                         setGraphic(null);
                     } else {
-                        authorText.setText("Author: " + response.getAuthor());
+                        Users loggedInUser = SessionManager.getInstance().getLoggedInUser();
+                        int loggedInUserId = loggedInUser != null ? loggedInUser.getId_user() : -1;
+
+                        authorText.setText("Author: " + response.getAuthorName(userService));
                         contentText.setText(response.getContent());
 
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy, HH:mm");
                         dateText.setText(response.getCreatedAt().format(formatter));
+
+                        if (loggedInUserId == response.getAuthor()) {
+                            updateButton.setVisible(true);
+                            deleteButton.setVisible(true);
+                            buttonsBox.getChildren().setAll(respondButton, updateButton, deleteButton);
+                        } else {
+                            updateButton.setVisible(false);
+                            deleteButton.setVisible(false);
+                            buttonsBox.getChildren().setAll(respondButton);
+                        }
 
                         double baseIndent = 20;
                         double indent = response.getDepth() * baseIndent;
@@ -169,7 +192,6 @@ public class ListResponsesController {
             });
         }
     }
-
     private void buildResponseHierarchy(Map<Integer, List<Response>> responseMap, int parentId, List<Response> orderedResponses) {
         List<Response> children = responseMap.get(parentId);
         if (children != null) {
@@ -270,18 +292,45 @@ public class ListResponsesController {
 
             APISummaryController controller = loader.getController();
 
-
             String forumContent = forum.getTitle() + "\n" + forum.getDescription() + "\n";
-
 
             StringBuilder responsesContent = new StringBuilder();
             for (Response response : ListResponses.getItems()) {
                 responsesContent.append(response.getContent()).append("\n");
             }
 
-
             controller.setForumContent(forumContent, responsesContent.toString());
 
+            ListResponses.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void goToMyProfile(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/Profile.fxml"));
+            ListResponses.getScene().setRoot(root);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void gotocours(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/AfficherCours.fxml"));
+            ListResponses.getScene().setRoot(root);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void goToQuiz(ActionEvent actionEvent) {
+    }
+
+    public void goToForum(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/ListForums.fxml"));
             ListResponses.getScene().setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();

@@ -92,4 +92,27 @@ public class CommunityService {
             throw new RuntimeException("Error deleting community: " + e.getMessage());
         }
     }
+
+    public List<Community> getCommunitiesForUser(int userId) {
+        List<Community> communities = new ArrayList<>();
+        String query = "SELECT * FROM community WHERE creator_id = ? OR members LIKE ?";
+        try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+            stmt.setInt(1, userId);
+            stmt.setString(2, "%" + userId + "%");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Community community = new Community();
+                community.setId(rs.getInt("id"));
+                community.setName(rs.getString("name"));
+                community.setDescription(rs.getString("description"));
+                community.setCreatorId(rs.getInt("creator_id"));
+                community.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+                community.setMembersFromString(rs.getString("members"));
+                communities.add(community);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error fetching communities for user: " + e.getMessage());
+        }
+        return communities;
+    }
 }

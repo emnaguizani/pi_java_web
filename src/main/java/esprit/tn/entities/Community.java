@@ -1,5 +1,8 @@
 package esprit.tn.entities;
 
+import esprit.tn.services.UserService;
+
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +25,6 @@ public class Community {
         this.createdAt = LocalDateTime.now();
         this.members = new ArrayList<>();
     }
-
 
     public int getId() {
         return id;
@@ -64,7 +66,6 @@ public class Community {
         this.createdAt = createdAt;
     }
 
-
     public List<Integer> getMembers() {
         return members;
     }
@@ -83,11 +84,9 @@ public class Community {
         members.remove((Integer) userId);
     }
 
-
     public String getMembersAsString() {
         return String.join(",", members.stream().map(String::valueOf).toArray(String[]::new));
     }
-
 
     public void setMembersFromString(String membersString) {
         if (membersString == null || membersString.isEmpty()) {
@@ -97,6 +96,19 @@ public class Community {
                     .map(Integer::parseInt)
                     .toList();
         }
+    }
+
+    public String getMembersNamesAsString(UserService userService) {
+        StringBuilder membersNames = new StringBuilder();
+        for (Integer memberId : members) {
+
+                Users user = userService.getUserById2(memberId);
+                if (user != null) {
+                    membersNames.append(user.getFullName()).append("\n");
+                }
+
+        }
+        return membersNames.toString().trim();
     }
 
     @Override

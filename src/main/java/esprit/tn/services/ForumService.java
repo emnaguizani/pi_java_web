@@ -250,25 +250,181 @@ public class ForumService {
         return null;
     }
 
-    public void incrementLikes(int forumId) {
-        String query = "UPDATE forum SET likes = likes + 1 WHERE idForum = ?";
-        try (PreparedStatement stmt = cnx.prepareStatement(query)) {
-            stmt.setInt(1, forumId);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Error incrementing likes: " + e.getMessage());
+    public void incrementLikes(int forumId, int userId) {
+        if (hasUserInteracted(userId, forumId)) {
+
+            undoLike(forumId, userId);
+            String query = "UPDATE forum SET likes = likes - 1 WHERE idForum = ?";
+            try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+                stmt.setInt(1, forumId);
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException("Error decrementing likes: " + e.getMessage());
+            }
+        } else {
+
+            if (hasUserDisliked(userId, forumId)) {
+                undoDislike(forumId, userId);
+                String query = "UPDATE forum SET dislikes = dislikes - 1 WHERE idForum = ?";
+                try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+                    stmt.setInt(1, forumId);
+                    stmt.executeUpdate();
+                } catch (SQLException e) {
+                    throw new RuntimeException("Error decrementing dislikes: " + e.getMessage());
+                }
+            }
+
+            recordInteraction(userId, forumId, "like");
+            String query = "UPDATE forum SET likes = likes + 1 WHERE idForum = ?";
+            try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+                stmt.setInt(1, forumId);
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException("Error incrementing likes: " + e.getMessage());
+            }
         }
     }
 
+    public void incrementDislikes(int forumId, int userId) {
+        if (hasUserInteracted(userId, forumId)) {
 
-    public void incrementDislikes(int forumId) {
-        String query = "UPDATE forum SET dislikes = dislikes + 1 WHERE idForum = ?";
+            undoDislike(forumId, userId);
+            String query = "UPDATE forum SET dislikes = dislikes - 1 WHERE idForum = ?";
+            try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+                stmt.setInt(1, forumId);
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException("Error decrementing dislikes: " + e.getMessage());
+            }
+        } else {
+
+            if (hasUserLiked(userId, forumId)) {
+                undoLike(forumId, userId);
+                String query = "UPDATE forum SET likes = likes - 1 WHERE idForum = ?";
+                try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+                    stmt.setInt(1, forumId);
+                    stmt.executeUpdate();
+                } catch (SQLException e) {
+                    throw new RuntimeException("Error decrementing likes: " + e.getMessage());
+                }
+            }
+
+            recordInteraction(userId, forumId, "dislike");
+            String query = "UPDATE forum SET dislikes = dislikes + 1 WHERE idForum = ?";
+            try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+                stmt.setInt(1, forumId);
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException("Error incrementing dislikes: " + e.getMessage());
+            }
+        }
+    }
+
+    public boolean hasUserInteracted(int userId, int forumId) {
+        String query = "SELECT COUNT(*) FROM forum_interactions WHERE user_id = ? AND forum_id = ?";
         try (PreparedStatement stmt = cnx.prepareStatement(query)) {
-            stmt.setInt(1, forumId);
+            stmt.setInt(1, userId);
+            stmt.setInt(2, forumId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error checking user interaction: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public void recordInteraction(int userId, int forumId, String interactionType) {
+        String query = "INSERT INTO forum_interactions (user_id, forum_id, interaction_type) VALUES (?, ?, ?)";
+        try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+            stmt.setInt(1, userId);
+            stmt.setInt(2, forumId);
+            stmt.setString(3, interactionType);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Error incrementing dislikes: " + e.getMessage());
+            throw new RuntimeException("Error recording interaction: " + e.getMessage());
         }
+    }
+
+    public void undoLike(int forumId, int userId) {
+        String query = "DELETE FROM forum_interactions WHERE user_id = ? AND forum_id = ? AND interaction_type = 'like'";
+        try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+            stmt.setInt(1, userId);
+            stmt.setInt(2, forumId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error undoing like: " + e.getMessage());
+        }
+    }
+
+    public void undoDislike(int forumId, int userId) {
+        String query = "DELETE FROM forum_interactions WHERE user_id = ? AND forum_id = ? AND interaction_type = 'dislike'";
+        try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+            stmt.setInt(1, userId);
+            stmt.setInt(2, forumId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error undoing dislike: " + e.getMessage());
+        }
+    }
+
+    public boolean hasUserLiked(int userId, int forumId) {
+        String query = "SELECT COUNT(*) FROM forum_interactions WHERE user_id = ? AND forum_id = ? AND interaction_type = 'like'";
+        try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+            stmt.setInt(1, userId);
+            stmt.setInt(2, forumId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error checking user like: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public boolean hasUserDisliked(int userId, int forumId) {
+        String query = "SELECT COUNT(*) FROM forum_interactions WHERE user_id = ? AND forum_id = ? AND interaction_type = 'dislike'";
+        try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+            stmt.setInt(1, userId);
+            stmt.setInt(2, forumId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error checking user dislike: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public int getLikesCount(int forumId) {
+        String query = "SELECT COUNT(*) FROM forum_interactions WHERE forum_id = ? AND interaction_type = 'like'";
+        try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+            stmt.setInt(1, forumId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error fetching likes count: " + e.getMessage());
+        }
+        return 0;
+    }
+
+    public int getDislikesCount(int forumId) {
+        String query = "SELECT COUNT(*) FROM forum_interactions WHERE forum_id = ? AND interaction_type = 'dislike'";
+        try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+            stmt.setInt(1, forumId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error fetching dislikes count: " + e.getMessage());
+        }
+        return 0;
     }
 
 }

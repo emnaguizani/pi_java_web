@@ -1,5 +1,8 @@
 package esprit.tn.entities;
 
+import esprit.tn.services.UserService;
+
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 public class Message {
@@ -71,6 +74,15 @@ public class Message {
 
     public void setSentAt(LocalDateTime sentAt) {
         this.sentAt = sentAt;
+    }
+
+    public String getSenderName(UserService userService) {
+
+            Users user = userService.getUserById2(this.getSenderId());
+            if (user != null) {
+                return user.getFullName();
+            }
+        return "Unknown";
     }
 
     @Override

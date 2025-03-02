@@ -1,5 +1,8 @@
 package esprit.tn.entities;
 
+import esprit.tn.services.UserService;
+
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
@@ -98,6 +101,16 @@ public class Response {
 
     public void setDepth(int depth) {
         this.depth = depth;
+    }
+
+    public String getAuthorName(UserService userService) {
+
+            Users user = userService.getUserById2(this.getAuthor());
+            if (user != null) {
+                return user.getFullName();
+            }
+
+        return "Unknown";
     }
 
     @Override
