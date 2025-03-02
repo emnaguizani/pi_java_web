@@ -31,7 +31,7 @@ public class SeanceVisioController {
                 Desktop.getDesktop().browse(new URI(meetURL));
 
                 // 📧 Envoyer l'email aux élèves et formateurs
-                envoyerEmailAuxParticipants(meetURL);
+                //envoyerEmailAuxParticipants(meetURL);
 
             } catch (IOException | URISyntaxException e) {
                 e.printStackTrace();
@@ -40,22 +40,5 @@ public class SeanceVisioController {
         }
     }
 
-    private void envoyerEmailAuxParticipants(String meetURL) {
-        List<String> emailsParticipants = userService.getEmailsParticipants();
 
-        String sujet = "📅 Invitation à la séance : " + seance.getTitre();
-        String message = "Bonjour,\n\n"
-                + "Vous êtes invité(e) à participer à la séance : **" + seance.getTitre() + "**.\n"
-                + "Cliquez sur le lien pour rejoindre la réunion : " + meetURL + "\n\n"
-                + "À bientôt !";
-
-        for (String email : emailsParticipants) {
-            boolean sent = EmailService.envoyerEmail(email, sujet, message);
-            if (sent) {
-                System.out.println("✅ Email envoyé à : " + email);
-            } else {
-                System.err.println("❌ Erreur lors de l'envoi de l'email à : " + email);
-            }
-        }
-    }
 }

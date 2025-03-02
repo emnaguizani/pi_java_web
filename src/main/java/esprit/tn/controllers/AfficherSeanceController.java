@@ -1,6 +1,7 @@
 package esprit.tn.controllers;
-
+import esprit.tn.services.UserService;
 import esprit.tn.entities.Seance;
+import esprit.tn.services.EmailService;
 import esprit.tn.services.SeanceService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -10,11 +11,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
+
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,19 +35,15 @@ public class AfficherSeanceController {
 
     @FXML
     private TableColumn<Seance, String> contenu;
-    @FXML
-    private TableColumn<Seance, String> nomFormateur;
-    @FXML
-    private ScrollPane scrollPane; // ✅ S'assurer que le ScrollPane est bien récupéré
+
     @FXML
     private TableColumn<Seance, String> modeColumn;
 
+    @FXML
+    private TableColumn<Seance, String> nomFormateur;
 
     @FXML
     private TableColumn<Seance, String> datetime;
-
-    @FXML
-    private TableColumn<Seance, Integer> idFormateur;
 
     @FXML
     private TableColumn<Seance, Void> modifierColumn;
@@ -49,48 +52,35 @@ public class AfficherSeanceController {
     private TableColumn<Seance, Void> supprimerColumn;
 
     @FXML
-    private TextField searchField;
+    private TableColumn<Seance, Void> participerColumn;
 
+    @FXML
+    private TextField searchField;
 
     private final SeanceService seanceService = new SeanceService();
     private ObservableList<Seance> allSeances;
-
-
+    private final UserService userService = new UserService();
+    private Seance seance;
 
     @FXML
     void initialize() {
         allSeances = FXCollections.observableList(seanceService.getAll());
 
-        // ✅ Vérifier que le ScrollPane n'est pas null
-        if (scrollPane != null) {
-            scrollPane.setFitToHeight(true);
-            scrollPane.setFitToWidth(true);
-        } else {
-            System.out.println("⚠ Warning: ScrollPane est NULL ! Vérifiez l'ID dans le fichier FXML.");
-        }
-
         tableView.setItems(allSeances);
-
-        // ✅ Configuration correcte des colonnes
         titre.setCellValueFactory(new PropertyValueFactory<>("titre"));
         contenu.setCellValueFactory(new PropertyValueFactory<>("contenu"));
+        modeColumn.setCellValueFactory(new PropertyValueFactory<>("modeSeance")); // ✅ Vérifier que l'attribut `modeSeance` existe dans `Seance`
         nomFormateur.setCellValueFactory(cellData -> new SimpleStringProperty(
                 cellData.getValue().getNomFormateur() != null ? cellData.getValue().getNomFormateur() : "Inconnu"
         ));
-        modeColumn.setCellValueFactory(new PropertyValueFactory<>("modeSeance"));
-
         datetime.setCellValueFactory(new PropertyValueFactory<>("datetime"));
 
-        // ✅ Activation automatique du scroll
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        // ✅ Assurer que les boutons "Modifier" et "Supprimer" sont bien ajoutés
         ajouterBoutonModifier();
         ajouterBoutonSupprimer();
+        ajouterBoutonParticiper();
     }
-
-
-
 
     private void ajouterBoutonModifier() {
         Callback<TableColumn<Seance, Void>, TableCell<Seance, Void>> cellFactory = param -> new TableCell<>() {
@@ -106,11 +96,7 @@ public class AfficherSeanceController {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(btn);
-                }
+                setGraphic(empty ? null : btn);
             }
         };
 
@@ -131,15 +117,51 @@ public class AfficherSeanceController {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(btn);
-                }
+                setGraphic(empty ? null : btn);
             }
         };
 
         supprimerColumn.setCellFactory(cellFactory);
+    }
+
+    private void ajouterBoutonParticiper() {
+        Callback<TableColumn<Seance, Void>, TableCell<Seance, Void>> cellFactory = param -> new TableCell<>() {
+            private final Button btn = new Button("Participer");
+
+            {
+                btn.setOnAction(event -> {
+                    Seance seance = getTableView().getItems().get(getIndex());
+                    participerASeance(seance);
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(empty ? null : btn);
+            }
+        };
+
+        participerColumn.setCellFactory(cellFactory);
+    }
+    private void envoyerEmailAuxParticipants(String meetURL) {
+        List<String> emailsParticipants = userService.getEmailsParticipants();
+
+        String sujet = "📅 Invitation à la séance : " + this.seance.getTitre();
+
+        String message = "Bonjour,\n\n"
+                + "Vous êtes invité(e) à participer à la séance : **" + seance.getTitre() + "**.\n"
+                + "Cliquez sur le lien pour rejoindre la réunion : " + meetURL + "\n\n"
+                + "À bientôt !";
+
+        for (String email : emailsParticipants) {
+            boolean sent = EmailService.envoyerEmail(email, sujet, message);
+            if (sent) {
+                System.out.println("✅ Email envoyé à : " + email);
+            } else {
+                System.err.println("❌ Erreur lors de l'envoi de l'email à : " + email);
+            }
+        }
     }
 
     private void ouvrirFenetreModification(Seance seance) {
@@ -155,7 +177,7 @@ public class AfficherSeanceController {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("❌ Erreur lors du chargement de ModifierSeance.fxml !");
+            showError("Erreur", "Impossible de charger la fenêtre de modification.");
         }
     }
 
@@ -166,13 +188,60 @@ public class AfficherSeanceController {
         alert.setContentText("Voulez-vous vraiment supprimer cette séance ?");
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
-                seanceService.supprimer(seance);
+                seanceService.supprimer(seance); // ✅ Utilisation correcte de la méthode supprimer
                 allSeances.remove(seance);
                 tableView.refresh();
             }
         });
     }
 
+    private void participerASeance(Seance seance) {
+        if ("En ligne".equalsIgnoreCase(seance.getModeSeance())) { // ✅ Vérifier que `getModeSeance()` existe
+            ouvrirJitsi(seance);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Séance Présentielle");
+            alert.setHeaderText("Cette séance est en présentiel.");
+            alert.setContentText("Veuillez vous rendre dans la salle correspondante.");
+            alert.showAndWait();
+        }
+    }
+
+    private void ouvrirJitsi(Seance seance) {
+        if (seance != null) {
+            try {
+                // Assurez-vous que `this.seance` est bien défini
+                this.seance = seance;
+
+                String titreEncode = seance.getTitre().replaceAll(" ", "%20");
+                String meetURL = "https://meet.jit.si/" + titreEncode + "-" + seance.getIdSeance()
+                        + "#config.prejoinPageEnabled=false";
+
+                System.out.println("🔗 URL générée : " + meetURL);
+
+                Desktop.getDesktop().browse(new URI(meetURL));
+
+                // 📧 Envoyer l'email uniquement si la séance est bien définie
+                if (this.seance != null) {
+                    envoyerEmailAuxParticipants(meetURL);
+                } else {
+                    System.err.println("❌ Impossible d'envoyer l'email : `seance` est null.");
+                }
+
+            } catch (IOException | URISyntaxException e) {
+                e.printStackTrace();
+                System.err.println("❌ Erreur lors de l'ouverture du lien Jitsi !");
+            }
+        }
+    }
+
+
+    private void showError(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
     @FXML
     void rechercherSeance() {
         String searchText = searchField.getText().trim().toLowerCase();
@@ -189,13 +258,11 @@ public class AfficherSeanceController {
 
         tableView.setItems(FXCollections.observableList(filteredList));
     }
-
     @FXML
     void resetSearch() {
         searchField.clear();
         tableView.setItems(allSeances);
     }
-
     @FXML
     void retour() {
         try {
@@ -209,10 +276,4 @@ public class AfficherSeanceController {
         }
     }
 
-    private void showError(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
 }

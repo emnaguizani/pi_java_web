@@ -88,11 +88,12 @@ public class SeanceService implements Iservice<Seance> {
     public List<Seance> getAllSeances() {
         List<Seance> seances = new ArrayList<>();
         String req = """
-        SELECT s.idSeance, s.titre, s.contenu, s.datetime, u.fullName AS nomFormateur
-        FROM seance s
-        JOIN users u ON s.idFormateur = u.id_user
-        ORDER BY s.datetime ASC
-    """;
+    SELECT s.idSeance, s.titre, s.contenu, s.datetime, s.idFormateur, u.fullName AS nomFormateur
+    FROM seance s
+    JOIN users u ON s.idFormateur = u.id_user
+    ORDER BY s.datetime ASC
+""";
+
 
         try (Statement stm = cnx.createStatement();
              ResultSet rs = stm.executeQuery(req)) {

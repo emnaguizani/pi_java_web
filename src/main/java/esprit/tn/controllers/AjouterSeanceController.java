@@ -153,18 +153,23 @@ public class AjouterSeanceController {
     }
 
     @FXML
-    void afficherSeances(ActionEvent event) {
+    void afficherSeances() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherSeance.fxml"));
             Parent root = loader.load();
+
             Stage stage = new Stage();
             stage.setTitle("Liste des Séances");
-            stage.setScene(new Scene(root));
+            stage.setScene(new Scene(root, 900, 600));
             stage.show();
         } catch (IOException e) {
+            e.printStackTrace(); // Ajoute ceci pour voir l'erreur dans la console
             showError("Erreur", "Impossible d'afficher les séances.");
         }
     }
+
+
+
 
     private void showError(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
