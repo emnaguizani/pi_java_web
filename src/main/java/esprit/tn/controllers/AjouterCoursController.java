@@ -75,7 +75,6 @@ public class AjouterCoursController implements Initializable {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select Video Files");
 
-
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("Video Files", "*.mp4", "*.avi", "*.mov", "*.mkv")
         );
@@ -83,13 +82,20 @@ public class AjouterCoursController implements Initializable {
         List<File> selectedFiles = fileChooser.showOpenMultipleDialog(new Stage());
 
         if (selectedFiles != null && !selectedFiles.isEmpty()) {
-            String videoPaths = selectedFiles.stream()
+            List<String> videoPaths = selectedFiles.stream()
                     .map(File::getAbsolutePath)
-                    .collect(Collectors.joining(","));
-            videoPathField.setText(videoPaths);
+                    .collect(Collectors.toList());
+
+            // Store the video paths in a shared object (e.g., a Cours object)
+            Cours course = new Cours();
+            course.setVideoPaths(videoPaths);
+
+            // Optionally, store the course object in a shared service or data model
+            SharedDataModel.setCurrentCourse(course);
+
+            // Update the UI (optional)
+            videoPathField.setText(String.join(",", videoPaths));
         }
-
-
     }
 
     private void addCourse(){

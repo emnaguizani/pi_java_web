@@ -67,7 +67,6 @@ public class AfficherCoursEleveController implements Initializable {
         courseTable.setItems(courseList);
     }
 
-    // l'ajout mta3 l button dynamiquement
     private void addEnrollButton() {
         enrollColumn.setCellFactory(param -> new TableCell<>() {
             private final Button enrollButton = new Button("Enroll");
@@ -92,9 +91,8 @@ public class AfficherCoursEleveController implements Initializable {
         });
     }
 
-    // fn mta3 l enroll
     private void handleEnroll(Cours course) {
-        int studentId = 1; // bech yetbaddell fl integration bl eleve.getIdeleve()
+        int studentId = 1; //  eleve.getIdeleve()
 
 
         Progress progress = new Progress(course.getIdCours(), studentId, StProgress.INPROGRESS);
@@ -115,8 +113,7 @@ public class AfficherCoursEleveController implements Initializable {
             stage.setTitle("Course Details");
 
             // Pass the course details to the CourseDetailsController
-            CourseDetailsController controller = loader.getController();
-            controller.initialize(course);
+
 
             stage.show();
         } catch (IOException e) {

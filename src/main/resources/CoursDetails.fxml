@@ -3,19 +3,20 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" prefHeight="457.0" prefWidth="625.0" spacing="20" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.CourseDetailsController">
-   <Pane prefHeight="48.0" prefWidth="626.0">
-      <children>
-         <Button fx:id="submitButton1" layoutX="30.0" layoutY="12.0" onAction="#handleCompletion" text="Back" textFill="#2667ff" />
-      </children>
-      <VBox.margin>
-         <Insets top="-210.0" />
-      </VBox.margin>
-   </Pane>
-    <Label fx:id="titleLabel" style="-fx-font-size: 20px;" />
-    <Label fx:id="descriptionLabel" style="-fx-font-size: 16px;" />
-    <VBox fx:id="videoContainer" alignment="CENTER" spacing="10" />
+<VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0" spacing="20" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.CourseDetailsController">
+    <Pane prefHeight="48.0" prefWidth="626.0">
+        <children>
+            <Button fx:id="submitButton1" layoutX="30.0" layoutY="12.0" onAction="#handleCompletion" text="Back" textFill="#2667ff" />
+        </children>
+        <VBox.margin>
+            <Insets top="-210.0" />
+        </VBox.margin>
+    </Pane>
+    <Label fx:id="titleLabel" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+    <Label fx:id="descriptionLabel" style="-fx-font-size: 16px;" wrapText="true" />
+    <VBox fx:id="videoContainer" alignment="CENTER" spacing="20" prefWidth="750.0" prefHeight="400.0" style="-fx-border-color: #ccc; -fx-border-width: 1px; -fx-padding: 10px;" />
     <CheckBox fx:id="completedCheckBox" text="If you completed the course, check it" />
     <Button fx:id="submitButton" onAction="#handleCompletion" text="Submit" textFill="#2667ff" />
 </VBox>
