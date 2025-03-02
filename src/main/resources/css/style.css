@@ -1,46 +1,43 @@
 .root {
-    -fx-background-color: linear-gradient(to right, #87BFFF, #3F8CFC, #2667FF, #3B28CC);
+    -fx-background-color: #f0f0f0; /* Gris clair */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-.table-view {
-    -fx-background-color: rgba(255, 255, 255, 0.9);
-    -fx-border-color: #2667FF;
-    -fx-border-radius: 10px;
-    -fx-padding: 10px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 5);
-}
-
-.button {
-    -fx-background-color: #3F8CFC;
-    -fx-text-fill: white;
-    -fx-font-size: 14px;
-    -fx-border-radius: 8px;
-    -fx-padding: 10px;
-}
-
-.button:hover {
-    -fx-background-color: #2667FF;
+.form-container {
+    width: 300px; /* Ajustez selon vos besoins */
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.8); /* Fond légèrement transparent pour le conteneur de formulaire */
+    -fx-border-radius: 20px; /* Bordures arrondies */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 20, 0, 0, 10);
+    -fx-padding: 20px;
 }
 
 .label {
-    -fx-font-size: 20px;
+    -fx-font-size: 16px;
+    -fx-text-fill: #333; /* Texte en gris foncé pour un meilleur contraste */
     -fx-font-weight: bold;
+}
+
+.text-field {
+    -fx-font-size: 14px;
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 15px; /* Bordures arrondies pour les champs de texte */
+    -fx-padding: 10px;
+    -fx-background-radius: 15px; /* Assure que le fond respecte les bordures arrondies */
+}
+
+.button {
+    -fx-background-color: #307AFF; /* Bleu clair */
     -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-border-radius: 15px;
+    -fx-padding: 10px;
+    -fx-background-radius: 15px; /* Assure que le fond respecte les bordures arrondies */
 }
 
-.combo-box {
-    -fx-background-color: white;
-    -fx-border-radius: 5px;
-    -fx-border-color: #2667FF;
-}
-.scroll-pane {
-    -fx-background-color: transparent;
-}
-
-.scroll-pane .viewport {
-    -fx-background-color: white;
-}
-
-.scroll-bar {
-    -fx-background-color: lightgray;
+.button:hover {
+    -fx-background-color: #265FDA; /* Bleu plus foncé */
 }

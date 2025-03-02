@@ -1,36 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/21.0.2"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="esprit.tn.controllers.AfficherSeanceController"
-            stylesheets="@css/style.css"
-            prefHeight="600" prefWidth="900">
+<AnchorPane prefHeight="745.0" prefWidth="1247.0" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.AfficherSeanceController">
 
     <children>
-        <Label layoutX="220" layoutY="10" text="📋 Liste des Séances"
-               style="-fx-font-size: 18px; -fx-text-fill: white;"/>
+        <Label layoutX="220" layoutY="10" style="-fx-font-size: 18px; -fx-text-fill: white;" text="📋 Liste des Séances" />
 
         <Label layoutX="30" layoutY="50" text="🔎 Rechercher :" />
-        <TextField fx:id="searchField" layoutX="150" layoutY="50" prefWidth="200" promptText="Titre ou Date (yyyy-MM-dd)" />
-        <Button layoutX="360" layoutY="50" text="Rechercher" onAction="#rechercherSeance" />
-        <Button layoutX="460" layoutY="50" text="Réinitialiser" onAction="#resetSearch" />
+        <TextField fx:id="searchField" layoutX="188.0" layoutY="57.0" prefWidth="200" promptText="Titre ou Date (yyyy-MM-dd)" />
+        <Button layoutX="388.0" layoutY="50.0" onAction="#rechercherSeance" text="Rechercher" />
+        <Button layoutX="494.0" layoutY="50.0" onAction="#resetSearch" text="Réinitialiser" />
 
-        <TableView fx:id="tableView" layoutX="20" layoutY="100" prefHeight="450" prefWidth="860">
+        <TableView fx:id="tableView" layoutX="20.0" layoutY="100.0" prefHeight="577.0" prefWidth="1182.0">
             <columns>
-                <TableColumn fx:id="titre" text="Titre" prefWidth="150"/>
-                <TableColumn fx:id="contenu" text="Description" prefWidth="200"/>
-                <TableColumn fx:id="modeColumn" text="Mode" prefWidth="100"/>
-                <TableColumn fx:id="nomFormateur" text="Formateur" prefWidth="150"/>
-                <TableColumn fx:id="datetime" text="Date &amp; Heure" prefWidth="200"/>
-                <TableColumn fx:id="modifierColumn" text="Modifier" prefWidth="100"/>
-                <TableColumn fx:id="supprimerColumn" text="Supprimer" prefWidth="100"/>
-                <TableColumn fx:id="participerColumn" text="Participer" prefWidth="100"/>
+                <TableColumn fx:id="titre" prefWidth="177.59997177124023" text="Titre" />
+                <TableColumn fx:id="contenu" prefWidth="194.40003967285156" text="Description" />
+                <TableColumn fx:id="modeColumn" prefWidth="108.79998779296875" text="Mode" />
+                <TableColumn fx:id="nomFormateur" prefWidth="121.60003662109375" text="Formateur" />
+                <TableColumn fx:id="datetime" prefWidth="200" text="Date &amp; Heure" />
+                <TableColumn fx:id="modifierColumn" prefWidth="129.5999755859375" text="Modifier" />
+                <TableColumn fx:id="supprimerColumn" prefWidth="128.8001708984375" text="Supprimer" />
+                <TableColumn fx:id="participerColumn" prefWidth="111.20004882812509" text="Participer" />
             </columns>
         </TableView>
 
-        <Button layoutX="30" layoutY="570" text="⬅ Retour" onAction="#retour"/>
+        <Button layoutX="30.0" layoutY="690.0" onAction="#retour" text="⬅ Retour" />
     </children>
 </AnchorPane>

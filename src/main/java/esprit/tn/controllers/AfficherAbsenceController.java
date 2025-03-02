@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -143,14 +144,20 @@ public class AfficherAbsenceController {
         File file = fileChooser.showSaveDialog(null);
         if (file == null) return;
 
-        try (FileWriter writer = new FileWriter(file)) {
-            writer.append("Séance,Nom Élève,État,Commentaire\n");
+        try (FileWriter writer = new FileWriter(file, StandardCharsets.UTF_8)) {
+            // Utilisation de ; comme séparateur pour Excel (peut varier selon la langue du système)
+            String separator = ";";
+
+            writer.append("Séance").append(separator)
+                    .append("Nom Élève").append(separator)
+                    .append("État").append(separator)
+                    .append("Commentaire").append("\n");
 
             for (Absence absence : allAbsences) {
-                writer.append(absence.getSeanceTitre()).append(",");
-                writer.append(absence.getEleveFullName()).append(",");
-                writer.append(absence.getEtat()).append(",");
-                writer.append(absence.getCommentaire()).append("\n");
+                writer.append("\"").append(absence.getSeanceTitre()).append("\"").append(separator);
+                writer.append("\"").append(absence.getEleveFullName()).append("\"").append(separator);
+                writer.append("\"").append(absence.getEtat()).append("\"").append(separator);
+                writer.append("\"").append(absence.getCommentaire()).append("\"").append("\n");
             }
 
             showSuccess("Export Réussi", "Les absences ont été exportées avec succès.\nFichier : " + file.getAbsolutePath());
@@ -159,6 +166,7 @@ public class AfficherAbsenceController {
             showError("Erreur Export", "Impossible d'exporter les absences.\n" + e.getMessage());
         }
     }
+
 
 
 

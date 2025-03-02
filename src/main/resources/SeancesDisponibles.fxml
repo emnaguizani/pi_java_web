@@ -2,7 +2,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="esprit.tn.controllers.SeancesDisponiblesController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" stylesheets="css/style.css" fx:controller="esprit.tn.controllers.SeancesDisponiblesController">
     <TableView fx:id="tableViewSeances" layoutX="20" layoutY="50" prefHeight="450" prefWidth="700">
         <columns>
             <TableColumn fx:id="titreColumn" text="Titre de la Séance" prefWidth="200"/>
