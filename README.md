@@ -42,9 +42,3 @@
 
 git clone https://github.com/emnaguizani/pi_java_web.git
 
-
-# 4. Update DB credentials
-#    - Open `DBConnection.java` and set your DB username & password
-
-# 5. Run the Application
-#    - Launch `Main.java`
